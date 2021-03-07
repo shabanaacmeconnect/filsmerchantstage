@@ -1,0 +1,85 @@
+<!-- <div class="row " >
+ <perfect-scrollbar style="   height: calc(100vh - 200px);">
+    <div class="col-12 ">
+   
+        <ng-container *ngFor="let m of messages">
+            <div class="card  mb-2">
+                <div class="card-body chat-box">
+                    <div class="d-flex flex-row pb-2">
+                
+                        <div class=" d-flex flex-grow-1 min-width-zero">
+                            <div class="pl-0 align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
+                                <div class="position-absolute pt-1 pr-2 r-0 mb-2">
+                                    <span class="text-extra-small text-muted">{{m.created_at | date:'medium'}}</span>
+                                </div>
+                                <div class="min-width-zero mt-4">
+                                    <p class=" truncate list-item-heading">{{m.username}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-text-left">
+                        <p class="mb-0 text-semi-muted">{{m.comment}} </p>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </ng-container>
+      </div>
+</perfect-scrollbar>
+  
+  
+  
+</div>
+<div class="chat-input-container d-flex justify-content-between align-items-center">
+  <input class="form-control flex-grow-1" type="text" placeholder="Say something..." [(ngModel)]="message"
+      (keyup)="messageInputKeyUp($event)">
+  <div>
+     
+      <button type="button" class="btn btn-primary icon-button large" (click)="sendMessage()">
+          <i class="bx bx-paper-plane"></i>
+      </button>
+  </div>
+</div> -->
+
+
+<div class="chat-conversation p-3">
+    <perfect-scrollbar style="height: 470px;">
+      <ul class="list-unstyled">
+      
+        <li *ngFor="let data of messages">
+          <div class="conversation-list w-100">
+          
+            <div class="ctext-wrap">
+              <div class="conversation-name">{{ data.username }}</div>
+              <p>
+                {{ data.comment }}
+              </p>
+              <p class="chat-time mb-0 float-right"><i class="bx bx-time-five align-middle mr-1"></i> {{ data.created_at |date:'medium' }}</p>
+            </div>
+
+          </div>
+        </li>
+      </ul>
+    </perfect-scrollbar>
+  </div>
+  <div class="p-3 chat-input-section">
+
+    <!-- <form class="row">
+      <div class="col">
+        <div class="position-relative">
+          <input type="text" [(ngModel)]="message" name="message"
+          (keyup)="messageInputKeyUp($event)" class="form-control chat-input" placeholder="Enter Message..."/>
+         
+        </div>
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary btn-rounded chat-send w-md" (click)="sendMessage()"><span
+            class="d-none d-sm-inline-block mr-2">Send</span> <i class="mdi mdi-send"></i></button>
+      </div>
+    </form> -->
+  </div>
+
+
+
+

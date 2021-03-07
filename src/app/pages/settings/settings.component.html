@@ -1,0 +1,179 @@
+<div class="container-fluid">
+
+    <app-page-title title="Settings" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="text-sm-right">
+                  <button type="button" class="btn btn-primary btn-rounded mb-2 mr-2" (click)="editModal(largeDataModal)">
+                     Change Password
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-centered table-striped table-nowrap">
+                  <tr>
+                    <th style="text-align: left !important;">Name</th><th style="text-align: left !important;">Point of Contact</th><th style="text-align: left !important;">POC Email ID</th>
+                  </tr>
+                  <tr class="table-light"><td style="text-align: left !important;">{{merchantsData.business_name}}</td><td style="text-align: left !important;">{{merchantsData.contact_name}}</td><td style="text-align: left !important;">{{merchantsData.contact_email}}</td></tr>
+                  <tr>
+                    <th style="text-align: left !important;">Mobile No.</th><th style="text-align: left !important;">Office No.</th><th style="text-align: left !important;">Street Address</th>
+                  </tr>
+                  <tr class="table-light"><td style="text-align: left !important;">{{merchantsData.mobile}}</td><td style="text-align: left !important;">{{merchantsData.office_phone}}</td><td style="text-align: left !important;">{{merchantsData.address}}</td></tr>
+                  <tr>
+                    <th style="text-align: left !important;">Country</th><th style="text-align: left !important;">State</th><th style="text-align: left !important;">City</th>
+                  </tr>
+                  <tr class="table-light"><td style="text-align: left !important;">{{merchantsData.country_name}}</td><td style="text-align: left !important;">{{merchantsData.state_name}}</td><td style="text-align: left !important;">{{merchantsData.city_name}}</td></tr>
+                  <tr>
+                    <th style="text-align: left !important;">Email ID</th><th style="text-align: left !important;">Website</th><th style="text-align: left !important;">Identity Proof</th>
+                  </tr>
+                  <tr class="table-light"><td style="text-align: left !important;">{{merchantsData.email}}</td><td style="text-align: left !important;">{{merchantsData.website}}</td><td style="text-align: left !important;"><a href="javascript:;" (click)="imageModal(imageModal1,merchantsData.emirate_id_path)"><i class="bx bx-file"></i></a></td></tr>
+                  <tr>
+                    <th style="text-align: left !important;">Address Proof</th><th style="text-align: left !important;">Trade License Proof</th><th style="text-align: left !important;">Logo</th>
+                  </tr>
+                  <tr class="table-light"><td style="text-align: left !important;"><a href="javascript:;" (click)="imageModal(imageModal1,merchantsData.address_proof_path)" ><i class="bx bx-file"></i></a></td><td style="text-align: left !important;"><a href="javascript:;" (click)="imageModal(imageModal1,merchantsData.trade_license_path)"><i class="bx bx-file"></i></a></td><td style="text-align: left !important;"><a href="javascript:;" (click)="imageModal(imageModal1,merchantsData.logo_path)"><i class="bx bx-file"></i></a></td></tr>
+              </table>
+            </div>
+            <!-- pagination -->
+            <!-- <ngb-pagination [collectionSize]="elementCount" [(page)]="currentpage" (pageChange)="pageChange()"
+              class="pagination pagination-rounded justify-content-end mb-2" aria-label="Default pagination">
+            </ngb-pagination> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end row -->
+     <div class="row">
+      <div class="col-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="mb-3 ">API Settings</h5>
+            <div  *ngIf="keypresent.length==0">
+              <div class="form-group mb-0">
+                <div>
+                  <button type="submit" class="btn btn-primary mr-1" (click)="generateKeys()">
+                    Generate Keys
+                  </button>
+                </div>
+              </div>
+            </div>
+              <form *ngIf="keypresent.length!=0">
+                <div class="form-group">
+                  <label>API Key</label>
+                  <div class="input-group"  *ngIf="form1">
+                    <input type="text" class="form-control" [(ngModel)]="api_key" name="api_key1?" #api_key1="ngModel" />
+                    <div class="input-group-append">
+                      <div class="input-group-text " ngbTooltip="Api key copied Successfully" triggers="click:blur" style="cursor:pointer" (click)="copyInputMessage(api_key)">Copy</div>
+                    </div>
+                  </div>
+
+                  <input *ngIf="form2" type="text" class="form-control" value="*******************************************************************************************************************************"/>
+                  <!-- <div class="invalid-feedback" >
+                    <span *ngIf="api_key1?.errors?.required && form.submitted" >API Key is required!</span>
+                    <div *ngIf="api_key1?.errors?.pattern && form.submitted" >API Key should be alphanumeric!</div>
+                    <div *ngIf="api_key1?.errors?.minlength && form.submitted" >API Key should have 15 characters!</div>
+                  </div> -->
+                </div>
+                <div class="form-group">
+                  <label>Secret Key</label>
+                  <div class="input-group" >
+                    <input type="text" class="form-control"  [(ngModel)]="api_secret  " name="api_secret1" #api_secret1="ngModel" />
+                    <div class="input-group-append">
+                      <div class="input-group-text " ngbTooltip="Secret key copied Successfully" triggers="click:blur" style="cursor:pointer" (click)="copyInputMessage(api_secret)">Copy</div>
+                    </div>
+                  </div>
+                  <!-- <div class="invalid-feedback">
+                    <div *ngIf="api_secret1?.errors?.required && form.submitted" >API Secret Key is required!</div>
+                    <div *ngIf="api_secret1?.errors?.pattern && form.submitted" >API Secret Key should be alphanumeric!</div>
+                    <div *ngIf="api_secret1?.errors?.minlength && form.submitted" >API Secret Key should have 25 characters!</div>
+
+                  </div> -->
+                </div>
+                <div class="form-group mb-0">
+                  <div>
+                    <button type="submit" class="btn btn-primary mr-1"  (click)="generateKeys()">
+                      Change Keys
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+  
+  <ng-template #largeDataModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Change Password</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm">
+                <div class="form-group">
+                  <label>Current Password</label>
+                  <input type="text" class="form-control" formControlName="current_password"
+                    [ngClass]="{'is-invalid': typesubmit && type.current_password.errors}"  />
+                  <div *ngIf="typesubmit && type.current_password.errors" class="invalid-feedback">
+                    <span *ngIf="type.current_password.errors.required">Current Password is required.</span>
+                  </div>
+                </div>
+               
+                <div class="form-group">
+                  <label>New Password</label>
+                  <div>
+                    <input type="password" class="form-control"autocomplete="new-password" maxlength="50" formControlName="new_password"
+                      [ngClass]="{'is-invalid': typesubmit && type.new_password.errors}" />
+                    <div *ngIf="typesubmit && type.new_password.errors" class="invalid-feedback">
+                      <span *ngIf="type.new_password.errors.required">Password is required.</span>
+                      <span *ngIf="type.new_password.errors.minlength">Password must be at least 10
+                        characters.</span>
+                        <span *ngIf="type.new_password.errors.pattern"> Password must contain alphabetics,numbers and special charactes !</span>
+  
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <input type="password" class="form-control" placeholder="Re-Type Password" formControlName="confirm_password"
+                      [ngClass]="{'is-invalid': typesubmit && type.confirm_password.errors}" />
+                    <div *ngIf="typesubmit && type.confirm_password.errors" class="invalid-feedback">
+                      <span *ngIf="type.confirm_password.errors.required">This value is required.</span>
+                      <span *ngIf="type.confirm_password.errors.mustMatch">This value should be the same.</span>
+                    </div>
+                  </div>
+                </div>
+              
+                <div class="form-group mb-0">
+                  <div>
+                    <button type="submit" class="btn btn-primary mr-1">
+                      Submit
+                    </button>
+                    <button type="reset" class="btn btn-secondary float-right">
+                      Reset
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    
+       
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #imageModal1 let-modal>
+    <div class="modal-body" style="min-height: 500px;text-align: center;">
+     <img class=""  [src]="img"/>
+    </div>
+  </ng-template>

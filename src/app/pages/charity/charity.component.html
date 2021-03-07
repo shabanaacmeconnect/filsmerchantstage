@@ -1,0 +1,188 @@
+<div class="container-fluid">
+
+  <app-page-title title="Charities" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-12" *ngIf="assigned">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title mb-3" >Assigned Charity and Cause</div>
+          <div class="table-responsive">
+            <table class="table table-centered table-striped table-nowrap">
+                <tr><th style="text-align: left !important;">Charity</th><th style="text-align: left !important;">Cause</th></tr>
+                <tr class="table-light"><td style="text-align: left !important;">{{assigned.charity_name}}</td><td style="text-align: left !important;">{{assigned.cause_name}}</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Search</label>
+                <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="keyword" (keyup)="search()"/>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Categories</label>
+                <select type="text" class="form-control" [(ngModel)]="category" (change)="_fetchData()">
+                  <option value=''>Choose one...</option>
+                  <option [ngValue]="cat.id" *ngFor="let cat of categories">{{cat.category_name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Entries</label>
+                <select type="text" class="form-control" [(ngModel)]="page.size" (change)="pageChange()">
+                  <option value=10>10</option><option value=20>20</option>
+                  <option value=30>30</option><option value=40>40</option>
+                  <option value=50>50</option><option value=100>100</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-2 ">
+              <div class="form-group col-md-12">
+                <label style="visibility: hidden;">report</label>
+                <div>
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" (click)="export('csv')" class="btn btn-secondary">CSV</button>
+                    <button type="button" (click)="export('xlsx')" class="btn btn-secondary">Excel</button>
+                    
+                  </div>
+                 
+                 
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label style="visibility: hidden;">report</label>
+                <div >
+                  <div class="text-sm-right">
+                    <button type="button" class="btn btn-primary "  (click)="largeModal(largeDataModal)">
+                      <i class="mdi mdi-plus mr-1"></i> Select Charity and Cause
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-sm-4">
+              <div class="search-box mr-2 mb-2 d-inline-block">
+                <!-- <div class="position-relative">
+                  <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="keyword" (keyup)="search()"/>
+                  <i class="bx bx-search-alt search-icon"></i>
+                </div> -->
+              </div>
+            </div>
+            <div class="col-sm-8">
+              <!-- <div class="text-sm-right">
+                <button type="button" class="btn btn-primary btn-rounded mb-2 mr-2"  (click)="largeModal(largeDataModal)">
+                  <i class="mdi mdi-plus mr-1"></i> Configure Charity and Cause
+                </button>
+              </div> -->
+            </div>
+            <!-- end col-->
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
+              <thead>
+                <tr>
+                  <th sortable="business_name" (sort)="onSort($event)">Name</th>
+                  <th sortable="commission" (sort)="onSort($event)">Commision</th>
+                  <th sortable="city_name" (sort)="onSort($event)">City</th>
+                  <th >Causes</th>
+                  <!-- <th sortable="iacad_number" (sort)="onSort($event)">IACAD No.</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let merchants of merchantsData  | filter:term ;let i = index;">
+                  <!-- <td>
+                    <div class="custom-control custom-checkbox">
+                      <input id="customCheck{{i}}" type="checkbox" class="custom-control-input" />
+                      <label class="custom-control-label" for="customCheck{{i}}">&nbsp;</label>
+                    </div>
+                  </td> -->
+                  <td><img [src]="merchants.logo_path" class="rounded-circle header-profile-user mr-2" style="    height: 50px;
+                    width: 50px;
+                    object-fit: cover;"/>{{merchants.business_name}}</td>
+                  <td>{{merchants.commission}} </td>
+                  <td>{{merchants.city_name}}</td>
+                  <td>
+                    <div class="dropdown row" ngbDropdown placement="bottom-right">
+                      <a href="javascript: void(0);"  routerLink="/charity/{{merchants.user_id}}/causes" class=" col-md-3" ><i
+                        class="fas fa-eye text-info mr-1"></i>
+                      </a>
+                    </div>
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- pagination -->
+          <!-- <ngb-pagination [collectionSize]="elementCount" [(page)]="currentpage" (pageChange)="pageChange()"
+            class="pagination pagination-rounded justify-content-end mb-2" aria-label="Default pagination">
+          </ngb-pagination> -->
+          <app-pagination [page]="pageCopy()" (newItemEvent)="changePage($event)"></app-pagination>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+</div>
+<ng-template #largeDataModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Configure Charity</h5>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm" class="row">
+              <div class="form-group col-md-12">
+                <label>Charity</label>
+                <select class="form-control" formControlName="charity_id" (change)="_getcauses($event.target.value)"
+                  [ngClass]="{'is-invalid': typesubmit && type.charity_id.errors}">
+                  <option [ngValue]="x.user_id" *ngFor="let x of charities">{{x.business_name}}</option>
+                </select>
+                <div *ngIf="typesubmit && type.charity_id.errors" class="invalid-feedback">
+                  <span *ngIf="type.charity_id.errors.required">Charity is required.</span>
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label>Cause</label>
+                <select class="form-control" formControlName="cause_id"
+                  [ngClass]="{'is-invalid': typesubmit && type.cause_id.errors}">
+                  <option [ngValue]=x.id *ngFor="let x of causes">{{x.cause_name}}</option>
+                </select>
+                <div *ngIf="typesubmit && type.cause_id.errors" class="invalid-feedback">
+                  <span *ngIf="type.cause_id.errors.required">Cause is required.</span>
+                </div>
+              </div>
+              <div class="form-group col-md-12 mb-0">
+                <div>
+                  <button type="submit" class="btn btn-primary mr-1">
+                    Submit
+                  </button>
+                  
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  
+     
+    </div>
+  </div>
+</ng-template>
+

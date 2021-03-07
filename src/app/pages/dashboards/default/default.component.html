@@ -1,0 +1,179 @@
+<div class="container-fluid">
+    <div class="row">     
+        <div class="col-xl-12">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="avatar-xs mr-3">
+                                    <span class="avatar-title rounded-circle bg-soft-primary text-primary font-size-18">
+                                        <i class="bx bx-money"></i>
+                                    </span>
+                                </div>
+                                <h5 class="font-size-14 mb-0">Amounts Collected <br/><span class="font-size-12">  - Total</span></h5>
+                            </div>
+                            <div class="text-muted mt-4">
+                                <h4>{{dashboardData.total_amount_collected |currency:'AED ':'code':'1.2-2'}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="avatar-xs mr-3">
+                                    <span class="avatar-title rounded-circle bg-soft-primary text-primary font-size-18">
+                                        <i class="bx bxs-report"></i>
+                                    </span>
+                                </div>
+                                <h5 class="font-size-14 mb-0">Transactions Count <br/><span class="font-size-12">  - Total</span></h5>
+                            </div>
+                            <div class="text-muted mt-4">
+                                <h4>{{dashboardData.all_transactions_count |number}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="avatar-xs mr-3">
+                                    <span class="avatar-title rounded-circle bg-soft-primary text-primary font-size-18">
+                                        <i class="bx bx-group"></i>
+                                    </span>
+                                </div>
+                                <h5 class="font-size-14 mb-0">Live Charities Count<br/><span class="font-size-12"></span></h5>
+                            </div>
+                            <div class="text-muted mt-4">
+                                <h4>{{dashboardData.live_charities_count |number}}</h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="avatar-xs mr-3">
+                                    <span class="avatar-title rounded-circle bg-soft-primary text-primary font-size-18">
+                                        <i class="bx bx-layer"></i>
+                                    </span>
+                                </div>
+                                <h5 class="font-size-14 mb-0">Live Causes Count<br/><span class="font-size-12">  </span></h5>
+                            </div>
+                            <div class="text-muted mt-4">
+                                <h4>{{dashboardData.live_causes_count |number}} </h4>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col-sm-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="avatar-xs mr-3">
+                                    <span class="avatar-title rounded-circle bg-soft-primary text-primary font-size-18">
+                                        <i class="bx bx-money"></i>
+                                    </span>
+                                </div>
+                                <h5 class="font-size-14 mb-0">Amounts Collected <br/><span class="font-size-12">  - Today</span></h5>
+                            </div>
+                            <div class="text-muted mt-4">
+                                <h4>{{dashboardData.total_amount_collected_today |currency:'AED ':'code':'1.2-2'}}</h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="avatar-xs mr-3">
+                                    <span class="avatar-title rounded-circle bg-soft-primary text-primary font-size-18">
+                                        <i class="bx bxs-report"></i>
+                                    </span>
+                                </div>
+                                <h5 class="font-size-14 mb-0">Transactions Count<br/><span class="font-size-12">  - Today</span></h5>
+                            </div>
+                            <div class="text-muted mt-4">
+                                <h4>{{dashboardData.today_transactions_count |number}} </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="avatar-xs mr-3">
+                                    <span class="avatar-title rounded-circle bg-soft-primary text-primary font-size-18">
+                                        <i class="bx bx-line-chart"></i>
+                                    </span>
+                                </div>
+                                <h5 class="font-size-14 mb-0">Gross Profit <br/><span class="font-size-12">  - Total</span></h5>
+                            </div>
+                            <div class="text-muted mt-4">
+                                <h4>{{dashboardData.total_gross_profit |currency:'AED ':'code':'1.2-2'}}</h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="avatar-xs mr-3">
+                                    <span class="avatar-title rounded-circle bg-soft-primary text-primary font-size-18">
+                                        <i class="bx bx-line-chart"></i>
+                                    </span>
+                                </div>
+                                <h5 class="font-size-14 mb-0">Gross Profit<br/><span class="font-size-12">  - Today</span></h5>
+                            </div>
+                            <div class="text-muted mt-4">
+                                <h4>{{dashboardData.total_gross_profit_today|currency:'AED ':'code':'1.2-2'}} </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <apx-chart class="apex-charts" dir="ltr" [title]="earningLineChart.title"
+                    [responsive]="earningLineChart.responsive" [legend]="earningLineChart.legend"
+                    [markers]="earningLineChart.markers" [series]="earningLineChart.series"
+                        [chart]="earningLineChart.chart" [colors]="earningLineChart.colors" [xaxis]="earningLineChart.xaxis" [yaxis]="earningLineChart.yaxis"
+                        [stroke]="earningLineChart.stroke" [dataLabels]="earningLineChart.dataLabels">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <apx-chart class="apex-charts" dir="ltr" [title]="earningLineChart1.title"
+                    [responsive]="earningLineChart1.responsive" [legend]="earningLineChart1.legend"
+                    [markers]="earningLineChart1.markers" [series]="earningLineChart1.series"
+                        [chart]="earningLineChart1.chart" [colors]="earningLineChart1.colors" [xaxis]="earningLineChart1.xaxis" [yaxis]="earningLineChart1.yaxis"
+                        [stroke]="earningLineChart1.stroke" [dataLabels]="earningLineChart1.dataLabels">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- container-fluid -->

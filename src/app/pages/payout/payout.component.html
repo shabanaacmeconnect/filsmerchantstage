@@ -1,0 +1,273 @@
+<div class="container-fluid">
+
+    <app-page-title title="Payout" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Search</label>
+                  <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="keyword" (keyup)="search()"/>
+                </div>
+              </div>
+              <!-- <div class="col-md-3">
+                <div class="form-group ">
+                  <label>Sort</label>
+                  <select type="text" class="form-control" [(ngModel)]="order" (change)="sorting()">
+                    <option ngValue="">Select</option>
+                    <option ngValue="asc">Ascending</option>
+                    <option ngValue="desc">Descending</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group ">
+                  <label>Column</label>
+                  <select class="form-control" [(ngModel)]="sortBy"  (change)="sorting()">
+                    <option ngValue="">Select</option>
+                    <option ngValue="category_name">Category Name</option>
+                    <option ngValue="status">Status</option>
+
+                  </select>
+                </div>
+              </div> -->
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Entries</label>
+                  <select type="text" class="form-control" [(ngModel)]="page.size" (change)="pageChange()">
+                    <option value=10>10</option><option value=20>20</option>
+                    <option value=30>30</option><option value=40>40</option>
+                    <option value=50>50</option><option value=100>100</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group col-md-4">
+                  <label style="visibility: hidden;">report</label>
+                  <div>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      
+                      <button type="button" (click)="export('csv')" class="btn btn-secondary">CSV</button>
+<button type="button" (click)="export('xlsx')" class="btn btn-secondary">Excel</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group col-md-12">
+                  <label style="visibility: hidden;">report</label>
+                  <div>
+                  <!-- <div class="text-sm-right">
+                    <button type="button" class="btn btn-primary mb-2 mr-2"  (click)="largeModal(largeDataModal)">
+                      <i class="mdi mdi-plus mr-1"></i> New Payout
+                    </button>
+                  </div> -->
+                </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-sm-4">
+                <div class="search-box mr-2 mb-2 d-inline-block">
+                  <!-- <div class="position-relative">
+                    <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="keyword" (keyup)="search()"/>
+                    <i class="bx bx-search-alt search-icon"></i>
+                  </div> -->
+                </div>
+              </div>
+              <div class="col-sm-8">
+                <!-- <div class="text-sm-right">
+                  <button type="button" class="btn btn-primary btn-rounded mb-2 mr-2"  (click)="largeModal(largeDataModal)">
+                    <i class="mdi mdi-plus mr-1"></i> Add New Payout
+                  </button>
+                </div> -->
+              </div>
+              <!-- end col-->
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
+                <thead>
+                  <tr>
+                    <th sortable="payout_date" (sort)="onSort($event)">Date</th>
+                    <th sortable="payout_amount" (sort)="onSort($event)">Amount</th>
+                    <th sortable="transaction_mode" (sort)="onSort($event)">Mode of Payment</th>
+                    <th sortable="transfer_type" (sort)="onSort($event)">Transfer Type</th>
+                    <th sortable=""  class="text-center"(sort)="onSort($event)">Files & comments</th>
+                    <th sortable="status" class="text-center" (sort)="onSort($event)">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let merchants of merchantsData  | filter:term ;let i = index;">
+                    <td role="button"  (click)="openModel2(merchants,templateDetail)">{{merchants.payout_date |date}}</td>
+                    <td role="button"  (click)="openModel2(merchants,templateDetail)">{{merchants.payout_amount | currency:'AED '}}</td>
+                    <td role="button"  (click)="openModel2(merchants,templateDetail)">{{merchants.transaction_mode}} </td>
+                    <td  role="button"  (click)="openModel2(merchants,templateDetail)"><span *ngIf="merchants.transfer_type==1">Fils to Merchant</span><span *ngIf="merchants.transfer_type==2">Merchant to Fils</span> </td>
+
+                    <td  class="text-center"> 
+                      <div class=""  placement="bottom-right">
+                      <a href="javascript: void(0);" class="mr-4" >
+                        <i class='bx bx-chat'  (click)="openModel(chatModel,1)"></i>
+                      </a>
+                      <a href="javascript: void(0);" class="" >
+                        <i class='bx bx-paperclip' (click)="getAttachments(attachmentTemplate,1)"></i>
+                      </a>
+                      </div>
+                    </td>
+                    <td  class="text-center">
+                      <span class="badge badge-primary font-size-12" *ngIf="merchants.status==0">
+                       Pending
+                      </span>
+                      <span class="badge badge-success font-size-12" *ngIf="merchants.status==1">
+                        Success
+                       </span>
+                       <span class="badge badge-danger font-size-12" *ngIf="merchants.status==2">
+                        Failed
+                       </span>
+                    </td>
+                   </tr>
+                 
+                </tbody>
+              </table>
+            </div>
+           
+            <app-pagination [page]="pageCopy()" (newItemEvent)="changePage($event)"></app-pagination>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end row -->
+  </div>
+  <ng-template #largeDataModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">{{title}} Payout</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm" class="row">
+                <div class="form-group col-md-12">
+                  <label>Mode of Transaction</label>
+                  <select class="form-control" formControlName="transaction_mode"
+                    [ngClass]="{'is-invalid': typesubmit && type.transaction_mode.errors}">
+                    <option [ngValue]=x *ngFor="let x of categories">{{x}}</option>
+                  </select>
+                  <div *ngIf="typesubmit && type.transaction_mode.errors" class="invalid-feedback">
+                    <span *ngIf="type.transaction_mode.errors.required">Mode of Transaction is required.</span>
+                  </div>
+                </div>
+                <div class="form-group col-md-12">
+                  <label>Payout Amount</label>
+                  <input type="number" class="form-control" formControlName="payout_amount"
+                    [ngClass]="{'is-invalid': typesubmit && type.payout_amount.errors}"/>
+                  <div *ngIf="typesubmit && type.payout_amount.errors" class="invalid-feedback">
+                    <span *ngIf="type.payout_amount.errors.required">Payout Amount is required.</span>
+                  </div>
+                </div>
+                <div class="form-group col-md-12 mb-0">
+                  <div>
+                    <button type="submit" class="btn btn-primary mr-1">
+                      Submit
+                    </button>
+                    <button type="reset" class="btn btn-secondary float-right">
+                      Reset
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    
+       
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #chatModel  let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Comments</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <app-chat [pro_id]="id"></app-chat>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </ng-template>
+
+  <ng-template #attachmentTemplate  let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Attachments</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group col-md-12 mb-0">
+        <div>
+          <!-- <button type="reset" class="btn btn-primary float-right"(click)="selectFile()"><input #fileInput type='file' id="file" (click)="fileInput.value = null" (change)="onFileSelected($event)"  hidden/>
+            New Attachment
+          </button> -->
+        </div>
+      </div>
+      <div class="row" style="min-height:400px">
+        <div class="col-md-3" *ngFor="let attachment of attachments">
+              <a href="{{attachment.attachment_path}}" target="_blank"><img [src]="attachment.attachment_path"  class="w-100"/></a>
+        </div>
+      
+    </div>
+    </div>
+  
+  </ng-template>
+  <ng-template #templateDetail let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Details</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-centered table-striped table-nowrap">
+                    <tr>
+                      <th style="text-align:left !important">Date</th><th style="text-align:left !important">Amount</th> <th style="text-align:left !important">Mode of Payment</th>
+                    </tr>
+                    <tr class="table-light"><td style="text-align:left !important">{{details.payout_date |date}}</td><td style="text-align:left !important">{{details.payout_amount | currency:'AED '}}</td><td style="text-align:left !important">{{details.transaction_mode}}</td></tr>
+                    <tr>
+                     <th style="text-align:left !important">Transfer Type</th><th style="text-align:left !important">Status</th><th></th>
+                    </tr>
+                    <tr class="table-light"><td style="text-align:left !important"><span *ngIf="details.transfer_type==1">Fils to Merchant</span><span *ngIf="details.transfer_type==2">Merchant to Fils</span></td> <td style="text-align:left !important">
+                      <span class="badge badge-primary font-size-12 "*ngIf="details.status==0">
+                       Pending
+                      </span>
+                      <span class="badge badge-success font-size-12" *ngIf="details.status==1">
+                        Resolved 
+                       </span>
+                       <span class="badge badge-danger font-size-12" *ngIf="details.status==2">
+                        Cancelled
+                       </span>
+                    </td><td></td></tr>
+                   
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+       
+      </div>
+    </div>
+  </ng-template>

@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+.modal-holder{
+    animation-name: example;
+    animation-duration: 0.3s;
+  }
+  @keyframes example {
+    0%   {transform: scale(0.5)}
+    100% {transform: scale(1)}
+  }
+
+  .carousel-item {
+    transition: opacity 0.7s ease !important;
+    position: absolute !important;
+    display: block !important;
+    opacity: 0;
+  }
+
+  .carousel-item.active {
+    position: relative !important;
+    opacity: 1;
+  }
+  
+  .mm-active{
+    // border-left:8px solid   #6f62e7;
+  }
+  .swal2-styled.swal2-confirm{
+    background-color:   #6f62e7!important;
+  }
+  th{
+    padding-right: 25px!important;
+  }
+  td,th {
+    text-align: center!important;
+  }
+  td:first-child,th:first-child {
+    text-align: left !important;
+  }

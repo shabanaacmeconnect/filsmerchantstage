@@ -1,0 +1,30 @@
+<nav class="mt-4 mb-3">
+    <ul class="pagination pagination-rounded justify-content-center mb-0">
+        <li class="page-item ">
+            <a class="page-link first" (click)="getFirst()" href="javascript:;">
+                <<
+            </a>
+        </li>
+        <li class="page-item " >
+            <a class="page-link prev" href="javascript:;" (click)=getPrev()>
+                <
+            </a>
+        </li>
+        <li [class]="page.pageNumber==item ?'page-item active':'page-item'" *ngFor="let item of pagelist" [attr.disabled]="item=='...'?true:null">
+          <span class="page-link" (click)="setPage(item)" >
+            {{item}}
+          </span>
+      </li>
+      
+        <li class="page-item ">
+            <a class="page-link next" href="javascript:;" (click)="getNext()" aria-label="Next">
+                >
+            </a>
+        </li>
+        <li class="page-item ">
+            <a class="page-link last" href="javascript:;" (click)=getLast()>
+                >>
+            </a>
+        </li>
+    </ul>
+</nav>

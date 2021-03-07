@@ -1,0 +1,197 @@
+<div class="container-fluid">
+
+    <app-page-title title="Transactions" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Search</label>
+                  <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="keyword" (keyup)="search()"/>
+                </div>
+              </div>
+              <!-- <div class="col-md-3">
+                <div class="form-group">
+                  <label>Sort</label>
+                  <select type="text" class="form-control" [(ngModel)]="order" (change)="sorting()">
+                    <option ngValue="">Select</option>
+                    <option ngValue="asc">Ascending</option>
+                    <option ngValue="desc">Descending</option>
+                  </select>
+                </div>
+              </div> -->
+              <!-- <div class="col-md-3">
+                <div class="form-group ">
+                  <label>Column</label>
+                  <select class="form-control" [(ngModel)]="sortBy"  (change)="sorting()">
+                    <option ngValue="">Select</option>
+                    <option ngValue="transaction_id">Transaction ID</option>
+                    <option ngValue="created_at">Created At</option>
+                    <option ngValue="donation_amount">Donation Amount</option>
+                    <option ngValue="vendor_commission">Merchant Commission</option>
+                    <option ngValue="fils_commission">Fils Commission</option>
+                    <option ngValue="charity_payable">Charity Payable</option>
+                    <option ngValue="charity_name">Charity</option>
+                    <option ngValue="cause_name">Cause</option>
+                    <option ngValue="status">Status</option>
+                  </select>
+                </div>
+              </div> -->
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Entries</label>
+                  <select type="text" class="form-control" [(ngModel)]="page.size" (change)="pageChange()">
+                    <option value=10>10</option><option value=20>20</option>
+                    <option value=30>30</option><option value=40>40</option>
+                    <option value=50>50</option><option value=100>100</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>From Date</label>
+                  <input type="date" class="form-control" placeholder="From Date" [(ngModel)]="from_date" (change)="datesearch()" />
+                </div> 
+              </div>                 
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>To Date</label>
+                  <input type="date" class="form-control" placeholder="To Date" [(ngModel)]="to_date" (change)="datesearch()" />
+                </div>
+              </div>
+              <div class="col-md-1">
+                <div class="form-group col-md-4">
+                  <label style="visibility: hidden;">report</label>
+                  <div  (click)="clearfilter()">
+                    <button type="button" class="btn btn-secondary"><i class="bx bx-revision " style=""></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group col-md-12">
+                  <label style="visibility: hidden;">report</label>
+                  <div class="text-sm-right">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      
+                      <button type="button" (click)="export('csv')" class="btn btn-secondary">CSV</button>
+<button type="button" (click)="export('xlsx')" class="btn btn-secondary">Excel</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-2">
+             
+                
+              
+              <div class="col-sm-8">
+                <div class="text-sm-right">
+                  <!-- <button type="button" class="btn btn-success btn-rounded mb-2 mr-2"  (click)="largeModal(largeDataModal)">
+                    <i class="mdi mdi-plus mr-1"></i> Import products
+                  </button> -->
+                </div>
+              </div>
+              <!-- end col-->
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
+                <thead>
+                  <tr>
+                    <!-- <th sortable="category_name" (sort)="onSort($event)">Transaction ID</th> -->
+                    <th sortable="created_at" (sort)="onSort($event)">Created At</th>
+                    <th sortable="transaction_type" (sort)="onSort($event)">Type</th>
+
+                    <th sortable="donation_amount" (sort)="onSort($event)">Donation Amount</th>
+                    <!-- <th sortable="mer" (sort)="onSort($event)">Merchant Commission</th>
+                    <th sortable="category_name" (sort)="onSort($event)">Fils Commission</th> -->
+                    <th sortable="charity_payable" (sort)="onSort($event)">Charity Payable</th>
+                    <th sortable="charity_name" (sort)="onSort($event)">Charity</th>
+                    <th sortable="cause_name" (sort)="onSort($event)">Cause</th>
+                    <th sortable="status" (sort)="onSort($event)">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let merchants of merchantsData  | filter:term ;let i = index;">
+                    <!-- <td   role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.transaction_id}}</td> -->
+                    <td  role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.created_at |date :'medium'}}</td>
+                    <td   role="button"  (click)="openModel(merchants,templateDetail)" *ngIf="merchants.transaction_type==1" class="text-center"><i class="fas fa-store text-primary"></i></td>
+                    <td   role="button"  (click)="openModel(merchants,templateDetail)" *ngIf="merchants.transaction_type==2"  class="text-center"><i class="fas fa-qrcode text-primary"></i></td>
+                    <td   role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.donation_amount | currency:'AED ':'code':'1.2-3'}}</td>
+                    <!-- <td   role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.vendor_commission | currency:'AED ':'code':'1.2-3'}}</td>
+                    <td   role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.fils_commission | currency:'AED ':'code':'1.2-3'}}</td> -->
+                    <td   role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.charity_payable | currency:'AED ':'code':'1.2-3'}}</td>
+                    <td   role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.charity_name}}</td>
+                    <td   role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.cause_name}}</td>
+                    <td>
+                      <span class="badge badge-primary font-size-12" *ngIf="merchants.status==0">
+                       Pending
+                      </span>
+                      <span class="badge badge-success font-size-12" *ngIf="merchants.status==1">
+                        Success
+                       </span>
+                       <span class="badge badge-danger font-size-12" *ngIf="merchants.status==2">
+                        Failed
+                       </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+           
+            <app-pagination [page]="pageCopy()" (newItemEvent)="changePage($event)"></app-pagination>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end row -->
+  </div>
+  <ng-template #templateDetail let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Transaction Details</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-centered table-striped table-nowrap">
+                    <tr>
+                      <th style="text-align:left !important">Created At</th><th style="text-align:left !important">Transaction ID</th><th style="text-align:left !important">Donation Amount</th>
+                    </tr>
+                    <tr class="table-light"><td style="text-align:left !important">{{details.created_at |date}}</td><td style="text-align:left !important">{{details.transaction_id}}</td><td style="text-align:left !important">{{details.donation_amount| currency:'AED ':'code':'1.2-3'}}</td></tr>
+                    <tr>
+                      <th style="text-align:left !important">Charity Payable</th><th style="text-align:left !important">Fils Commission</th><th style="text-align:left !important">Merchant Commission</th>
+                    </tr>
+                    <tr class="table-light"><td style="text-align:left !important">{{details.charity_payable| currency:'AED ':'code':'1.2-3'}}</td><td style="text-align:left !important">{{details.fils_commission| currency:'AED ':'code':'1.2-3'}}</td><td style="text-align:left !important">{{details.vendor_commission| currency:'AED ':'code':'1.2-3'}}</td></tr>
+                    <tr>
+                      <th style="text-align:left !important">Cause Name</th><th style="text-align:left !important">Charity Name</th><th style="text-align:left !important">Status</th>
+                    </tr>
+                    <tr class="table-light"><td style="text-align:left !important">{{details.cause_name}}</td><td style="text-align:left !important">{{details.charity_name}}</td> <td style="text-align:left !important">
+                      <span class="badge badge-primary font-size-12" *ngIf="details.status==0">
+                       Pending
+                      </span>
+                      <span class="badge badge-success font-size-12" *ngIf="details.status==1">
+                        Success
+                       </span>
+                       <span class="badge badge-danger font-size-12" *ngIf="details.status==2">
+                        Failed
+                       </span>
+                    </td></tr>
+                   
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+       
+      </div>
+    </div>
+  </ng-template>
+  

@@ -1,0 +1,184 @@
+<div class="container-fluid">
+  <app-page-title title="Support" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Search</label>
+                <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="keyword" (keyup)="search()"/>
+              </div>
+            </div>
+            <!-- <div class="col-md-3">
+              <div class="form-group ">
+                <label>Sort</label>
+                <select type="text" class="form-control" [(ngModel)]="order" (change)="sorting()">
+                  <option ngValue="">Select</option>
+                  <option ngValue="asc">Ascending</option>
+                  <option ngValue="desc">Descending</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group ">
+                <label>Column</label>
+                <select class="form-control" [(ngModel)]="sortBy"  (change)="sorting()">
+                  <option ngValue="">Select</option>
+                  <option ngValue="category_name">Category Name</option>
+                  <option ngValue="status">Status</option>
+
+                </select>
+              </div>
+            </div> -->
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Entries</label>
+                <select type="text" class="form-control" [(ngModel)]="page.size" (change)="pageChange()">
+                  <option value=10>10</option><option value=20>20</option>
+                  <option value=30>30</option><option value=40>40</option>
+                  <option value=50>50</option><option value=100>100</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group col-md-4">
+                <label style="visibility: hidden;">report</label>
+                <div>
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group col-md-12">
+                <label style="visibility: hidden;">report</label>
+                <div>
+                <div class="text-sm-right">
+                  <button type="button" class="btn btn-primary mb-2 mr-2"  (click)="largeModal(largeDataModal)">
+                    <i class="mdi mdi-plus mr-1"></i> Raise a Ticket
+                  </button>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-sm-4">
+              <!-- <div class="search-box mr-2 mb-2 d-inline-block">
+                <div class="position-relative">
+                  <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="keyword" (keyup)="search()"/>
+                  <i class="bx bx-search-alt search-icon"></i>
+                </div>
+              </div> -->
+            </div>
+            <div class="col-sm-8">
+              <div class="text-sm-right">
+                <!-- <button type="button" class="btn btn-primary btn-rounded mb-2 mr-2"  (click)="largeModal(largeDataModal)">
+                  <i class="mdi mdi-plus mr-1"></i> Raise a Ticket
+                </button> -->
+              </div>
+            </div>
+            <!-- end col-->
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
+              <thead>
+                <tr>
+                  <th sortable="support_ticket_id" (sort)="onSort($event)">Support ID</th>
+                  <th sortable="category_name" (sort)="onSort($event)">Issue Category</th>
+                  <th sortable="subject" (sort)="onSort($event)">Subject</th>
+                  <th sortable="ticket_description" (sort)="onSort($event)">Issue Details</th>
+                  <th sortable="remarks" (sort)="onSort($event)">Remarks</th>
+                  <th sortable="status" (sort)="onSort($event)">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let merchants of merchantsData  | filter:term ;let i = index;">
+                  <td>{{merchants.support_ticket_id}}</td>
+                  <td>{{merchants.category_name}} </td>
+                  <td>{{merchants.subject}}</td>
+                  <td>{{merchants.ticket_description}}</td>
+                  <td>{{merchants.remarks}}</td>
+                  <td>
+                    <span class="badge badge-primary font-size-12" *ngIf="merchants.status==0">
+                     Pending
+                    </span>
+                    <span class="badge badge-warning font-size-12" *ngIf="merchants.status==2">
+                      In Progress
+                     </span>
+                     <span class="badge badge-success font-size-12" *ngIf="merchants.status==1">
+                      Resolved
+                     </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+         
+          <app-pagination [page]="pageCopy()" (newItemEvent)="changePage($event)"></app-pagination>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+</div>
+<ng-template #largeDataModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Raise a Ticket</h5>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm" class="row">
+              <div class="form-group col-md-6">
+                <label>Issue Category</label>
+                <select class="form-control" formControlName="ticket_category_id"
+                  [ngClass]="{'is-invalid': typesubmit && type.ticket_category_id.errors}">
+                  <option [ngValue]=x.id *ngFor="let x of categories">{{x.category_name}}</option>
+                </select>
+                <div *ngIf="typesubmit && type.ticket_category_id.errors" class="invalid-feedback">
+                  <span *ngIf="type.ticket_category_id.errors.required">Issue Category is required.</span>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Subject</label>
+                <input type="text" class="form-control" formControlName="subject"
+                  [ngClass]="{'is-invalid': typesubmit && type.subject.errors}"/>
+                <div *ngIf="typesubmit && type.subject.errors" class="invalid-feedback">
+                  <span *ngIf="type.subject.errors.required">Subject is required.</span>
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label>Issue Description</label>
+                <textarea class="form-control" formControlName="ticket_description"
+                  [ngClass]="{'is-invalid': typesubmit && type.ticket_description.errors}"></textarea>
+                <div *ngIf="typesubmit && type.ticket_description.errors" class="invalid-feedback">
+                  <span *ngIf="type.ticket_description.errors.required">Issue Description is required.</span>
+                </div>
+              </div>
+              <div class="form-group col-md-12 mb-0">
+                <div>
+                  <button type="submit" class="btn btn-primary mr-1">
+                    Submit
+                  </button>
+                  <button type="reset" class="btn btn-secondary float-right">
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  
+     
+    </div>
+  </div>
+</ng-template>

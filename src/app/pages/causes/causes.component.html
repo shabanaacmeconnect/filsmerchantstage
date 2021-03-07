@@ -1,0 +1,103 @@
+<div class="container-fluid">
+
+    <app-page-title title="Cause Requests" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Search</label>
+                  <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="keyword" (keyup)="search()"/>
+                </div>
+              </div>
+              <!-- <div class="col-md-3">
+                <div class="form-group ">
+                  <label>Sort</label>
+                  <select type="text" class="form-control" [(ngModel)]="order" (change)="sorting()">
+                    <option ngValue="">Select</option>
+                    <option ngValue="asc">Ascending</option>
+                    <option ngValue="desc">Descending</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group ">
+                  <label>Column</label>
+                  <select class="form-control" [(ngModel)]="sortBy"  (change)="sorting()">
+                    <option ngValue="">Select</option>
+                    <option ngValue="cause_name">Cause</option>
+                    <option ngValue="cause_description">Cause Info</option>
+                    <option ngValue="category_name">Category</option>
+                    <option ngValue="from_date">From Date</option>
+                    <option ngValue="end_date">To Date</option>
+                    <option ngValue="denomination">Denomination</option>
+                  </select>
+                </div>
+              </div> -->
+              <!-- <div class="col-md-3">
+                <div class="form-group">
+                  <label>Entries</label>
+                  <select type="text" class="form-control" [(ngModel)]="page.size" (change)="pageChange()">
+                    <option value=10>10</option><option value=20>20</option>
+                    <option value=30>30</option><option value=40>40</option>
+                    <option value=50>50</option><option value=100>100</option>
+                  </select>
+                </div>
+              </div> -->
+              <div class="col-md-3">
+                <div class="form-group col-md-4">
+                  <label style="visibility: hidden;">report</label>
+                  <div>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      
+                      <button type="button" (click)="export('csv')" class="btn btn-secondary">CSV</button>
+<button type="button" (click)="export('xlsx')" class="btn btn-secondary">Excel</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <div class="row mb-2">
+              <div class="col-sm-4">
+                <div class="search-box mr-2 mb-2 d-inline-block">
+                  <!-- <div class="position-relative">
+                    <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="keyword" (keyup)="search()"/>
+                    <i class="bx bx-search-alt search-icon"></i>
+                  </div> -->
+                </div>
+              </div>
+           
+              <!-- end col-->
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
+                <thead>
+                  <tr>
+                    <th sortable="cause_name" (sort)="onSort($event)">Cause</th><th sortable="cause_description" (sort)="onSort($event)">Cause Info</th><th sortable="category_name" (sort)="onSort($event)">Category</th>
+                    <th sortable="from_date" (sort)="onSort($event)">From Date</th><th sortable="end_date" (sort)="onSort($event)">To Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let merchants of merchantsData  | filter:term ;let i = index;">
+                    <td>{{merchants.cause_name}}</td>
+                    <td>{{merchants.cause_description}}</td>
+                    <td>{{merchants.category_name}} </td>
+                    <td>{{merchants.from_date |date}} </td>
+                    <td>{{merchants.end_date |date}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+           
+            <app-pagination [page]="pageCopy()" (newItemEvent)="changePage($event)"></app-pagination>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end row -->
+  </div>
+ 

@@ -1,0 +1,302 @@
+<div class="container-fluid">
+
+    <app-page-title title="Charitable Drives" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Search</label>
+                  <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="keyword" (keyup)="search()"/>
+                </div>
+              </div>
+              <!-- <div class="col-md-3">
+                <div class="form-group ">
+                  <label>Sort</label>
+                  <select type="text" class="form-control" [(ngModel)]="order" (change)="sorting()">
+                    <option ngValue="">Select</option>
+                    <option ngValue="asc">Ascending</option>
+                    <option ngValue="desc">Descending</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group ">
+                  <label>Column</label>
+                  <select class="form-control" [(ngModel)]="sortBy"  (change)="sorting()">
+                    <option ngValue="">Select</option>
+                    <option ngValue="category_name">Category Name</option>
+                    <option ngValue="status">Status</option>
+
+                  </select>
+                </div>
+              </div> -->
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Entries</label>
+                  <select type="text" class="form-control" [(ngModel)]="page.size" (change)="pageChange()">
+                    <option value=10>10</option><option value=20>20</option>
+                    <option value=30>30</option><option value=40>40</option>
+                    <option value=50>50</option><option value=100>100</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <!-- <div class="form-group col-md-4">
+                  <label style="visibility: hidden;">report</label>
+                  <div>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      
+                      <button type="button" (click)="export('csv')" class="btn btn-secondary">CSV</button>
+<button type="button" (click)="export('xlsx')" class="btn btn-secondary">Excel</button>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+              <div class="col-md-3">
+                <div class="form-group col-md-12">
+                  <label style="visibility: hidden;">report</label>
+                  <div>
+                  <div class="text-sm-right">
+                    <button type="button" class="btn btn-primary mb-2 mr-2"  (click)="largeModal(largeDataModal)">
+                      <i class="mdi mdi-plus mr-1"></i> Add New
+                    </button>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-sm-4">
+                <div class="search-box mr-2 mb-2 d-inline-block">
+                  <!-- <div class="position-relative">
+                    <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="keyword" (keyup)="search()"/>
+                    <i class="bx bx-search-alt search-icon"></i>
+                  </div> -->
+                </div>
+              </div>
+              <div class="col-sm-8">
+                <!-- <div class="text-sm-right">
+                  <button type="button" class="btn btn-primary btn-rounded mb-2 mr-2"  (click)="largeModal(largeDataModal)">
+                    <i class="mdi mdi-plus mr-1"></i> Add New Payout
+                  </button>
+                </div> -->
+              </div>
+              <!-- end col-->
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
+                <thead>
+                  <tr>
+                    <!--<th sortable="drive_id" (sort)="onSort($event)">Drive ID</th>-->
+                    <th sortable="charity" (sort)="onSort($event)">Charity</th>
+                    <th sortable="cause_name" (sort)="onSort($event)">Cause</th>
+                    <th sortable="start_date" (sort)="onSort($event)">Start Date</th>
+                    <th sortable="end_date" (sort)="onSort($event)">End Date</th>
+                    <th sortable="fils_commission" (sort)="onSort($event)">Fils Commission</th>
+                    <th sortable="vendor_commission" (sort)="onSort($event)">Vendor Commission</th> 
+                                       <th>QR Code</th>
+                    <th sortable="approved" (sort)="onSort($event)">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let merchants of merchantsData  | filter:term ;let i = index;">
+                    <!--<td>{{merchants.drive_id}}</td>-->
+                    <td>{{merchants.charity}}</td>
+                    <td>{{merchants.cause_name}}</td>
+                    <td>{{merchants.start_date |date}} </td>
+                    <td>{{merchants.end_date |date}}</td>
+                    <td> {{merchants.fils_commission |currency:'AED ':'code':'1.2-3'}}</td>
+                    <td>{{merchants.vendor_commission  |currency:'AED ':'code':'1.2-3'}}</td>
+                    <td>
+                      <div class="dropdown row" ngbDropdown placement="bottom-right">
+                        <a href="javascript: void(0);" *ngIf="merchants.approved==0" (click)="openQR(qrTemplate,merchants.drive_id)" class="dropdown-item col-md-3" >
+                          <i class='bx bx-barcode-reader'></i>
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="badge badge-primary font-size-12" *ngIf="merchants.approved==2">
+                       Pending
+                      </span>
+                      <span class="badge badge-success font-size-12" *ngIf="merchants.approved==0">
+                        Approved
+                       </span>
+                       <span class="badge badge-danger font-size-12" *ngIf="merchants.approved==1">
+                        Rejected
+                       </span>
+                    </td>
+                   </tr>
+                </tbody>
+              </table>
+            </div>
+           
+            <app-pagination [page]="pageCopy()" (newItemEvent)="changePage($event)"></app-pagination>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #largeDataModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">{{title}} Drive</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm" class="row">
+                <div class="form-group col-md-6">
+                  <label>Charity</label>
+                  <select class="form-control" formControlName="charity_id" (change)="_getcauses($event.target.value)"
+                    [ngClass]="{'is-invalid': typesubmit && type.charity_id.errors}">
+                    <option [ngValue]="x.user_id" *ngFor="let x of charities">{{x.business_name}}</option>
+                  </select>
+                  <div *ngIf="typesubmit && type.charity_id.errors" class="invalid-feedback">
+                    <span *ngIf="type.charity_id.errors.required">Charity is required.</span>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Cause</label>
+                  <select class="form-control" formControlName="cause_id"
+                    [ngClass]="{'is-invalid': typesubmit && type.cause_id.errors}">
+                    <option [ngValue]=x.id *ngFor="let x of causes">{{x.cause_name}}</option>
+                  </select>
+                  <div *ngIf="typesubmit && type.cause_id.errors" class="invalid-feedback">
+                    <span *ngIf="type.cause_id.errors.required">Cause is required.</span>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label>From Date</label>
+                  <input type="date" class="form-control" formControlName="start_date"
+                    [ngClass]="{'is-invalid': typesubmit && type.start_date.errors}"/>
+                  <div *ngIf="typesubmit && type.start_date.errors" class="invalid-feedback">
+                    <span *ngIf="type.start_date.errors.required">From Date is required.</span>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label>End Date</label>
+                  <input type="date" class="form-control" formControlName="end_date"
+                    [ngClass]="{'is-invalid': typesubmit && type.end_date.errors}"/>
+                  <div *ngIf="typesubmit && type.end_date.errors" class="invalid-feedback">
+                    <span *ngIf="type.end_date.errors.required">End Date is required.</span>
+                    <span *ngIf="type.end_date.errors.mustHigh">End Date should be greater.</span>
+
+                  </div>
+                </div>
+                <div class="modal-header  col-md-12 mb-3 justify-content-center">
+                  <h5 class="modal-title">Page Settings</h5>
+                </div>
+                <div class="form-group col-md-6">
+                <label>Color</label>
+                <input type="text" class="colorpicker-default form-control" [value]="color" formControlName="color" [(colorPicker)]="color"
+                [cpOutputFormat]="'hex'" [cpPosition]="'bottom'"(colorPickerChange)="typeValidationForm.controls.color.setValue($event)" [ngClass]="{'is-invalid': typesubmit && type.color.errors}">
+                <div *ngIf="typesubmit && type.color.errors" class="invalid-feedback">
+                  <span *ngIf="type.color.errors.required">Color is required.</span>
+                </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Logo Path</label>
+                  <div>
+                    <input type="file"  (change)="onFileSelected($event)" formControlName="logo_path"
+                      [ngClass]="{'is-invalid': (typesubmit && type.logo_path.errors || (sizeError|| !imageType))}">
+                    <div *ngIf="typesubmit && type.logo_path.errors" class="invalid-feedback">
+                      <span *ngIf="type.logo_path.errors.required">Logo is required.</span>
+                    </div>
+                    <div class="invalid-feedback">
+                      <span  *ngIf="sizeError==true">
+                        Image size cannot exceed 2MB.
+                     </span>
+                     <span *ngIf="imageType==false">
+                         Invalid Image file.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Message</label>
+                  <textarea class="form-control" formControlName="message"
+                    [ngClass]="{'is-invalid': typesubmit && type.message.errors}"></textarea>
+                  <div *ngIf="typesubmit && type.message.errors" class="invalid-feedback">
+                    <span *ngIf="type.message.errors.required">Message is required.</span>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Payment Type</label>
+                  <select class="form-control" formControlName="payment_type" 
+                    [ngClass]="{'is-invalid': typesubmit && type.payment_type.errors}">
+                    <option [ngValue]=1 >Open</option>
+                    <option [ngValue]=2 >Preset</option>
+                  </select>
+                  <div *ngIf="typesubmit && type.payment_type.errors" class="invalid-feedback">
+                    <span *ngIf="type.payment_type.errors.required">Payment Type is required.</span>
+                  </div>
+                </div>
+                <div class="mb-4 col-md-12" *ngIf="type.payment_type.value==2">
+                  <div class="form-group">
+                    <div formArrayName="preset_values">
+                      <div class="inner mb-3 row" *ngFor="let data1 of  phonedata().controls; let i=index;"
+                        [formGroupName]="i">
+                        <div class="col-md-10 col-8">
+                          <input type="text" class="inner form-control" formControlName="phonenumber"
+                            >
+                        </div>
+                        <div class="col-md-2 col-4">
+                          <input type="button" class="btn btn-primary btn-block inner" value="Delete"
+                            (click)="deletePhone(i)">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <input type="button" class="btn btn-success inner" value="Add Amount" (click)="addPhone()">
+                  <div *ngIf="typesubmit && type.preset_values.errors" class="invalid-feedback">
+                    <span *ngIf="type.preset_values.errors.mustMatch">Atleast one amount is required.</span>
+                  </div>
+                </div>
+                <div class="form-group col-md-12 mb-0">
+                  <div>
+                    <button type="submit" class="btn btn-primary mr-1">
+                      Submit
+                    </button>
+                    <button type="reset" class="btn btn-secondary float-right">
+                      Reset
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    
+       
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #qrTemplate let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">QR Code</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body text-center " >
+              <a [href]='qrstring' target="_blank">
+                <qrcode [qrdata]="qrstring" allowEmptyString="true" [width]="300"[cssClass]="qrstring" [errorCorrectionLevel]="'M'"></qrcode>
+
+              </a>
+            </div>
+          </div>
+        </div>
+    
+       
+      </div>
+    </div>
+  </ng-template>
