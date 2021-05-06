@@ -1,0 +1,54 @@
+<div class="container-fluid">
+
+  <app-page-title title="Notifications" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row">
+    <div class="col-md-12 mb-3">
+      <div class="text-sm-right">
+        <button type="button" class="btn btn-primary mb-2 mr-2"  (click)="clearAll(1)">
+          <i class="mdi mdi-plus mr-1"></i> Mark all  as Read
+        </button>
+        <button type="button" class="btn btn-primary mb-2 mr-2"  (click)="clearAll(0)">
+          <i class="mdi mdi-plus mr-1"></i> Mark current list as Read
+        </button>
+      </div>
+    </div>
+    <div class="col-12 card">
+      <div class="card-body">
+        <div class="card" *ngFor="let merchants of merchantsData " >
+          <div class="card-body" [ngClass]="merchants.status==1?'bg-not':'bg-yes'">
+            <!-- <i class="far fa-bell text-primary mr-3"></i> -->
+            <span class="ml-3">{{merchants.notification}} <span role="button" class=" text-danger ml-2 float-right" style="position: relative;
+              top: 9px;
+              font-size: 15px;" (click)="clearone(merchants.id)"><b>x</b></span><br/>
+             <span class="text-muted ml-3"> {{merchants.created_at |date}}</span></span>
+          </div>
+        </div>
+      </div>
+       
+       <div class="row pl-4">
+          <div class="col-md-1">
+            <div class="form-group">
+              <label>Entries</label>
+              <select type="text" class="form-control" [(ngModel)]="page.size" (change)="pageChange()">
+                <option value=10>10</option><option value=20>20</option>
+                <option value=30>30</option><option value=40>40</option>
+                <option value=50>50</option><option value=100>100</option>
+              </select>
+            </div>
+          </div>
+         <div class="col-md-11">
+          <app-pagination [page]="pageCopy()" (newItemEvent)="changePage($event)"></app-pagination>
+         </div>
+       </div>
+            
+
+    </div>
+  </div>
+  <!-- end row -->
+</div>
+
+
+<ngb-alert style="position: fixed;
+  bottom: 40px;
+  right: 40px;" *ngIf="!closed" type="success" (close)="closed=true">Deleted Successfully.</ngb-alert>

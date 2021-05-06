@@ -36,6 +36,7 @@ export class CausesComponent implements OnInit {
   id:any;
   sortBy='';
   order='';
+  cause: any;
   constructor( private route: ActivatedRoute,private router: Router,private modalService: NgbModal,public notificationService:notificationService,
     private authFackservice: AuthfakeauthenticationService,public formBuilder: FormBuilder) { }
 
@@ -85,6 +86,14 @@ export class CausesComponent implements OnInit {
           
         }
       });
+      this.authFackservice.get('vendor/assignedCharityCause').subscribe(
+        res => {
+          if(res['status']==true){
+            if(res['data']!=[]){
+               this.cause=res['data'][0].assigned_cause_id;
+            }
+          }
+        });
   }
   toggleFunction(event,id){
     let currentTarget=event.currentTarget.checked==true?0:1;
@@ -106,9 +115,9 @@ export class CausesComponent implements OnInit {
         res => {
           if(res['status']==true){
             if(currentTarget==0)
-            Swal.fire('Enabled!', 'Selected row has been enaled.', 'success');
+            Swal.fire('Enabled!', 'Selected cause has been enaled.', 'success');
             else
-            Swal.fire('Disabled!', 'Selected row has been disabled.', 'success');
+            Swal.fire('Disabled!', 'Selected cause has been disabled.', 'success');
             this._fetchData();
           }
         });  
@@ -129,7 +138,7 @@ export class CausesComponent implements OnInit {
         this.authFackservice.delete('vendor/causes?user_id='+item.user_id).subscribe(
           res => {
             if(res['status']==true){
-              Swal.fire('Deleted!', 'Selected row has been deleted.', 'success');
+              Swal.fire('Deleted!', 'Selected cause has been deleted.', 'success');
               this._fetchData();
             }
           });  
@@ -176,5 +185,50 @@ export class CausesComponent implements OnInit {
     this.page.pageNumber=event;
     this._fetchData()
   }
+  assign(data) {
+    
+    var formData: any = new FormData();
+    formData.append("charity_id", this.id);
+    formData.append("cause_id", data.id);
+    
+    // if(this.charity!='' && this.cause!='' && this.cause!=this.typeValidationForm.value.cause_id){
+    //   let a=this.charities.filter(x=>{return x.user_id== this.typeValidationForm.value.charity_id})
+    //   let b=this.causes.filter(x=>{return x.id== this.typeValidationForm.value.cause_id})
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'Would you like to change the cause to '+data.cause_name,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#34c38f',
+        cancelButtonColor: '#f46a6a',
+        confirmButtonText: 'Yes!'
+      }).then(result => {
+        if (result.value) {
+          this.authFackservice.putMultipart('vendor/assignCharityCause',formData).subscribe(
+            res => {
+              if(res['status']==true){
+                this._fetchData();
+                Swal.fire('Success!', 'Selected cause has been configured.', 'success');
+    
+              }else{
+                Swal.fire('Error!', res['message'], 'error');
+              }
+              // this.modalService.dismissAll()
+            }); 
+        }
+      })
+    // }else if( this.cause!=this.typeValidationForm.value.cause_id){
+    //   this.authFackservice.putMultipart('vendor/assignCharityCause',formData).subscribe(
+    //       res => {
+    //         if(res['status']==true){
+    //           this.assign();
+    //           Swal.fire('Success!', 'Selected cause has been configured.', 'success');
+    //         }else{
+    //           Swal.fire('Error!', res['message'], 'error');
+    //         }
+    //         this.modalService.dismissAll()
+    //   }); 
+    // }else               this.modalService.dismissAll()
 
+  }
 }

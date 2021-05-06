@@ -7,8 +7,10 @@ import { PayoutComponent } from './payout/payout.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SupportComponent } from './support/support.component';
 import { TransactionsComponent} from './transactions/transactions.component';
-import {DrivesComponent} from './drives/drives.component'
+import { DrivesComponent} from './drives/drives.component'
 import { AnalyticsComponent } from './dashboards/analytics/analytics.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { ApiComponent } from './api/api.component';
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
   { path: 'dashboard', component: DefaultComponent },
@@ -20,9 +22,9 @@ const routes: Routes = [
    {path: 'transactions',component:TransactionsComponent},
    {path:'drives',component:DrivesComponent},
    {path:'payout',component:PayoutComponent},
-   {path:'analytics',component:AnalyticsComponent}
-
-
+   {path:'analytics',component:AnalyticsComponent},
+   {path:'notifications',component:NotificationsComponent},
+   {path:'api-settings',component:ApiComponent}
 ];
 
 @NgModule({

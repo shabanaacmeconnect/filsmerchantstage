@@ -77,16 +77,17 @@
                 <thead>
                   <tr>
                     <th sortable="cause_name" (sort)="onSort($event)">Cause</th><th sortable="cause_description" (sort)="onSort($event)">Cause Info</th><th sortable="category_name" (sort)="onSort($event)">Category</th>
-                    <th sortable="from_date" (sort)="onSort($event)">From Date</th><th sortable="end_date" (sort)="onSort($event)">To Date</th>
+                    <th sortable="from_date" (sort)="onSort($event)">From Date</th><th sortable="end_date" (sort)="onSort($event)">To Date</th><th>Configure</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let merchants of merchantsData  | filter:term ;let i = index;">
-                    <td>{{merchants.cause_name}}</td>
+                    <td>{{merchants.cause_name}} <span class="badge badge-primary " *ngIf="cause==merchants.id">Selected</span></td>
                     <td>{{merchants.cause_description}}</td>
                     <td>{{merchants.category_name}} </td>
                     <td>{{merchants.from_date |date}} </td>
                     <td>{{merchants.end_date |date}}</td>
+                    <td><button class="btn btn-primary btn-sm" (click)="assign(merchants)">Select</button></td>
                   </tr>
                 </tbody>
               </table>

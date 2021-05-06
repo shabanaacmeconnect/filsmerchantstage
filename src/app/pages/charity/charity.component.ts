@@ -129,7 +129,7 @@ export class CharityComponent implements OnInit {
         }
       });
   }
-  public _getcauses(id) {
+  public _getcauses(id,ob=null) {
     this.typeValidationForm.patchValue({
       cause_id:'',
     })
@@ -179,20 +179,46 @@ export class CharityComponent implements OnInit {
     var formData: any = new FormData();
     formData.append("charity_id", this.typeValidationForm.value.charity_id);
     formData.append("cause_id", this.typeValidationForm.value.cause_id);
-    let data=this.typeValidationForm.value;
-    this.authFackservice.putMultipart('vendor/assignCharityCause',formData).subscribe(
-        res => {
-          if(res['status']==true){
-            this.assign();
-            Swal.fire('Success!', 'Selected row has been updated.', 'success');
+    
+    if(this.charity!='' && this.cause!='' && this.cause!=this.typeValidationForm.value.cause_id){
+      let a=this.charities.filter(x=>{return x.user_id== this.typeValidationForm.value.charity_id})
+      let b=this.causes.filter(x=>{return x.id== this.typeValidationForm.value.cause_id})
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'Would you like to change the charity and cause to '+a[0].business_name+' - '+b[0].cause_name,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#34c38f',
+        cancelButtonColor: '#f46a6a',
+        confirmButtonText: 'Yes!'
+      }).then(result => {
+        if (result.value) {
+          this.authFackservice.putMultipart('vendor/assignCharityCause',formData).subscribe(
+            res => {
+              if(res['status']==true){
+                this.assign();
+                Swal.fire('Success!', 'Selected cause has been configured.', 'success');
+    
+              }else{
+                Swal.fire('Error!', res['message'], 'error');
+              }
+              this.modalService.dismissAll()
+            }); 
+        }
+      })
+    }else if( this.cause!=this.typeValidationForm.value.cause_id){
+      this.authFackservice.putMultipart('vendor/assignCharityCause',formData).subscribe(
+          res => {
+            if(res['status']==true){
+              this.assign();
+              Swal.fire('Success!', 'Selected cause has been configured.', 'success');
+            }else{
+              Swal.fire('Error!', res['message'], 'error');
+            }
+            this.modalService.dismissAll()
+      }); 
+    }else               this.modalService.dismissAll()
 
-          }else{
-            Swal.fire('Error!', res['message'], 'error');
-
-          }
-          this.modalService.dismissAll()
-
-        }); 
   }
   sorting(){
     if(this.sortBy!='' && this.order!=''){

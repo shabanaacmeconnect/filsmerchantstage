@@ -31,7 +31,7 @@ export class DriveComponent implements OnInit, AfterViewInit {
   response: any;
   amounts=[];
   amount='';
-  status=true;
+  status;
   // tslint:disable-next-line: max-line-length
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router,
     private authFackservice: AuthfakeauthenticationService) {
@@ -44,18 +44,16 @@ export class DriveComponent implements OnInit, AfterViewInit {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required]],
     });
-    
-    // reset login status
-    // this.authenticationService.logout();
-    // get return url from route parameters or default to '/'
-    // tslint:disable-next-line: no-string-literal
+  console.log(this.route.snapshot)
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
   public _fetchData() {
     let url='charityDrivePayment?drive_id='+this.id
-    
+    if(this.route.snapshot.url['2']=='preview')
+      url+='&preview=1'
      this.authFackservice.get(url).subscribe(res => {
         if(res['status']==true){
+          this.status=true
          this.response=res['data'][0];
          if(this.response.payment_type==2){
            this.amounts=this.response.preset_values.split(',');

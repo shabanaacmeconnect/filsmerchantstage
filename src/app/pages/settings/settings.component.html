@@ -48,7 +48,7 @@
       </div>
     </div>
     <!-- end row -->
-     <div class="row">
+     <!-- <div class="row">
       <div class="col-6">
         <div class="card">
           <div class="card-body">
@@ -73,11 +73,7 @@
                   </div>
 
                   <input *ngIf="form2" type="text" class="form-control" value="*******************************************************************************************************************************"/>
-                  <!-- <div class="invalid-feedback" >
-                    <span *ngIf="api_key1?.errors?.required && form.submitted" >API Key is required!</span>
-                    <div *ngIf="api_key1?.errors?.pattern && form.submitted" >API Key should be alphanumeric!</div>
-                    <div *ngIf="api_key1?.errors?.minlength && form.submitted" >API Key should have 15 characters!</div>
-                  </div> -->
+                 
                 </div>
                 <div class="form-group">
                   <label>Secret Key</label>
@@ -87,12 +83,7 @@
                       <div class="input-group-text " ngbTooltip="Secret key copied Successfully" triggers="click:blur" style="cursor:pointer" (click)="copyInputMessage(api_secret)">Copy</div>
                     </div>
                   </div>
-                  <!-- <div class="invalid-feedback">
-                    <div *ngIf="api_secret1?.errors?.required && form.submitted" >API Secret Key is required!</div>
-                    <div *ngIf="api_secret1?.errors?.pattern && form.submitted" >API Secret Key should be alphanumeric!</div>
-                    <div *ngIf="api_secret1?.errors?.minlength && form.submitted" >API Secret Key should have 25 characters!</div>
-
-                  </div> -->
+                  
                 </div>
                 <div class="form-group mb-0">
                   <div>
@@ -106,7 +97,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 </div>
 
   
@@ -123,7 +114,7 @@
               <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm">
                 <div class="form-group">
                   <label>Current Password</label>
-                  <input type="text" class="form-control" formControlName="current_password"
+                  <input type="text" class="form-control" formControlName="current_password" placeholder="Enter current password"
                     [ngClass]="{'is-invalid': typesubmit && type.current_password.errors}"  />
                   <div *ngIf="typesubmit && type.current_password.errors" class="invalid-feedback">
                     <span *ngIf="type.current_password.errors.required">Current Password is required.</span>
@@ -134,7 +125,7 @@
                   <label>New Password</label>
                   <div>
                     <input type="password" class="form-control"autocomplete="new-password" maxlength="50" formControlName="new_password"
-                      [ngClass]="{'is-invalid': typesubmit && type.new_password.errors}" />
+                      [ngClass]="{'is-invalid': typesubmit && type.new_password.errors}" placeholder="Enter new password"/>
                     <div *ngIf="typesubmit && type.new_password.errors" class="invalid-feedback">
                       <span *ngIf="type.new_password.errors.required">Password is required.</span>
                       <span *ngIf="type.new_password.errors.minlength">Password must be at least 10
@@ -155,10 +146,10 @@
               
                 <div class="form-group mb-0">
                   <div>
-                    <button type="submit" class="btn btn-primary mr-1">
+                    <button type="submit" class="btn btn-primary float-right">
                       Submit
                     </button>
-                    <button type="reset" class="btn btn-secondary float-right">
+                    <button type="reset" class="btn btn-secondary mr-3 float-right">
                       Reset
                     </button>
                   </div>

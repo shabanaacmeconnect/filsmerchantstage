@@ -40,16 +40,7 @@
                   </select>
                 </div>
               </div> -->
-              <div class="col-md-2">
-                <div class="form-group">
-                  <label>Entries</label>
-                  <select type="text" class="form-control" [(ngModel)]="page.size" (change)="pageChange()">
-                    <option value=10>10</option><option value=20>20</option>
-                    <option value=30>30</option><option value=40>40</option>
-                    <option value=50>50</option><option value=100>100</option>
-                  </select>
-                </div>
-              </div>
+              
               <div class="col-md-2">
                 <div class="form-group">
                   <label>From Date</label>
@@ -62,6 +53,24 @@
                   <input type="date" class="form-control" placeholder="To Date" [(ngModel)]="to_date" (change)="datesearch()" />
                 </div>
               </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Transaction Types</label>
+                  <select type="text" class="form-control" [(ngModel)]="transfer_type" (change)="search()">
+                    <option value=1>Store</option><option value=2>QR Code</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-1">
+                <div class="form-group">
+                  <label>Entries</label>
+                  <select type="text" class="form-control" [(ngModel)]="page.size" (change)="pageChange()">
+                    <option value=10>10</option><option value=20>20</option>
+                    <option value=30>30</option><option value=40>40</option>
+                    <option value=50>50</option><option value=100>100</option>
+                  </select>
+                </div>
+              </div>
               <div class="col-md-1">
                 <div class="form-group col-md-4">
                   <label style="visibility: hidden;">report</label>
@@ -70,7 +79,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <div class="form-group col-md-12">
                   <label style="visibility: hidden;">report</label>
                   <div class="text-sm-right">
@@ -101,9 +110,9 @@
                 <thead>
                   <tr>
                     <!-- <th sortable="category_name" (sort)="onSort($event)">Transaction ID</th> -->
-                    <th sortable="created_at" (sort)="onSort($event)">Created At</th>
+                    <th sortable="created_at" (sort)="onSort($event)">Date</th>
+                    <th sortable="created_at" (sort)="onSort($event)">Time</th>
                     <th sortable="transaction_type" (sort)="onSort($event)">Type</th>
-
                     <th sortable="donation_amount" (sort)="onSort($event)">Donation Amount</th>
                     <!-- <th sortable="mer" (sort)="onSort($event)">Merchant Commission</th>
                     <th sortable="category_name" (sort)="onSort($event)">Fils Commission</th> -->
@@ -115,8 +124,8 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let merchants of merchantsData  | filter:term ;let i = index;">
-                    <!-- <td   role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.transaction_id}}</td> -->
-                    <td  role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.created_at |date :'medium'}}</td>
+                    <td  role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.created_at |date }}</td>
+                    <td  role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.created_at |date :'h:mm:ss a'}}</td>
                     <td   role="button"  (click)="openModel(merchants,templateDetail)" *ngIf="merchants.transaction_type==1" class="text-center"><i class="fas fa-store text-primary"></i></td>
                     <td   role="button"  (click)="openModel(merchants,templateDetail)" *ngIf="merchants.transaction_type==2"  class="text-center"><i class="fas fa-qrcode text-primary"></i></td>
                     <td   role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.donation_amount | currency:'AED ':'code':'1.2-3'}}</td>
@@ -170,9 +179,16 @@
                     </tr>
                     <tr class="table-light"><td style="text-align:left !important">{{details.charity_payable| currency:'AED ':'code':'1.2-3'}}</td><td style="text-align:left !important">{{details.fils_commission| currency:'AED ':'code':'1.2-3'}}</td><td style="text-align:left !important">{{details.vendor_commission| currency:'AED ':'code':'1.2-3'}}</td></tr>
                     <tr>
-                      <th style="text-align:left !important">Cause Name</th><th style="text-align:left !important">Charity Name</th><th style="text-align:left !important">Status</th>
+                      <th style="text-align:left !important">Cause Name</th><th style="text-align:left !important">Charity Name</th><th style="text-align:left !important">Transaction Type</th>
                     </tr>
-                    <tr class="table-light"><td style="text-align:left !important">{{details.cause_name}}</td><td style="text-align:left !important">{{details.charity_name}}</td> <td style="text-align:left !important">
+                    <tr class="table-light"><td style="text-align:left !important">{{details.cause_name}}</td><td style="text-align:left !important">{{details.charity_name}}</td>
+                      <td style="text-align:left !important">
+                        <span *ngIf="details.transaction_type==1">Store</span>
+                        <span *ngIf="details.transaction_type==2">QR Code</span>
+                      </td></tr><tr>
+                      <th style="text-align:left !important">Status</th>
+                    </tr>
+                    <tr class="table-light"><td style="text-align:left !important">
                       <span class="badge badge-primary font-size-12" *ngIf="details.status==0">
                        Pending
                       </span>

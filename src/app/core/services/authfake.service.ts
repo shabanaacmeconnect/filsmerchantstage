@@ -100,6 +100,16 @@ export class AuthfakeauthenticationService {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
         location.reload();
+    } getnoload( url) {
+        return this.http.get<any>(environment.baseurl+url)
+                      .pipe(map(res => {
+            this.apiStatusHandler.next({show:false});
+            // login successful if there's a jwt token in the response
+            if (res['status']==true) {
+             
+            }
+            return res;
+        }));
     }
     getFile( url) {
         this.apiStatusHandler.next({show:true});

@@ -3,7 +3,8 @@ import { Router, NavigationEnd } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthfakeauthenticationService } from 'src/app/core/services/authfake.service';
 import { EventService } from 'src/app/core/services/event.service';
-
+import { io } from 'socket.io-client';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-vertical',
   templateUrl: './vertical.component.html',
@@ -18,6 +19,8 @@ export class VerticalComponent implements OnInit, AfterViewInit {
   userlogo=localStorage.getItem('user_logo')
   merchantsData={balance:0}
   isCondensed = false;
+  count: any;
+  socket: any;
 
   constructor(private eventService: EventService,private router: Router,  private authFackservice: AuthfakeauthenticationService) {
     router.events.forEach((event) => {
@@ -30,11 +33,35 @@ export class VerticalComponent implements OnInit, AfterViewInit {
     this.merchantsData= this.authFackservice.currentstatusvalue;
 
   }
-
+  setupSocketConnection() {
+    this.socket = io(environment.SOCKET_ENDPOINT, {
+      path:'/api/socket.io',
+      // auth: {
+      //   admin_id: this.authFackservice.currentUserValue['user_id'],
+      // }
+    });
+      // this.socket.emit('getNotificationsCount', 'Hello there from Angular.');
+    this.socket.on('getNotificationsCount'+this.authFackservice.currentUserValue['user_id'], (data: any) => {
+      if(data['status']==true){
+     this.count=data['data']
+      }
+    });
+  }
+  getcount(){
+    let url='vendor/notifications'
+    this.authFackservice.get(url).subscribe(
+      res => {
+        if(res['status']==true){
+          this.count=res['unreadCount'];
+        }
+        })
+  }
   ngOnInit() {
+    this.setupSocketConnection();
     this.eventService.subscribe('currentstatus', (layout) => {
       this.merchantsData=layout
     })
+    this.getcount()
     document.body.removeAttribute('data-layout');
     document.body.removeAttribute('data-topbar');
     document.body.removeAttribute('data-layout-size');

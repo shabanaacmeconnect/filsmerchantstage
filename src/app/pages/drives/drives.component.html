@@ -91,12 +91,12 @@
               <table class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
                 <thead>
                   <tr>
-                    <!--<th sortable="drive_id" (sort)="onSort($event)">Drive ID</th>-->
-                    <th sortable="charity" (sort)="onSort($event)">Charity</th>
-                    <th sortable="cause_name" (sort)="onSort($event)">Cause</th>
+                    <th sortable="created_at" (sort)="onSort($event)">Created At</th>
                     <th sortable="start_date" (sort)="onSort($event)">Start Date</th>
                     <th sortable="end_date" (sort)="onSort($event)">End Date</th>
-                    <th sortable="fils_commission" (sort)="onSort($event)">Fils Commission</th>
+                    <th sortable="charity" (sort)="onSort($event)">Charity</th>
+                    <th sortable="cause_name" (sort)="onSort($event)">Cause</th>
+                    <!-- <th sortable="fils_commission" (sort)="onSort($event)">Fils Commission</th> -->
                     <th sortable="vendor_commission" (sort)="onSort($event)">Vendor Commission</th> 
                                        <th>QR Code</th>
                     <th sortable="approved" (sort)="onSort($event)">Status</th>
@@ -104,21 +104,24 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let merchants of merchantsData  | filter:term ;let i = index;">
-                    <!--<td>{{merchants.drive_id}}</td>-->
-                    <td>{{merchants.charity}}</td>
-                    <td>{{merchants.cause_name}}</td>
-                    <td>{{merchants.start_date |date}} </td>
-                    <td>{{merchants.end_date |date}}</td>
-                    <td> {{merchants.fils_commission |currency:'AED ':'code':'1.2-3'}}</td>
-                    <td>{{merchants.vendor_commission  |currency:'AED ':'code':'1.2-3'}}</td>
-                    <td>
-                      <div class="dropdown row" ngbDropdown placement="bottom-right">
-                        <a href="javascript: void(0);" *ngIf="merchants.approved==0" (click)="openQR(qrTemplate,merchants.drive_id)" class="dropdown-item col-md-3" >
+                    <td (click)="openModel2(merchants,templateDetail)">{{merchants.created_at |date}} </td>
+                    <td (click)="openModel2(merchants,templateDetail)">{{merchants.start_date |date}} </td>
+                    <td (click)="openModel2(merchants,templateDetail)">{{merchants.end_date |date}}</td>
+                    <td (click)="openModel2(merchants,templateDetail)">{{merchants.charity}}</td>
+                    <td (click)="openModel2(merchants,templateDetail)">{{merchants.cause_name}}</td>
+                    <!-- <td> {{merchants.fils_commission |currency:'AED ':'code':'1.2-3'}}</td> -->
+                    <td (click)="openModel2(merchants,templateDetail)">{{merchants.vendor_commission  |currency:'AED ':'code':'1.2-3'}}</td>
+                    <td class="text-center">
+                      <div *ngIf="checkdate(merchants.start_date,merchants.end_date)"  ngbDropdown placement="bottom-right">
+                        <a href="javascript: void(0);" *ngIf="merchants.approved==0" (click)="openQR(qrTemplate,merchants.drive_id)" class="dropdown-item " >
                           <i class='bx bx-barcode-reader'></i>
                         </a>
                       </div>
                     </td>
                     <td>
+                      <a class="mr-3 font-size-12" target="_blank" href="/account/drive/{{merchants.drive_id}}/preview"  >
+                        <i class='bx bx-expand text-secondary'></i>
+                      </a>
                       <span class="badge badge-primary font-size-12" *ngIf="merchants.approved==2">
                        Pending
                       </span>
@@ -148,7 +151,7 @@
     </div>
     <div class="modal-body">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-8">
           <div class="card">
             <div class="card-body">
               <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm" class="row">
@@ -156,6 +159,7 @@
                   <label>Charity</label>
                   <select class="form-control" formControlName="charity_id" (change)="_getcauses($event.target.value)"
                     [ngClass]="{'is-invalid': typesubmit && type.charity_id.errors}">
+                    <option [ngValue]="null" [disabled]="true" >Choose charity</option>
                     <option [ngValue]="x.user_id" *ngFor="let x of charities">{{x.business_name}}</option>
                   </select>
                   <div *ngIf="typesubmit && type.charity_id.errors" class="invalid-feedback">
@@ -166,6 +170,7 @@
                   <label>Cause</label>
                   <select class="form-control" formControlName="cause_id"
                     [ngClass]="{'is-invalid': typesubmit && type.cause_id.errors}">
+                    <option [ngValue]="null" [disabled]="true" >Choose cause</option>
                     <option [ngValue]=x.id *ngFor="let x of causes">{{x.cause_name}}</option>
                   </select>
                   <div *ngIf="typesubmit && type.cause_id.errors" class="invalid-feedback">
@@ -174,10 +179,11 @@
                 </div>
                 <div class="form-group col-md-6">
                   <label>From Date</label>
-                  <input type="date" class="form-control" formControlName="start_date"
+                  <input type="date" class="form-control" formControlName="start_date" [min]="title=='Add'?minDate:''"
                     [ngClass]="{'is-invalid': typesubmit && type.start_date.errors}"/>
                   <div *ngIf="typesubmit && type.start_date.errors" class="invalid-feedback">
                     <span *ngIf="type.start_date.errors.required">From Date is required.</span>
+                    <span *ngIf="type.start_date.errors.invalid">From Date should be greater than current Date</span>
                   </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -193,21 +199,28 @@
                 <div class="modal-header  col-md-12 mb-3 justify-content-center">
                   <h5 class="modal-title">Page Settings</h5>
                 </div>
+                <div class="form-group col-md-12">
+                  <label>Heading</label>
+                  <input type="text" class="form-control" formControlName="heading"  [ngClass]="{'is-invalid': typesubmit && type.heading.errors}">
+                  <div *ngIf="typesubmit && type.heading.errors" class="invalid-feedback">
+                    <span *ngIf="type.heading.errors.required">Heading is required.</span>
+                  </div>
+                  </div>
                 <div class="form-group col-md-6">
                 <label>Color</label>
-                <input type="text" class="colorpicker-default form-control" [value]="color" formControlName="color" [(colorPicker)]="color"
+                <input type="text" class="colorpicker-default form-control" [value]="color" formControlName="color" [(colorPicker)]="color" placeholder="Enter color code"
                 [cpOutputFormat]="'hex'" [cpPosition]="'bottom'"(colorPickerChange)="typeValidationForm.controls.color.setValue($event)" [ngClass]="{'is-invalid': typesubmit && type.color.errors}">
                 <div *ngIf="typesubmit && type.color.errors" class="invalid-feedback">
                   <span *ngIf="type.color.errors.required">Color is required.</span>
                 </div>
                 </div>
                 <div class="form-group col-md-6">
-                  <label>Logo Path</label>
+                  <label>Image</label><span class="text-muted font-size-10 "> ( jpg/jpeg/png files of maximum 2MB )</span>
                   <div>
                     <input type="file"  (change)="onFileSelected($event)" formControlName="logo_path"
                       [ngClass]="{'is-invalid': (typesubmit && type.logo_path.errors || (sizeError|| !imageType))}">
                     <div *ngIf="typesubmit && type.logo_path.errors" class="invalid-feedback">
-                      <span *ngIf="type.logo_path.errors.required">Logo is required.</span>
+                      <span *ngIf="type.logo_path.errors.required">Image is required.</span>
                     </div>
                     <div class="invalid-feedback">
                       <span  *ngIf="sizeError==true">
@@ -221,16 +234,33 @@
                 </div>
                 <div class="form-group col-md-6">
                   <label>Message</label>
-                  <textarea class="form-control" formControlName="message"
+                  <textarea class="form-control" formControlName="message" placeholder="Enter message"
                     [ngClass]="{'is-invalid': typesubmit && type.message.errors}"></textarea>
                   <div *ngIf="typesubmit && type.message.errors" class="invalid-feedback">
                     <span *ngIf="type.message.errors.required">Message is required.</span>
                   </div>
                 </div>
                 <div class="form-group col-md-6">
+                  <label>Message 2</label>
+                  <textarea class="form-control" formControlName="message2" placeholder="Enter message2"
+                    [ngClass]="{'is-invalid': typesubmit && type.message2.errors}"></textarea>
+                  <div *ngIf="typesubmit && type.message2.errors" class="invalid-feedback">
+                    <span *ngIf="type.message2.errors.required">Message 2 is required.</span>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Message 3</label>
+                  <textarea class="form-control" formControlName="message3" placeholder="Enter message3"
+                    [ngClass]="{'is-invalid': typesubmit && type.message3.errors}"></textarea>
+                  <div *ngIf="typesubmit && type.message3.errors" class="invalid-feedback">
+                    <span *ngIf="type.message3.errors.required">Message 3 is required.</span>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
                   <label>Payment Type</label>
                   <select class="form-control" formControlName="payment_type" 
                     [ngClass]="{'is-invalid': typesubmit && type.payment_type.errors}">
+                    <option [ngValue]="null" [disabled]="true" >Choose payment type</option>
                     <option [ngValue]=1 >Open</option>
                     <option [ngValue]=2 >Preset</option>
                   </select>
@@ -244,7 +274,7 @@
                       <div class="inner mb-3 row" *ngFor="let data1 of  phonedata().controls; let i=index;"
                         [formGroupName]="i">
                         <div class="col-md-10 col-8">
-                          <input type="text" class="inner form-control" formControlName="phonenumber"
+                          <input type="number" class="inner form-control" formControlName="phonenumber" placeholder="Enter amount"
                             >
                         </div>
                         <div class="col-md-2 col-4">
@@ -261,10 +291,10 @@
                 </div>
                 <div class="form-group col-md-12 mb-0">
                   <div>
-                    <button type="submit" class="btn btn-primary mr-1">
+                    <button type="submit" class="btn btn-primary float-right">
                       Submit
                     </button>
-                    <button type="reset" class="btn btn-secondary float-right">
+                    <button type="reset" class="btn btn-secondary mr-3 float-right">
                       Reset
                     </button>
                   </div>
@@ -273,7 +303,61 @@
             </div>
           </div>
         </div>
-    
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title mb-3">
+                Drive Page Preview
+              </div>
+
+              <div class="account-pages mb-5" >
+  <div class="container bg-white" style="max-width: 500px;">
+    <div class="row justify-content-center">
+      <img [src]="img"  style="object-fit: cover; width:100%" id="fakeimg" height="150px"/><br/>
+      <div   class="container">
+        <h1 class="text-center mb-4"  [ngStyle]="{
+          'color' :  type.color.value
+        }" >
+          <p class="font-weight-bold">{{type.heading.value}}</p>
+        </h1>
+        <div class="text-center text-muted">
+          <p class="mb-3">{{type.message.value}}</p>
+          <p class="mb-3">{{type.message2.value}}</p>  
+        </div>
+        <h3 class="text-center">
+          <p class="font-weight-bold">{{type.message3.value}}</p>
+        </h3>
+        <div class="text-center px-2 mb-5" *ngIf="type.payment_type.value==2">
+          <button class="btn btn-xl mx-2  my-2  text-white"  style="    width: 38%;
+          border-radius: 9px;" [ngStyle]="{
+            'background-color' :  type.color.value
+          }" *ngFor="let amount of getamounts(type.preset_values.value)">{{amount |currency :'AED '}}</button>
+        </div>
+        <div class="px-2 mb-5" *ngIf="type.payment_type.value==1">
+          <form class="form-horizontal">
+            <div class="form-group mb-3">
+              <input type="number"  placeholder="Enter the amount here" class="form-control" id="email" placeholder=""
+              />
+             
+            </div>
+            <div class="mt-3">
+              <button class="btn btn-block text-white"  [ngStyle]="{
+                'background-color' :  type.color.value
+              }"  type="submit">Checkout</button>
+            </div>
+            <div class="mt-4 text-center">
+            </div>
+          </form>
+        </div>
+      </div>
+     
+     </div>
+  </div>
+
+</div>
+            </div>
+          </div>
+        </div>
        
       </div>
     </div>
@@ -292,6 +376,49 @@
                 <qrcode [qrdata]="qrstring" allowEmptyString="true" [width]="300"[cssClass]="qrstring" [errorCorrectionLevel]="'M'"></qrcode>
 
               </a>
+            </div>
+          </div>
+        </div>
+    
+       
+      </div>
+    </div>
+  </ng-template>
+ 
+  <ng-template #templateDetail let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Details</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-centered table-striped table-nowrap">
+                    <tr><th style="text-align:left !important">Created At</th><th style="text-align:left !important">Drive ID</th><th style="text-align:left !important">Charity</th><th style="text-align:left !important">Cause</th></tr>
+                    <tr class="table-light"><td style="text-align:left !important">{{details.created_at |date}}</td><td style="text-align:left !important">{{details.drive_id}}</td><td style="text-align:left !important">{{details.charity}}</td><td style="text-align:left !important">{{details.cause_name}}</td></tr>
+                    <tr>
+                      <th style="text-align:left !important">Start Date</th><th style="text-align:left !important">End Date</th><th style="text-align:left !important">Vendor Commission</th><th style="text-align:left !important">Merchant</th>
+                    </tr>
+                    <tr class="table-light"><td style="text-align:left !important">{{details.start_date |date}}</td><td style="text-align:left !important">{{details.end_date |date}}</td><td style="text-align:left !important">{{details.vendor_commission |currency:'AED '}}</td><td style="text-align:left !important">{{details.vendor_name}}</td></tr>
+                    <tr><th style="text-align:left !important">Status</th><th style="text-align:left !important">Color</th><th style="text-align:left !important">Payment Type</th><th style="text-align:left !important" ><span >Preset Values</span></th></tr>
+                    <tr class="table-light"><td style="text-align:left !important"> 
+                      <span  href="javascript:;"class="badge badge-danger font-size-12" *ngIf="details.approved==1">
+                        Rejected
+                      </span>
+                      <span  href="javascript:;"class="badge badge-success font-size-12" *ngIf="details.approved==0">
+                        Approved
+                      </span></td><td style="text-align:left !important"><button class="btn  text-white" [ngStyle]="{
+                        'background-color' :  details.color 
+                      }">{{details.color}}</button></td><td style="text-align:left !important"><span *ngIf="details.payment_type==1">Open</span><span *ngIf="details.payment_type==2">Preset</span></td><td style="text-align:left !important" ><span *ngIf="details.payment_type==2">{{details.preset_values}}</span></td></tr>
+                    <tr><th style="text-align:left !important">Image</th><th style="text-align:left !important">Message</th><th style="text-align:left !important">Message 2</th><th style="text-align:left !important">Message 3</th></tr>
+                    <tr class="table-light"><td style="text-align:left !important"><img [src]="details.logo_path" width="100px"/></td><td style="text-align:left !important">{{details.message}}</td><td style="text-align:left !important">{{details.message2}}</td><td style="text-align:left !important">{{details.message3}}</td></tr>
+                    
+                   
+                </table>
+              </div>
             </div>
           </div>
         </div>

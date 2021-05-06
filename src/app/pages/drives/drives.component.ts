@@ -34,13 +34,21 @@ export class DrivesComponent implements OnInit {
   keyword: string='';
   charities=[];causes=[];
   sortBy='';
+  dates=new Date().getTime();
   order='';
   color='#ffff' 
   hrefLink: any;
   blob: Blob;
   qrstring=""
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>=Object.create(null);
-
+  details: any;
+   dtToday = new Date();
+    img
+   month:any = this.dtToday.getMonth() + 1;
+   day:any = this.dtToday.getDate();
+   year:any = this.dtToday.getFullYear();
+  minDate: string;
+ 
   constructor( private router: Router,private modalService: NgbModal,public notificationService:notificationService,
     private authFackservice: AuthfakeauthenticationService,public formBuilder: FormBuilder) { }
 
@@ -50,6 +58,12 @@ export class DrivesComponent implements OnInit {
     this._fetchData();
     this._getcharities();
     this.initForm();
+    if(this.month < 10)
+    this.month = '0' + this.month.toString();
+    if(this.day < 10)
+        this.day = '0' + this.day.toString();
+
+    this.minDate= this.year + '-' + this.month + '-' + this.day;  
   }
   onSort({column, direction}: SortEvent) {
     // resetting other headers
@@ -86,10 +100,14 @@ export class DrivesComponent implements OnInit {
    
       charity_id:['',Validators.required],
       cause_id:['',Validators.required],
-      start_date:['',Validators.required],
+      start_date:['',[Validators.required,this.conditionalDate(this.title)]],
       end_date:['',Validators.required],
       logo_path:['',this.conditionalrequiredValidator(this.title)],
       message:['',Validators.required],
+      message2:[''],
+      message3:[''],
+
+      heading:['',Validators.required],
       color:['',Validators.required],
       payment_type:['',Validators.required],
       preset_values: this.formBuilder.array([]),
@@ -97,6 +115,28 @@ export class DrivesComponent implements OnInit {
       validator: [this.MustHave('payment_type', 'preset_values'),this.mustHigh('start_date', 'end_date')],
     });
     
+  }
+  checkdate(start,end){
+    start=new Date(start).getTime();end=new Date(end).getTime();
+    return (start<=this.dates && end>=this.dates)
+  }
+  conditionalDate(client)
+    {
+      return (control: AbstractControl):{[key: string]: boolean} | null => {
+        if (client=='Edit') return null;
+        let currentDateTime = new Date();
+        currentDateTime.setHours(0,0,0,0);
+        let a=currentDateTime.getTime();
+        let controlValue = new Date(control.value);
+        controlValue.setHours(0,0,0,0);
+        let b=controlValue.getTime();
+        if(a>b && control.value)
+        {
+          return {invalid:true}
+        }
+      return null;
+     
+    } 
   }
   deletePhone(i: number) {
     this.phonedata().removeAt(i);
@@ -153,17 +193,22 @@ export class DrivesComponent implements OnInit {
     return this.typeValidationForm.controls;
   }
   openQR(largeDataModal: any,item){
-    this.qrstring=location.origin+'/account/drive/'+item;
+    this.qrstring=location.origin+'/merchant/account/drive/'+item;
     this.modalService.open(largeDataModal, { size: 'md',windowClass:'modal-holder', centered: true });
 
   }
+  openModel2(item,largeDataModal: any) {
+    this.details=item
+     this.modalService.open(largeDataModal, { size: 'lg',windowClass:'modal-holder', centered: true });
+   }
   largeModal(largeDataModal: any) {
     this.title='Add';
     this.typesubmit=false;
     this.typeValidationForm.reset();
     this.imageType=true;
     this.sizeError=false;
-    this.modalService.open(largeDataModal, { size: 'lg',windowClass:'modal-holder', centered: true });
+    this.img=undefined
+    this.modalService.open(largeDataModal, { size: 'xl',windowClass:'modal-holder', centered: true });
   }
   onFileSelected(event) {
     if(event.target.files[0].type=='image/png' || event.target.files[0].type=='image/jpg' || event.target.files[0].type=='image/jpeg'){
@@ -177,7 +222,19 @@ export class DrivesComponent implements OnInit {
     }else{
       this.sizeError=false
     }
+    var reader = new FileReader();
+    reader.onload = (event: ProgressEvent) => {
+      this.img = (<FileReader>event.target).result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
     this.logo=event.target.files[0];
+    }
+    getamounts(data){
+      let amount=[]
+      data.forEach(element => {
+        amount.push(element.phonenumber);
+      });
+      return amount;
     }
   typeSubmit() {
     this.typesubmit = true;
@@ -195,6 +252,10 @@ export class DrivesComponent implements OnInit {
     formData.append("start_date", this.typeValidationForm.value.start_date);
     formData.append("end_date", this.typeValidationForm.value.end_date);
     formData.append("message", this.typeValidationForm.value.message);
+    formData.append("message2", this.typeValidationForm.value.message2);
+    formData.append("message3", this.typeValidationForm.value.message3);
+
+    formData.append("heading", this.typeValidationForm.value.heading);
     formData.append("color", this.typeValidationForm.value.color);
     formData.append("payment_type", this.typeValidationForm.value.payment_type);
     formData.append("preset_values", amount.join(','));    

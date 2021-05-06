@@ -19,14 +19,37 @@ import { formatDate } from '@angular/common';
  * Login component
  */
 export class CancelComponent implements OnInit {
-
-  year: number = new Date().getFullYear();
+  id=''
+  drive=''
+  response: any;
+  response1:any;
+  status;
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router,
     private authFackservice: AuthfakeauthenticationService) {
+      this.id = this.route.snapshot.paramMap.get("id")?this.route.snapshot.paramMap.get("id"):'';
+      this.drive = this.route.snapshot.paramMap.get("drive")?this.route.snapshot.paramMap.get("drive"):'';
 
      }
 
   ngOnInit() {
-      
+      this._fetchData()
   }
+  public _fetchData() {
+  this.authFackservice.get('charityDrivePayment?drive_id='+this.drive).subscribe(res => {
+       if(res['status']==true){
+         this.status=true
+        this.response1=res['data'][0];
+       }
+      })
+    let url='/transactionDetails?transaction_id='+this.id
+    
+     this.authFackservice.get(url).subscribe(res => {
+        if(res['status']==true){
+          this.status=true;
+         this.response=res['data'][0];
+        
+        }
+      });
+  }
+  
 }

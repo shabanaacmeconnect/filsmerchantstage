@@ -1,27 +1,22 @@
 <div class="home-btn d-none d-sm-block">
 </div>
-<div class="account-pages mt-5 mb-5">
-  <div class="container">
+<div class="account-pages mb-5" style="position: relative;
+top: -16px;">
+  <div class="container bg-white" style="max-width: 500px;">
     <div class="row justify-content-center">
-      <div class="col-md-8 col-lg-6 col-xl-5">
-        <div class="card overflow-hidden">
-          
-          <div class="card-body pt-0   mt-4">
-            <div class="text-center mb-4" style="margin-top: 10%; margin-bottom:10%">
-              <h4 class=" text-primary">
-                Cancelled!
-              </h4>
-              <p> Payment has been Cancelled. Please try again.</p>
-            </div>
-          
-          </div>
-        </div>
-        <div class="mt-5 text-center">
-         
-          <p>© {{year}} Fils Connect.</p>
-        </div>
-
+      <img [src]="response1.logo_path"  *ngIf="status==true" style="object-fit: cover; width:100%" height="300px"/><br/>
+      <div  *ngIf="status==true" class="container">
+        <!-- <h3 class="text-center mb-4 mt-3"  [ngStyle]="{
+          'color' :  response.color 
+        }" >
+        </h3> -->
+      
+        <h5 class="text-center mt-4 mb-5">
+          <p class="font-weight-bold">Payment has been cancelled. Please try again.</p>
+        </h5>
+      
       </div>
+     
     </div>
   </div>
 

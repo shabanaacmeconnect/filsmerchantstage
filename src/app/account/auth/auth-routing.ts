@@ -27,10 +27,12 @@ const routes: Routes = [
         path: 'forgot-password/:token',
         component: ResetComponent
     },
-    {path:'payment-success',component:SuccessComponent},
-    {path:'payment-cancelled',component:CancelComponent},
-    {path:'payment-failed',component:ErrorComponent},
+    {path:'payment-success/:id/:drive',component:SuccessComponent},
+    {path:'payment-cancelled/:id/:drive',component:CancelComponent},
+    {path:'payment-failed/:id/:drive',component:ErrorComponent},
     {path:'drive/:id',component:DriveComponent},
+    {path:'drive/:id/preview',component:DriveComponent},
+
     
 ];
 

@@ -1,4 +1,4 @@
-<div class="home-btn d-none d-sm-block">
+<!-- <div class="home-btn d-none d-sm-block">
 </div>
 <div class="account-pages mt-5 mb-5">
   <div class="container">
@@ -22,6 +22,31 @@
         </div>
 
       </div>
+    </div>
+  </div>
+
+</div>
+end page -->
+<div class="home-btn d-none d-sm-block">
+</div>
+<div class="account-pages mb-5" style="position: relative;
+top: -16px;">
+  <div class="container bg-white" style="max-width: 500px;">
+    <div class="row justify-content-center">
+      <img [src]="response1.logo_path"  *ngIf="status==true" style="object-fit: cover; width:100%" height="300px"/><br/>
+      <div  *ngIf="status==true" class="container">
+        <h3 class="text-center mb-4 mt-3"  [ngStyle]="{
+          'color' :  response1.color 
+        }" >
+          <p class="font-weight-bold"> {{response.amount |currency:'AED ':'code':'1.2-2'}}</p>
+        </h3>
+      
+        <h5 class="text-center  mt-4 mb-5">
+          <p class="font-weight-bold">Thank you for your donation.</p>
+        </h5>
+      
+      </div>
+     
     </div>
   </div>
 

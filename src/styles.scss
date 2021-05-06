@@ -14,7 +14,9 @@
     display: block !important;
     opacity: 0;
   }
-
+  td{
+    vertical-align: middle !important;
+  }
   .carousel-item.active {
     position: relative !important;
     opacity: 1;
@@ -34,4 +36,10 @@
   }
   td:first-child,th:first-child {
     text-align: left !important;
+  }
+  .bg-not{
+    background-color: #f1f1f16e
+  }
+  .bg-yes{
+    background-color:#8f85ef2e !important;
   }

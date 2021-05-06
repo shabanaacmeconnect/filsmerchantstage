@@ -141,6 +141,7 @@
                 <label>Issue Category</label>
                 <select class="form-control" formControlName="ticket_category_id"
                   [ngClass]="{'is-invalid': typesubmit && type.ticket_category_id.errors}">
+                  <option [ngValue]="null" [disabled]="true" >Choose category</option>
                   <option [ngValue]=x.id *ngFor="let x of categories">{{x.category_name}}</option>
                 </select>
                 <div *ngIf="typesubmit && type.ticket_category_id.errors" class="invalid-feedback">
@@ -149,7 +150,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label>Subject</label>
-                <input type="text" class="form-control" formControlName="subject"
+                <input type="text" class="form-control" formControlName="subject" placeholder="Enter subject"
                   [ngClass]="{'is-invalid': typesubmit && type.subject.errors}"/>
                 <div *ngIf="typesubmit && type.subject.errors" class="invalid-feedback">
                   <span *ngIf="type.subject.errors.required">Subject is required.</span>
@@ -157,7 +158,7 @@
               </div>
               <div class="form-group col-md-12">
                 <label>Issue Description</label>
-                <textarea class="form-control" formControlName="ticket_description"
+                <textarea class="form-control" formControlName="ticket_description" placeholder="Enter description"
                   [ngClass]="{'is-invalid': typesubmit && type.ticket_description.errors}"></textarea>
                 <div *ngIf="typesubmit && type.ticket_description.errors" class="invalid-feedback">
                   <span *ngIf="type.ticket_description.errors.required">Issue Description is required.</span>
@@ -165,10 +166,10 @@
               </div>
               <div class="form-group col-md-12 mb-0">
                 <div>
-                  <button type="submit" class="btn btn-primary mr-1">
+                  <button type="submit" class="btn btn-primary float-right">
                     Submit
                   </button>
-                  <button type="reset" class="btn btn-secondary float-right">
+                  <button type="reset" class="btn btn-secondary mr-3 float-right">
                     Reset
                   </button>
                 </div>

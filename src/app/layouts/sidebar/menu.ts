@@ -45,6 +45,18 @@ export const MENU: MenuItem[] = [
             text: '0',
         },
  },
+ {
+    id: 2,
+    label: 'API',
+    icon: 'bx bx-check-shield',
+    link: '/api-settings',
+},
+{
+    id: 9,
+    label: 'Notifications',
+    icon: 'bx bx-bell',
+    link: '/notifications',
+},
     {
         id: 2,
         label: 'Support',

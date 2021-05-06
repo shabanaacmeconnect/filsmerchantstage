@@ -1,0 +1,169 @@
+<div class="container-fluid">
+  <app-page-title title="Email API" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="checkout-tabs">
+    <div class="row">
+      <div class="col-lg-2">
+        <ul ngbNav #nav="ngbNav" [activeId]="1" class="flex-column nav-pills">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink>
+              <i class="bx bx-cloud d-block check-nav-icon mt-4 mb-2"></i>
+              <p class="font-weight-bold mb-4">API URL</p>
+            </a>
+            <ng-template ngbNavContent>
+              <div class="card">
+                <div class="card-body">
+                  <div class="fade active show" id="v-pills-gen-ques">
+                    <h4 class="card-title mb-5">API URL</h4>
+                    <div class="faq-box media mb-4">
+                      <div class="faq-icon mr-3">
+                        <i class="bx bx-help-circle font-size-20 text-success"></i>
+                      </div>
+                      <div class="media-body">
+                        <h5 class="font-size-15">Request Method : POST</h5>
+                        <p class="text-muted">URL: https://filstest.stridewebstudio.com/api/createTransaction</p>
+                        <p class="text-muted">Authorization Header: Bearer Token (token: Merchant Secret Key)</p>
+                      </div>
+                    </div>
+                 
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2">
+            <a ngbNavLink>
+              <i class="bx bx-code-curly d-block check-nav-icon mt-4 mb-2"></i>
+              <p class="font-weight-bold mb-4">Request Body</p>
+            </a>
+            <ng-template ngbNavContent>
+              <div class="card">
+                <div class="card-body">
+                  <div class="tab-pane">
+                    <h4 class="card-title mb-5">Request Body</h4>
+
+                    <div class="faq-box media mb-4">
+                      <div class="faq-icon mr-3">
+                        <i class="bx bx-help-circle font-size-20 text-success"></i>
+                      </div>
+                      <div class="media-body">
+                        <h5 class="font-size-15">Body Format: Form Data</h5>
+                        <p class="text-muted"><span class="text-primary">api_key</span> : Merchant API Key</p>
+                        <p class="text-muted"><span class="text-primary">total</span> : Postive decimal value</p>    
+                        <p class="text-muted"><span class="text-primary">mode</span> : 1,2 <br/>
+
+                          1 : get the donation amount from the Total entered<br/>
+                          
+                          2 : Create transaction from the Total entered</p>        
+                        <p class="text-muted"><span class="text-primary">transaction_type</span> : 1,2 <br/>
+
+                          1 : One Time <br/>
+                          2 : Round Up
+                          </p>        
+                        <p class="text-muted"><span class="text-primary">channel_id</span> : 1,2,3 <br/>
+
+                          1 : Cash<br/>
+                          2 : Online<br/>
+                          3 : QR</p>        
+    
+                      </div>
+                      <div class="media-body">
+                        <h5 class="font-size-15">Sample Body Format- Mode 1 : Form Data</h5>
+                        <p class="text-muted">
+                      total : 0.95 <br/>
+                      mode : 1<br/>
+                      api_key : AMYVZT5-MGPMWVT-QMFV1B9-Q87CCHA<br/>
+                      transaction_type : 1<br/>
+                      channel_id : 2<br/></p>
+                      <h5 class="font-size-15">Sample Body Format- Mode 2 :  Form Data</h5>
+                      <p class="text-muted">
+                    total : 150 <br/>
+                    mode : 2<br/>
+                    api_key : AMYVZT5-MGPMWVT-QMFV1B9-Q87CCHA<br/>
+                    transaction_type : 1<br/>
+                    channel_id : 2<br/>
+                       </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="3">
+            <a ngbNavLink>
+              <i class="bx bx-cog d-block check-nav-icon mt-4 mb-2"></i>
+              <p class="font-weight-bold mb-4">API Settings</p>
+            </a>
+            <ng-template ngbNavContent>
+              <div class="card">
+                <div class="card-body">
+                  <div class="tab-pane">
+                    <h4 class="card-title mb-5">Api Settings</h4>
+
+                  
+                    <div class="faq-box media mb-4">
+                      <div  *ngIf="keypresent.length==0">
+                        <div class="form-group mb-0">
+                          <div>
+                            <button type="submit" class="btn btn-primary mr-1" (click)="generateKeys()">
+                              Generate Keys
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                        <form *ngIf="keypresent.length!=0" class="media-body">
+                          <div class="form-group">
+                            <label>API Key</label>
+                            <div class="input-group"  *ngIf="form1">
+                              <input type="text" class="form-control" [(ngModel)]="api_key" name="api_key1?" #api_key1="ngModel" />
+                              <div class="input-group-append">
+                                <div class="input-group-text " ngbTooltip="Api key copied Successfully" triggers="click:blur" style="cursor:pointer" (click)="copyInputMessage(api_key)">Copy</div>
+                              </div>
+                            </div>
+          
+                            <input *ngIf="form2" type="text" class="form-control" value="*********************************************************************************************************************************************************************************************************************************************************************"/>
+                            <!-- <div class="invalid-feedback" >
+                              <span *ngIf="api_key1?.errors?.required && form.submitted" >API Key is required!</span>
+                              <div *ngIf="api_key1?.errors?.pattern && form.submitted" >API Key should be alphanumeric!</div>
+                              <div *ngIf="api_key1?.errors?.minlength && form.submitted" >API Key should have 15 characters!</div>
+                            </div> -->
+                          </div>
+                          <div class="form-group">
+                            <label>Secret Key</label>
+                            <div class="input-group" >
+                              <input type="text" class="form-control"  [(ngModel)]="api_secret  " name="api_secret1" #api_secret1="ngModel" />
+                              <div class="input-group-append">
+                                <div class="input-group-text " ngbTooltip="Secret key copied Successfully" triggers="click:blur" style="cursor:pointer" (click)="copyInputMessage(api_secret)">Copy</div>
+                              </div>
+                            </div>
+                            <!-- <div class="invalid-feedback">
+                              <div *ngIf="api_secret1?.errors?.required && form.submitted" >API Secret Key is required!</div>
+                              <div *ngIf="api_secret1?.errors?.pattern && form.submitted" >API Secret Key should be alphanumeric!</div>
+                              <div *ngIf="api_secret1?.errors?.minlength && form.submitted" >API Secret Key should have 25 characters!</div>
+          
+                            </div> -->
+                          </div>
+                          <div class="form-group mb-0">
+                            <div>
+                              <button type="submit" class="btn btn-primary mr-1"  (click)="generateKeys()">
+                                Change Keys
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-10">
+        <div [ngbNavOutlet]="nav"></div>
+      </div>
+    </div>
+  </div>
+</div>

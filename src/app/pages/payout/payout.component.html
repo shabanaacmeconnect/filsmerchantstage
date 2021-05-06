@@ -91,8 +91,8 @@
               <table class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
                 <thead>
                   <tr>
-                    <th sortable="payout_date" (sort)="onSort($event)">Date</th>
-                    <th sortable="payout_amount" (sort)="onSort($event)">Amount</th>
+                    <th sortable="created_at" (sort)="onSort($event)">Created Date</th>
+                    <th sortable="payout_date" (sort)="onSort($event)">Payout Date</th>                    <th sortable="payout_amount" (sort)="onSort($event)">Amount</th>
                     <th sortable="transaction_mode" (sort)="onSort($event)">Mode of Payment</th>
                     <th sortable="transfer_type" (sort)="onSort($event)">Transfer Type</th>
                     <th sortable=""  class="text-center"(sort)="onSort($event)">Files & comments</th>
@@ -101,18 +101,19 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let merchants of merchantsData  | filter:term ;let i = index;">
-                    <td role="button"  (click)="openModel2(merchants,templateDetail)">{{merchants.payout_date |date}}</td>
-                    <td role="button"  (click)="openModel2(merchants,templateDetail)">{{merchants.payout_amount | currency:'AED '}}</td>
+                    <td role="button" (click)="openModel2(merchants,templateDetail)">{{merchants.created_at |date}}</td>
+                    <td  role="button"  (click)="openModel2(merchants,templateDetail)">{{merchants.payout_date |date}}</td>
+                    <td  role="button"  (click)="openModel2(merchants,templateDetail)">{{merchants.payout_amount | currency:'AED '}}</td>
                     <td role="button"  (click)="openModel2(merchants,templateDetail)">{{merchants.transaction_mode}} </td>
                     <td  role="button"  (click)="openModel2(merchants,templateDetail)"><span *ngIf="merchants.transfer_type==1">Fils to Merchant</span><span *ngIf="merchants.transfer_type==2">Merchant to Fils</span> </td>
 
-                    <td  class="text-center"> 
+                    <td  class="text-center" style="font-size:20px"> 
                       <div class=""  placement="bottom-right">
                       <a href="javascript: void(0);" class="mr-4" >
                         <i class='bx bx-chat'  (click)="openModel(chatModel,1)"></i>
                       </a>
                       <a href="javascript: void(0);" class="" >
-                        <i class='bx bx-paperclip' (click)="getAttachments(attachmentTemplate,1)"></i>
+                        <i class='bx bxs-file-doc' (click)="getAttachments(attachmentTemplate,1)"></i>
                       </a>
                       </div>
                     </td>
@@ -156,6 +157,7 @@
                   <label>Mode of Transaction</label>
                   <select class="form-control" formControlName="transaction_mode"
                     [ngClass]="{'is-invalid': typesubmit && type.transaction_mode.errors}">
+                    <option [ngValue]="null" [disabled]="true" >Choose mode of transaction</option>
                     <option [ngValue]=x *ngFor="let x of categories">{{x}}</option>
                   </select>
                   <div *ngIf="typesubmit && type.transaction_mode.errors" class="invalid-feedback">
@@ -164,7 +166,7 @@
                 </div>
                 <div class="form-group col-md-12">
                   <label>Payout Amount</label>
-                  <input type="number" class="form-control" formControlName="payout_amount"
+                  <input type="number" class="form-control" formControlName="payout_amount" placeholder="Enter amount"
                     [ngClass]="{'is-invalid': typesubmit && type.payout_amount.errors}"/>
                   <div *ngIf="typesubmit && type.payout_amount.errors" class="invalid-feedback">
                     <span *ngIf="type.payout_amount.errors.required">Payout Amount is required.</span>
@@ -172,10 +174,10 @@
                 </div>
                 <div class="form-group col-md-12 mb-0">
                   <div>
-                    <button type="submit" class="btn btn-primary mr-1">
+                    <button type="submit" class="btn btn-primary float-right">
                       Submit
                     </button>
-                    <button type="reset" class="btn btn-secondary float-right">
+                    <button type="reset" class="btn btn-secondary mr-3 float-right">
                       Reset
                     </button>
                   </div>
@@ -243,7 +245,7 @@
               <div class="table-responsive">
                 <table class="table table-centered table-striped table-nowrap">
                     <tr>
-                      <th style="text-align:left !important">Date</th><th style="text-align:left !important">Amount</th> <th style="text-align:left !important">Mode of Payment</th>
+                      <th style="text-align:left !important">Payout Date</th><th style="text-align:left !important">Amount</th> <th style="text-align:left !important">Mode of Payment</th>
                     </tr>
                     <tr class="table-light"><td style="text-align:left !important">{{details.payout_date |date}}</td><td style="text-align:left !important">{{details.payout_amount | currency:'AED '}}</td><td style="text-align:left !important">{{details.transaction_mode}}</td></tr>
                     <tr>

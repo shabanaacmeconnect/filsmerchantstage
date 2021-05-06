@@ -4,10 +4,11 @@
 
 export const environment = {
   production: false,
-  SOCKET_ENDPOINT: 'http://40.123.226.97:8088',
-
-  baseurl:"http://40.123.226.97:8088/",
- // baseurl:"https://bankfab.marshal-me.com/pbl/",
+  baseurl:"https://devlabapi.filscare.com/v1/",
+  SOCKET_ENDPOINT: 'https://devlab.filscare.com',
+  // baseurl:"https://filstest.stridewebstudio.com/api/",
+  // SOCKET_ENDPOINT: 'https://filstest.stridewebstudio.com',
+  // baseurl:"https://bankfab.marshal-me.com/pbl/",
 //  baseurl:"https://filstest.stridewebstudio.com/api/",
 //  SOCKET_ENDPOINT: 'https://filstest.stridewebstudio.com/api/',
   defaultauth: 'fackbackend',

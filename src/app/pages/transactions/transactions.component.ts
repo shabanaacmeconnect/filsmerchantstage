@@ -44,6 +44,7 @@ export class TransactionsComponent implements OnInit {
   sortBy='';
   order='';
   details: any;
+  transfer_type: any;
   constructor(private socketService: TransactionsService, private router: Router,private modalService: NgbModal,public notificationService:notificationService,
     private authFackservice: AuthfakeauthenticationService,public formBuilder: FormBuilder) { }
    ngOnInit() {
@@ -97,7 +98,8 @@ export class TransactionsComponent implements OnInit {
     if(this.from_date!=undefined ||this.to_date!=undefined || this.from_date<this.to_date)
     {
       url+='&from_date='+this.from_date+'&to_date='+this.to_date
-    }
+    }    if(this.transfer_type) url+='&transaction_type='+this.transfer_type;
+
      this.authFackservice.get(url).subscribe(      res => {
         if(res['status']==true){
           this.merchantsData =res['data'];

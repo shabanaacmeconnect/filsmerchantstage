@@ -101,7 +101,7 @@
             <button type="button" class="btn" ngbDropdownToggle id="page-header-user-dropdown">
               <!-- <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar"> -->
               <span class="d-xl-inline-block ml-1 mr-2">Welcome {{currentUser.name}}</span>
-              <img [src]="userlogo" alt="Header Avatar" class="rounded-circle header-profile-user mr-2" *ngIf="userlogo">
+              <img [src]="userlogo" alt="Header Avatar" class="rounded-circle header-profile-user mr-2" *ngIf="userlogo" style="object-fit: contain;">
               <img src="assets/images/user.png" alt="Header Avatar" class="rounded-circle header-profile-user mr-2" *ngIf="!userlogo">
               <i class="mdi mdi-chevron-down d-xl-inline-block"></i>
             </button>
@@ -122,6 +122,10 @@
                 {{ 'HEADER.LOGIN.LOGOUT' | translate}}</a>
             </div>
           </div>
+          <button type="button" routerLink="/notifications" class="btn header-item noti-icon float-right" style="margin-top:13px" id="page-header-notifications-dropdown">
+            <i class="bx bx-bell bx-tada"></i>
+            <span class="badge badge-danger badge-pill" *ngIf="count>0">{{count}}</span>
+          </button>
           <div class="dropdown d-inline-block float-right" style="margin-top:21px">
             <span class="d-xl-inline-block ml-1 mr-2">Balance ( <strong [ngClass]="merchantsData.balance>0?'text-success':'text-danger'">{{merchantsData.balance| currency:'AED ':'code':'1.2-3'}}</strong> )</span>
           </div>
