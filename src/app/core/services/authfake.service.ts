@@ -75,8 +75,10 @@ export class AuthfakeauthenticationService {
     }
     login(email: string, password: string) {
         this.apiStatusHandler.next({show:true});
-
-        return this.http.post<any>(environment.baseurl+'auth/login', { email, password })
+        let formData=new FormData();
+        formData.append('email',email);
+        formData.append('password',password)
+        return this.http.post<any>(environment.baseurl+'auth/login',formData)
                    .pipe(map(res => {
             this.apiStatusHandler.next({show:false});
 
