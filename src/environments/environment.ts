@@ -8,7 +8,6 @@ export const environment = {
   SOCKET_ENDPOINT: 'https://devlab.filscare.com',
   // baseurl:"https://filstest.stridewebstudio.com/api/",
   // SOCKET_ENDPOINT: 'https://filstest.stridewebstudio.com',
-  // baseurl:"https://bankfab.marshal-me.com/pbl/",
 //  baseurl:"https://filstest.stridewebstudio.com/api/",
 //  SOCKET_ENDPOINT: 'https://filstest.stridewebstudio.com/api/',
   defaultauth: 'fackbackend',
