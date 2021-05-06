@@ -33,7 +33,7 @@ error={
     this.getKeys()
   }
   getKeys(){
-    this.authFackservice.get('vendor/apiSettings').subscribe(
+    this.authFackservice.get('/apiSettings').subscribe(
       res => {
         if(res['status']==true){
           this.keypresent=res['data'];
@@ -54,7 +54,7 @@ error={
     document.execCommand('copy');
   }
   generateKeys(){
-    this.authFackservice.get('vendor/generateApiKey').subscribe(
+    this.authFackservice.get('/generateApiKey').subscribe(
       res => {
         if(res['status']==true){
           this.keypresent=res['data']
@@ -75,7 +75,7 @@ error={
     var formData: any = new FormData();
       formData.append("api_secret", this.api_secret);
       formData.append("api_key", this.api_key);
-      this.authFackservice.putMultipart('vendor/apiSettings',formData).subscribe(
+      this.authFackservice.putMultipart('/apiSettings',formData).subscribe(
         res => {
           if(res['status']==true){
             Swal.fire('Success!', 'Api Details Updated.', 'success');

@@ -80,7 +80,7 @@ export class DrivesComponent implements OnInit {
     }
   } 
   public _getcharities() {
-    this.authFackservice.get('vendor/charities').subscribe(
+    this.authFackservice.get('/charities').subscribe(
       res => {
         if(res['status']==true){
           this.charities =res['data'];
@@ -88,7 +88,7 @@ export class DrivesComponent implements OnInit {
       });
   }
   public _getcauses(id) {
-    this.authFackservice.get('vendor/charityCauses?charity_id='+this.typeValidationForm.value.charity_id).subscribe(
+    this.authFackservice.get('/charityCauses?charity_id='+this.typeValidationForm.value.charity_id).subscribe(
       res => {
         if(res['status']==true){
           this.causes =res['data'];
@@ -259,7 +259,7 @@ export class DrivesComponent implements OnInit {
     formData.append("color", this.typeValidationForm.value.color);
     formData.append("payment_type", this.typeValidationForm.value.payment_type);
     formData.append("preset_values", amount.join(','));    
-      this.authFackservice.postMultipart('vendor/charityDrive',formData).subscribe(
+      this.authFackservice.postMultipart('/charityDrive',formData).subscribe(
         res => {
           if(res['status']==true){
             this._fetchData();
@@ -277,7 +277,7 @@ export class DrivesComponent implements OnInit {
     this._fetchData()
   }
   public _fetchData() {
-    let url='vendor/charityDrive?page='+this.page.pageNumber+'&perPage='+this.page.size+'&keyword='+this.keyword
+    let url='/charityDrive?page='+this.page.pageNumber+'&perPage='+this.page.size+'&keyword='+this.keyword
     if(this.sortBy!='' && this.order!=''){
       url+='&sortBy='+this.sortBy+'&order='+this.order;
     }   
@@ -307,7 +307,7 @@ export class DrivesComponent implements OnInit {
 
  export(type){
    let parameter='payouts'
-  this.authFackservice.getFile('vendor/exportData?parameter='+parameter+'&type='+type).subscribe((res:any)=>{
+  this.authFackservice.getFile('/exportData?parameter='+parameter+'&type='+type).subscribe((res:any)=>{
     if(res.type=="application/json"){
 
     }else if(res.type=="application/vnd.openxmlformats"|| res.type=="text/csv" ){

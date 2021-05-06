@@ -65,7 +65,7 @@ export class SupportComponent implements OnInit {
     };
   }
   public _getcategory() {
-    this.authFackservice.get('vendor/ticketCategory').subscribe(
+    this.authFackservice.get('/ticketCategory').subscribe(
       res => {
         if(res['status']==true){
           this.categories =res['data'];
@@ -120,7 +120,7 @@ export class SupportComponent implements OnInit {
     formData.append("ticket_description", this.typeValidationForm.value.ticket_description);
 
       // delete data.user_id;
-      this.authFackservice.postMultipart('vendor/tickets',formData).subscribe(
+      this.authFackservice.postMultipart('/tickets',formData).subscribe(
         res => {
           if(res['status']==true){
             this._fetchData();
@@ -137,7 +137,7 @@ export class SupportComponent implements OnInit {
     this._fetchData()
   }
   public _fetchData() {
-    let url='vendor/tickets?page='+this.page.pageNumber+'&perPage='+this.page.size+'&keyword='+this.keyword
+    let url='/tickets?page='+this.page.pageNumber+'&perPage='+this.page.size+'&keyword='+this.keyword
     if(this.sortBy!='' && this.order!=''){
       url+='&sortBy='+this.sortBy+'&order='+this.order;
     }   
@@ -163,7 +163,7 @@ export class SupportComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then(result => {
       if (result.value) {
-        this.authFackservice.delete('vendor/causes?user_id='+item.user_id).subscribe(
+        this.authFackservice.delete('/causes?user_id='+item.user_id).subscribe(
           res => {
             if(res['status']==true){
               Swal.fire('Deleted!', 'Selected row has been deleted.', 'success');

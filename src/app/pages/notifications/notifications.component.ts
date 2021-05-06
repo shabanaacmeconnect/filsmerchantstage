@@ -59,7 +59,7 @@ export class NotificationsComponent implements OnInit {
 
   public _fetchData(type=null) {
    
-    let url='vendor/notifications?page='+this.page.pageNumber+'&perPage='+this.page.size+'&keyword='+this.keyword
+    let url='/notifications?page='+this.page.pageNumber+'&perPage='+this.page.size+'&keyword='+this.keyword
     if(this.sortBy!='' && this.order!=''){
       url+='&sortBy='+this.sortBy+'&order='+this.order;
     }
@@ -89,7 +89,7 @@ export class NotificationsComponent implements OnInit {
     
   }
   clearAll(type){
-    this.authFackservice.put('vendor/notifications?type='+type+'&page='+this.page.pageNumber+'&perPage='+this.page.size,{}).subscribe(
+    this.authFackservice.put('/notifications?type='+type+'&page='+this.page.pageNumber+'&perPage='+this.page.size,{}).subscribe(
       res => {
         if(res['status']==true){
           this._fetchData()
@@ -97,7 +97,7 @@ export class NotificationsComponent implements OnInit {
       })
   }
   clearone(id){
-    this.authFackservice.delete('vendor/notifications?notification_id='+id).subscribe(
+    this.authFackservice.delete('/notifications?notification_id='+id).subscribe(
       res => {
         if(res['status']==true){
           this.closed=false;
@@ -121,7 +121,7 @@ export class NotificationsComponent implements OnInit {
       confirmButtonText: confirmButtonText
     }).then(result => {
       if (result.value) {
-      this.authFackservice.put('vendor/categories/status?value='+currentTarget+'&category_id='+id,{}).subscribe(
+      this.authFackservice.put('/categories/status?value='+currentTarget+'&category_id='+id,{}).subscribe(
         res => {
           if(res['status']==true){
             if(currentTarget==0)

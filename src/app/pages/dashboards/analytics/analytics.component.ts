@@ -26,7 +26,7 @@ merchantCategoryCollection=[]
   }
   private _fetchData() {
 
-    this.authFackservice.get('vendor/getAnalytics').subscribe(
+    this.authFackservice.get('/getAnalytics').subscribe(
       res => {
         if(res['status']==true){
           this.authFackservice.statuscount().pipe(first())

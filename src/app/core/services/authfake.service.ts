@@ -39,7 +39,7 @@ export class AuthfakeauthenticationService {
     }
     statuscount(){
         this.apiStatusHandler.next({show:true});
-        return this.http.get<any>(environment.baseurl+'vendor/systemPendingCounts')
+        return this.http.get<any>(environment.baseurl+'/systemPendingCounts')
                     .pipe(map(res => {
             this.apiStatusHandler.next({show:false});
             localStorage.setItem('currentstatus', JSON.stringify(res['data'][0]));

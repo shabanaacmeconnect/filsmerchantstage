@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseurl:"https://devlabapi.filscare.com/v1/",
+  baseurl:"https://devlabapi.filscare.com/merchant/",
   SOCKET_ENDPOINT: 'https://devlab.filscare.com',
   // baseurl:"https://filstest.stridewebstudio.com/api/",
   // SOCKET_ENDPOINT: 'https://filstest.stridewebstudio.com',

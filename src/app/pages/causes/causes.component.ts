@@ -68,7 +68,7 @@ export class CausesComponent implements OnInit {
     }
   }  
   public _fetchData() {
-    let url='vendor/charityCauses?page='+this.page.pageNumber+'&perPage='+this.page.size+'&keyword='+this.keyword
+    let url='/charityCauses?page='+this.page.pageNumber+'&perPage='+this.page.size+'&keyword='+this.keyword
     if(this.sortBy!='' && this.order!=''){
       url+='&sortBy='+this.sortBy+'&order='+this.order;
     } 
@@ -86,7 +86,7 @@ export class CausesComponent implements OnInit {
           
         }
       });
-      this.authFackservice.get('vendor/assignedCharityCause').subscribe(
+      this.authFackservice.get('/assignedCharityCause').subscribe(
         res => {
           if(res['status']==true){
             if(res['data']!=[]){
@@ -111,7 +111,7 @@ export class CausesComponent implements OnInit {
       confirmButtonText: confirmButtonText
     }).then(result => {
       if (result.value) {
-      this.authFackservice.put('vendor/causes/status?value='+currentTarget+'&user_id='+id,{}).subscribe(
+      this.authFackservice.put('/causes/status?value='+currentTarget+'&user_id='+id,{}).subscribe(
         res => {
           if(res['status']==true){
             if(currentTarget==0)
@@ -135,7 +135,7 @@ export class CausesComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then(result => {
       if (result.value) {
-        this.authFackservice.delete('vendor/causes?user_id='+item.user_id).subscribe(
+        this.authFackservice.delete('/causes?user_id='+item.user_id).subscribe(
           res => {
             if(res['status']==true){
               Swal.fire('Deleted!', 'Selected cause has been deleted.', 'success');
@@ -159,7 +159,7 @@ export class CausesComponent implements OnInit {
  }
  export(type){
   let parameter='charityCauses'
-  let url='vendor/exportData?parameter='+parameter+'&type='+type;
+  let url='/exportData?parameter='+parameter+'&type='+type;
   if(this.id)
   url+='&charity_id='+this.id;
   this.authFackservice.getFile(url).subscribe((res:any)=>{
@@ -204,7 +204,7 @@ export class CausesComponent implements OnInit {
         confirmButtonText: 'Yes!'
       }).then(result => {
         if (result.value) {
-          this.authFackservice.putMultipart('vendor/assignCharityCause',formData).subscribe(
+          this.authFackservice.putMultipart('/assignCharityCause',formData).subscribe(
             res => {
               if(res['status']==true){
                 this._fetchData();
@@ -218,7 +218,7 @@ export class CausesComponent implements OnInit {
         }
       })
     // }else if( this.cause!=this.typeValidationForm.value.cause_id){
-    //   this.authFackservice.putMultipart('vendor/assignCharityCause',formData).subscribe(
+    //   this.authFackservice.putMultipart('/assignCharityCause',formData).subscribe(
     //       res => {
     //         if(res['status']==true){
     //           this.assign();

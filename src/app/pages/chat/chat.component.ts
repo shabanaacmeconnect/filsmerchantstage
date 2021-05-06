@@ -19,7 +19,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.getMessages()  
   }
   getMessages(){
-    this.authFackservice.get('vendor/payoutComment?payout_id='+this.pro_id)
+    this.authFackservice.get('/payoutComment?payout_id='+this.pro_id)
     .subscribe(res=>{
       if(res['status']==true){
         this.messages=res['data'];

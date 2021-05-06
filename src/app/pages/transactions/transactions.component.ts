@@ -91,7 +91,7 @@ export class TransactionsComponent implements OnInit {
   public _fetchData() {
     this.authFackservice.statuscount().pipe(first())
           .subscribe(data => {})
-    let url='vendor/transactions?page='+this.page.pageNumber+'&perPage='+this.page.size+'&keyword='+this.keyword
+    let url='/transactions?page='+this.page.pageNumber+'&perPage='+this.page.size+'&keyword='+this.keyword
     if(this.sortBy!='' && this.order!=''){
       url+='&sortBy='+this.sortBy+'&order='+this.order;
     }   
@@ -122,7 +122,7 @@ export class TransactionsComponent implements OnInit {
  }
  export(type){
    let parameter='transactions'
-  this.authFackservice.getFile('vendor/exportData?parameter='+parameter+'&type='+type).subscribe((res:any)=>{
+  this.authFackservice.getFile('/exportData?parameter='+parameter+'&type='+type).subscribe((res:any)=>{
     if(res.type=="application/json"){
 
     }else if(res.type=="application/vnd.openxmlformats"|| res.type=="text/csv" ){

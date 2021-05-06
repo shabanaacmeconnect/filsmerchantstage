@@ -78,7 +78,7 @@ export class PayoutComponent implements OnInit {
 
   public _getcategory() {
     this.categories=['Cash','Bank','Credit Card']
-    // this.authFackservice.get('vendor/categoryList').subscribe(
+    // this.authFackservice.get('/categoryList').subscribe(
     //   res => {
     //     if(res['status']==true){
     //       this.categories =res['data'];
@@ -96,7 +96,7 @@ export class PayoutComponent implements OnInit {
     this.modalService.open(largeDataModal, { size: 'md',windowClass:'modal-holder', centered: true });
   }
   getattachmentlist(){
-    this.authFackservice.get('vendor/payoutAttachment?payout_id='+this.id).subscribe(
+    this.authFackservice.get('/payoutAttachment?payout_id='+this.id).subscribe(
       res => {
         if(res['status']==true){
           this.attachments =res['data'];
@@ -112,7 +112,7 @@ export class PayoutComponent implements OnInit {
     formData.append("payout_amount", this.typeValidationForm.value.payout_amount);
     let data=this.typeValidationForm.value;
     
-      this.authFackservice.postMultipart('vendor/payouts',formData).subscribe(
+      this.authFackservice.postMultipart('/payouts',formData).subscribe(
         res => {
           if(res['status']==true){
             this._fetchData();
@@ -130,7 +130,7 @@ export class PayoutComponent implements OnInit {
     this._fetchData()
   }
   public _fetchData() {
-    let url='vendor/payouts?page='+this.page.pageNumber+'&perPage='+this.page.size+'&keyword='+this.keyword
+    let url='/payouts?page='+this.page.pageNumber+'&perPage='+this.page.size+'&keyword='+this.keyword
     if(this.sortBy!='' && this.order!=''){
       url+='&sortBy='+this.sortBy+'&order='+this.order;
     }   
@@ -163,7 +163,7 @@ export class PayoutComponent implements OnInit {
 
  export(type){
    let parameter='payouts'
-  this.authFackservice.getFile('vendor/exportData?parameter='+parameter+'&type='+type).subscribe((res:any)=>{
+  this.authFackservice.getFile('/exportData?parameter='+parameter+'&type='+type).subscribe((res:any)=>{
     if(res.type=="application/json"){
 
     }else if(res.type=="application/vnd.openxmlformats"|| res.type=="text/csv" ){

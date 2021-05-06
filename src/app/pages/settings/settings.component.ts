@@ -85,14 +85,14 @@ export class SettingsComponent implements OnInit {
   public _fetchData() {
     this.authFackservice.statuscount().pipe(first())
           .subscribe(data => {})
-    let url='vendor/getDetails'
+    let url='/getDetails'
     this.authFackservice.get(url).subscribe(
       res => {
         if(res['status']==true){
           this.merchantsData =res['data'][0];
         }
       });
-      this.authFackservice.get('vendor/apiSettings').subscribe(
+      this.authFackservice.get('/apiSettings').subscribe(
         res => {
           if(res['status']==true){
             this.keypresent=res['data'];
@@ -145,7 +145,7 @@ export class SettingsComponent implements OnInit {
     document.execCommand('copy');
   }
   generateKeys(){
-    this.authFackservice.get('vendor/generateApiKey').subscribe(
+    this.authFackservice.get('/generateApiKey').subscribe(
       res => {
         if(res['status']==true){
           this.keypresent=res['data']
@@ -166,7 +166,7 @@ export class SettingsComponent implements OnInit {
     var formData: any = new FormData();
       formData.append("api_secret", this.api_secret);
       formData.append("api_key", this.api_key);
-      this.authFackservice.putMultipart('vendor/apiSettings',formData).subscribe(
+      this.authFackservice.putMultipart('/apiSettings',formData).subscribe(
         res => {
           if(res['status']==true){
             Swal.fire('Success!', 'Api Details Updated.', 'success');

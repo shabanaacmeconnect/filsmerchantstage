@@ -22,7 +22,7 @@ export class DefaultComponent implements OnInit {
     this._fetchData()
   }
   private _fetchData() {
-    this.authFackservice.get('vendor/getStats').subscribe(
+    this.authFackservice.get('/getStats').subscribe(
       res => {
         if(res['status']==true){
             this.authFackservice.statuscount().pipe(first())

@@ -73,7 +73,7 @@ export class CharityComponent implements OnInit {
   }
  
  assign(){
-  this.authFackservice.get('vendor/assignedCharityCause').subscribe(
+  this.authFackservice.get('/assignedCharityCause').subscribe(
     res => {
       if(res['status']==true){
         if(res['data']!=[]){
@@ -111,7 +111,7 @@ export class CharityComponent implements OnInit {
     this._fetchData()
   }
   public getcategories() {
-    this.authFackservice.get('vendor/categoryList').subscribe(
+    this.authFackservice.get('/categoryList').subscribe(
       res => {
         if(res['status']==true){
           this.categories =res['data'];
@@ -120,7 +120,7 @@ export class CharityComponent implements OnInit {
   }
   
   public _getcharities() {
-    this.authFackservice.get('vendor/charities').subscribe(
+    this.authFackservice.get('/charities').subscribe(
       res => {
         if(res['status']==true){
           this.charities =res['data'];
@@ -133,7 +133,7 @@ export class CharityComponent implements OnInit {
     this.typeValidationForm.patchValue({
       cause_id:'',
     })
-    this.authFackservice.get('vendor/charityCauses?charity_id='+this.typeValidationForm.value.charity_id).subscribe(
+    this.authFackservice.get('/charityCauses?charity_id='+this.typeValidationForm.value.charity_id).subscribe(
       res => {
         if(res['status']==true){
           this.causes =res['data'];
@@ -141,7 +141,7 @@ export class CharityComponent implements OnInit {
       });
   }
   public _fetchData() {
-    let url='vendor/charities?page='+this.page.pageNumber+'&perPage='+this.page.size+'&keyword='+this.keyword
+    let url='/charities?page='+this.page.pageNumber+'&perPage='+this.page.size+'&keyword='+this.keyword
     if(this.sortBy!='' && this.order!=''){
       url+='&sortBy='+this.sortBy+'&order='+this.order;
     }
@@ -193,7 +193,7 @@ export class CharityComponent implements OnInit {
         confirmButtonText: 'Yes!'
       }).then(result => {
         if (result.value) {
-          this.authFackservice.putMultipart('vendor/assignCharityCause',formData).subscribe(
+          this.authFackservice.putMultipart('/assignCharityCause',formData).subscribe(
             res => {
               if(res['status']==true){
                 this.assign();
@@ -207,7 +207,7 @@ export class CharityComponent implements OnInit {
         }
       })
     }else if( this.cause!=this.typeValidationForm.value.cause_id){
-      this.authFackservice.putMultipart('vendor/assignCharityCause',formData).subscribe(
+      this.authFackservice.putMultipart('/assignCharityCause',formData).subscribe(
           res => {
             if(res['status']==true){
               this.assign();
@@ -233,7 +233,7 @@ export class CharityComponent implements OnInit {
  }
  export(type){
    let parameter='charities'
-  this.authFackservice.getFile('vendor/exportData?parameter='+parameter+'&type='+type).subscribe((res:any)=>{
+  this.authFackservice.getFile('/exportData?parameter='+parameter+'&type='+type).subscribe((res:any)=>{
     if(res.type=="application/json"){
 
     }else if(res.type=="application/vnd.openxmlformats"|| res.type=="text/csv" ){

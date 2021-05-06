@@ -48,7 +48,7 @@ export class VerticalComponent implements OnInit, AfterViewInit {
     });
   }
   getcount(){
-    let url='vendor/notifications'
+    let url='/notifications'
     this.authFackservice.get(url).subscribe(
       res => {
         if(res['status']==true){
