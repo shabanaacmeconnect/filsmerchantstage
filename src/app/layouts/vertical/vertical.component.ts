@@ -35,7 +35,7 @@ export class VerticalComponent implements OnInit, AfterViewInit {
   }
   setupSocketConnection() {
     this.socket = io(environment.SOCKET_ENDPOINT, {
-      path:'/api/socket.io',
+      path:'/merchant/api/socket.io',
       // auth: {
       //   admin_id: this.authFackservice.currentUserValue['user_id'],
       // }
