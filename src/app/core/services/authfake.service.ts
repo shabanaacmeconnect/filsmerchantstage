@@ -161,17 +161,34 @@ export class AuthfakeauthenticationService {
     }
     postMultipart( url,body) {
         this.apiStatusHandler.next({show:true});
-
         return this.http.post<any>(environment.baseurl+url,body)
                    .pipe(map(res => {
             this.apiStatusHandler.next({show:false});
-
                 return res;
             }));
     }
+    postMultipartV1( url,body) {
+        this.apiStatusHandler.next({show:true});
+        return this.http.post<any>(environment.SOCKET_ENDPOINT+'/v1/'+url,body)
+                   .pipe(map(res => {
+            this.apiStatusHandler.next({show:false});
+                return res;
+            }));
+    }
+    getv1(url){
+        this.apiStatusHandler.next({show:true});
+        return this.http.get<any>(environment.SOCKET_ENDPOINT+'/v1/'+url)
+                      .pipe(map(res => {
+            this.apiStatusHandler.next({show:false});
+            // login successful if there's a jwt token in the response
+            if (res['status']==true) {
+             
+            }
+            return res;
+        }));
+    }
     get( url) {
         this.apiStatusHandler.next({show:true});
-
         return this.http.get<any>(environment.baseurl+url)
                       .pipe(map(res => {
             this.apiStatusHandler.next({show:false});

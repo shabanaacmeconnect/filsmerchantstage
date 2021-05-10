@@ -51,7 +51,7 @@ export class DriveComponent implements OnInit, AfterViewInit {
     let url='charityDrivePayment?drive_id='+this.id
     if(this.route.snapshot.url['2']=='preview')
       url+='&preview=1'
-     this.authFackservice.get(url).subscribe(res => {
+     this.authFackservice.getv1(url).subscribe(res => {
         if(res['status']==true){
           this.status=true
          this.response=res['data'][0];
@@ -91,7 +91,7 @@ export class DriveComponent implements OnInit, AfterViewInit {
     let formData=new FormData()
     formData.append('amount',this.amount);
     formData.append('drive_id',this.id);
-    this.authFackservice.postMultipart('charityDrivePayment',formData).subscribe(
+    this.authFackservice.postMultipartV1('charityDrivePayment',formData).subscribe(
       res => {
         if(res['status']==true){
           window.location.href = res['data'];
