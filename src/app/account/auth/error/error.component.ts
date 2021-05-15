@@ -41,9 +41,9 @@ export class ErrorComponent implements OnInit {
         this.response1=res['data'][0];
        }
       })
-    let url='/transactionDetails?transaction_id='+this.id
+    let url='transactionDetails?transaction_id='+this.id
     
-     this.authFackservice.get(url).subscribe(res => {
+     this.authFackservice.getv1(url).subscribe(res => {
         if(res['status']==true){
           this.status=true;
          this.response=res['data'][0];
