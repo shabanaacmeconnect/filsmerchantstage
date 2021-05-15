@@ -122,7 +122,7 @@
                        Pending
                       </span>
                       <span class="badge badge-success font-size-12" *ngIf="merchants.status==1">
-                        Success
+                        Completed
                        </span>
                        <span class="badge badge-danger font-size-12" *ngIf="merchants.status==2">
                         Failed
@@ -249,7 +249,7 @@
                     </tr>
                     <tr class="table-light"><td style="text-align:left !important">{{details.payout_date |date}}</td><td style="text-align:left !important">{{details.payout_amount | currency:'AED '}}</td><td style="text-align:left !important">{{details.transaction_mode}}</td></tr>
                     <tr>
-                     <th style="text-align:left !important">Transfer Type</th><th style="text-align:left !important">Status</th><th></th>
+                     <th style="text-align:left !important">Transfer Type</th><th style="text-align:left !important">Status</th> <th style="text-align:left !important"  *ngIf="details.status==2">Remarks</th>
                     </tr>
                     <tr class="table-light"><td style="text-align:left !important"><span *ngIf="details.transfer_type==1">Fils to Merchant</span><span *ngIf="details.transfer_type==2">Merchant to Fils</span></td> <td style="text-align:left !important">
                       <span class="badge badge-primary font-size-12 "*ngIf="details.status==0">
@@ -261,7 +261,7 @@
                        <span class="badge badge-danger font-size-12" *ngIf="details.status==2">
                         Rejected
                        </span>
-                    </td><td></td></tr>
+                    </td> <td style="text-align:left !important"  *ngIf="details.status==2" >{{details.remarks}}</td></tr>
                    
                 </table>
               </div>
