@@ -31,8 +31,8 @@
                     <option ngValue="transaction_id">Transaction ID</option>
                     <option ngValue="created_at">Created At</option>
                     <option ngValue="donation_amount">Donation Amount</option>
-                    <option ngValue="vendor_commission">Merchant Commission</option>
-                    <option ngValue="fils_commission">Fils Commission</option>
+                    <option ngValue="vendor_commission">Merchant Fee</option>
+                    <option ngValue="fils_commission">Tech Fee</option>
                     <option ngValue="charity_payable">Charity Payable</option>
                     <option ngValue="charity_name">Charity</option>
                     <option ngValue="cause_name">Cause</option>
@@ -114,8 +114,8 @@
                     <th sortable="created_at" (sort)="onSort($event)">Time</th>
                     <th sortable="transaction_type" (sort)="onSort($event)">Type</th>
                     <th sortable="donation_amount" (sort)="onSort($event)">Donation Amount</th>
-                    <!-- <th sortable="mer" (sort)="onSort($event)">Merchant Commission</th>
-                    <th sortable="category_name" (sort)="onSort($event)">Fils Commission</th> -->
+                    <!-- <th sortable="mer" (sort)="onSort($event)">Merchant Fee</th>
+                    <th sortable="category_name" (sort)="onSort($event)">Tech Fee</th> -->
                     <th sortable="charity_payable" (sort)="onSort($event)">Charity Payable</th>
                     <th sortable="charity_name" (sort)="onSort($event)">Charity</th>
                     <th sortable="cause_name" (sort)="onSort($event)">Cause</th>
@@ -175,7 +175,7 @@
                     </tr>
                     <tr class="table-light"><td style="text-align:left !important">{{details.created_at |date}}</td><td style="text-align:left !important">{{details.transaction_id}}</td><td style="text-align:left !important">{{details.donation_amount| currency:'AED ':'code':'1.2-3'}}</td></tr>
                     <tr>
-                      <th style="text-align:left !important">Charity Payable</th><th style="text-align:left !important">Fils Commission</th><th style="text-align:left !important">Merchant Commission</th>
+                      <th style="text-align:left !important">Charity Payable</th><th style="text-align:left !important">Tech Fee</th><th style="text-align:left !important">Merchant Fee</th>
                     </tr>
                     <tr class="table-light"><td style="text-align:left !important">{{details.charity_payable| currency:'AED ':'code':'1.2-3'}}</td><td style="text-align:left !important">{{details.fils_commission| currency:'AED ':'code':'1.2-3'}}</td><td style="text-align:left !important">{{details.vendor_commission| currency:'AED ':'code':'1.2-3'}}</td></tr>
                     <tr>
