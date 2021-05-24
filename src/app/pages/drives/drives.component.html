@@ -97,7 +97,7 @@
                     <th sortable="charity" (sort)="onSort($event)">Charity</th>
                     <th sortable="cause_name" (sort)="onSort($event)">Cause</th>
                     <!-- <th sortable="fils_commission" (sort)="onSort($event)">Tech Fee</th> -->
-                    <th sortable="vendor_commission" (sort)="onSort($event)">Vendor Commission</th> 
+                    <th sortable="vendor_commission" (sort)="onSort($event)">Merchant Fee</th> 
                                        <th>QR Code</th>
                     <th sortable="approved" (sort)="onSort($event)">Status</th>
                   </tr>
@@ -112,9 +112,9 @@
                     <!-- <td> {{merchants.fils_commission |currency:'AED ':'code':'1.2-3'}}</td> -->
                     <td (click)="openModel2(merchants,templateDetail)">{{merchants.vendor_commission  |currency:'AED ':'code':'1.2-3'}}</td>
                     <td class="text-center">
-                      <!--*ngIf="checkdate(merchants.start_date,merchants.end_date)" -->
+                      <!--*ngIf="checkdate(merchants.start_date,merchants.end_date)" *ngIf="merchants.approved==0" -->
                       <div  ngbDropdown placement="bottom-right">
-                        <a href="javascript: void(0);" *ngIf="merchants.approved==0" (click)="openQR(qrTemplate,merchants.drive_id)" class="dropdown-item " >
+                        <a href="javascript: void(0);"  (click)="openQR(qrTemplate,merchants.drive_id)" class="dropdown-item " >
                           <i class='bx bx-barcode-reader'></i>
                         </a>
                       </div>
@@ -375,8 +375,9 @@
             <div class="card-body text-center " >
               <a [href]='qrstring' target="_blank">
                 <qrcode [qrdata]="qrstring" allowEmptyString="true" [width]="300"[cssClass]="qrstring" [errorCorrectionLevel]="'M'"></qrcode>
-
               </a>
+              <button class="btn btn-primary" (click)="downloadQR()">Download</button>
+
             </div>
           </div>
         </div>
@@ -401,7 +402,7 @@
                     <tr><th style="text-align:left !important">Created At</th><th style="text-align:left !important">Drive ID</th><th style="text-align:left !important">Charity</th><th style="text-align:left !important">Cause</th></tr>
                     <tr class="table-light"><td style="text-align:left !important">{{details.created_at |date}}</td><td style="text-align:left !important">{{details.drive_id}}</td><td style="text-align:left !important">{{details.charity}}</td><td style="text-align:left !important">{{details.cause_name}}</td></tr>
                     <tr>
-                      <th style="text-align:left !important">Start Date</th><th style="text-align:left !important">End Date</th><th style="text-align:left !important">Vendor Commission</th><th style="text-align:left !important">Merchant</th>
+                      <th style="text-align:left !important">Start Date</th><th style="text-align:left !important">End Date</th><th style="text-align:left !important">Merchant Fee</th><th style="text-align:left !important">Merchant</th>
                     </tr>
                     <tr class="table-light"><td style="text-align:left !important">{{details.start_date |date}}</td><td style="text-align:left !important">{{details.end_date |date}}</td><td style="text-align:left !important">{{details.vendor_commission |currency:'AED '}}</td><td style="text-align:left !important">{{details.vendor_name}}</td></tr>
                     <tr><th style="text-align:left !important">Status</th><th style="text-align:left !important">Color</th><th style="text-align:left !important">Payment Type</th><th style="text-align:left !important" ><span >Preset Values</span></th></tr>

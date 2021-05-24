@@ -116,13 +116,13 @@
                             <div class="d-flex align-items-center mb-3">
                                 <div class="avatar-xs mr-3">
                                     <span class="avatar-title rounded-circle bg-soft-primary text-primary font-size-18">
-                                        <i class="bx bx-line-chart"></i>
+                                        <i class="bx bx-check"></i>
                                     </span>
                                 </div>
-                                <h5 class="font-size-14 mb-0">Gross Profit <br/><span class="font-size-12">  - Total</span></h5>
+                                <h5 class="font-size-14 mb-0">Active Cause <br/><span class="font-size-12"> </span></h5>
                             </div>
                             <div class="text-muted mt-4">
-                                <h4>{{dashboardData.total_gross_profit |currency:'AED ':'code':'1.2-2'}}</h4>
+                                <h4>{{dashboardData.cause_name}}</h4>
                                 
                             </div>
                         </div>
@@ -135,13 +135,13 @@
                             <div class="d-flex align-items-center mb-3">
                                 <div class="avatar-xs mr-3">
                                     <span class="avatar-title rounded-circle bg-soft-primary text-primary font-size-18">
-                                        <i class="bx bx-line-chart"></i>
+                                        <i class="bx bx-money"></i>
                                     </span>
                                 </div>
-                                <h5 class="font-size-14 mb-0">Gross Profit<br/><span class="font-size-12">  - Today</span></h5>
+                                <h5 class="font-size-14 mb-0">Active Cause Collection<br/><span class="font-size-12">  - Today</span></h5>
                             </div>
                             <div class="text-muted mt-4">
-                                <h4>{{dashboardData.total_gross_profit_today|currency:'AED ':'code':'1.2-2'}} </h4>
+                                <h4>{{dashboardData.cause_collection|currency:'AED ':'code':'1.2-2'}} </h4>
                             </div>
                         </div>
                     </div>

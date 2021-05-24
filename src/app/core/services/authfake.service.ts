@@ -4,8 +4,9 @@ import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import jwt_decode from "jwt-decode";
 import { User } from '../models/auth.models';
 import { environment } from 'src/environments/environment';
-import { catchError, retry, map, tap } from 'rxjs/operators';
+import { catchError, retry, map, tap} from 'rxjs/operators';
 import { EventService } from './event.service';
+import 'rxjs/add/observable/of';
 
 @Injectable({ providedIn: 'root' })
 export class AuthfakeauthenticationService {
@@ -36,6 +37,10 @@ export class AuthfakeauthenticationService {
     {
       this.apiStatusHandler.next({show:false});
 
+    }
+    public setLoader(value){
+        this.apiStatusHandler.next({show:value});
+         return Observable.of({status:1});
     }
     statuscount(){
         this.apiStatusHandler.next({show:true});

@@ -2,11 +2,12 @@ import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { first } from 'rxjs/operators';
+import { delay, first } from 'rxjs/operators';
 import { AuthfakeauthenticationService } from 'src/app/core/services/authfake.service';
 import { notificationService } from 'src/app/core/services/notofication.service';
 import Swal from 'sweetalert2';
 import { NgbdSortableHeader } from '../table-sortable';
+import * as htmlToImage from 'html-to-image';
 
 export type SortDirection = 'asc' | 'desc' | '';
 export const compare = (v1:number|string, v2:number|string) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
@@ -235,6 +236,19 @@ export class DrivesComponent implements OnInit {
         amount.push(element.phonenumber);
       });
       return amount;
+    }
+    downloadQR(){
+      // this.authFackservice.setLoader(true).pipe(delay(0)).subscribe(response => {
+              htmlToImage.toJpeg(document.getElementsByTagName('canvas')[0])
+      .then(function (dataUrl) {
+        var link = document.createElement('a');
+        link.download = 'QR.jpeg';
+        link.href = dataUrl;
+        link.click();
+          });
+     //   })
+        // this.authFackservice.setLoader(false).pipe(delay(0)).subscribe(response => { })
+
     }
   typeSubmit() {
     this.typesubmit = true;

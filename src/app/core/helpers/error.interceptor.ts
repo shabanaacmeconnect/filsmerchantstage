@@ -18,8 +18,15 @@ export class ErrorInterceptor implements HttpInterceptor {
                  this.authenticationService.logout();
                 // location.reload();
             }
-            Swal.fire('Error',  'Oops... Some error occured. Please try again later.', 'warning');
-            const error = err.error.message || err.statusText;
+            if (err.status === 400 || err.status === 422) {
+                // if( err.error.message)
+                // Swal.fire('Error',  err.error.data, 'warning');
+                // else{
+                    Swal.fire('Error', 'Invalid Input', 'warning');
+                // }
+
+            }else
+            Swal.fire('Error',  'Oops... Some error occured. Please try again later.', 'warning');            const error = err.error.message || err.statusText;
             return throwError(error);
         }));
     }

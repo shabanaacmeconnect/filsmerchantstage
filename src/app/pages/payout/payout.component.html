@@ -95,7 +95,7 @@
                     <th sortable="payout_date" (sort)="onSort($event)">Payout Date</th>                    <th sortable="payout_amount" (sort)="onSort($event)">Amount</th>
                     <th sortable="transaction_mode" (sort)="onSort($event)">Mode of Payment</th>
                     <th sortable="transfer_type" (sort)="onSort($event)">Transfer Type</th>
-                    <th sortable=""  class="text-center"(sort)="onSort($event)">Files & comments</th>
+                    <th sortable=""  class="text-center"(sort)="onSort($event)">Files </th>
                     <th sortable="status" class="text-center" (sort)="onSort($event)">Status</th>
                   </tr>
                 </thead>
@@ -109,9 +109,9 @@
 
                     <td  class="text-center" style="font-size:20px"> 
                       <div class=""  placement="bottom-right">
-                      <a href="javascript: void(0);" class="mr-4" >
+                      <!-- <a href="javascript: void(0);" class="mr-4" >
                         <i class='bx bx-chat'  (click)="openModel(chatModel,1)"></i>
-                      </a>
+                      </a> -->
                       <a href="javascript: void(0);" class="" >
                         <i class='bx bxs-file-doc' (click)="getAttachments(attachmentTemplate,1)"></i>
                       </a>

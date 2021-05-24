@@ -175,9 +175,20 @@
                     </tr>
                     <tr class="table-light"><td style="text-align:left !important">{{details.created_at |date}}</td><td style="text-align:left !important">{{details.transaction_id}}</td><td style="text-align:left !important">{{details.donation_amount| currency:'AED ':'code':'1.2-3'}}</td></tr>
                     <tr>
-                      <th style="text-align:left !important">Charity Payable</th><th style="text-align:left !important">Tech Fee</th><th style="text-align:left !important">Merchant Fee</th>
+                      <th style="text-align:left !important">Charity Payable</th><th style="text-align:left !important">Merchant Fee</th><th style="text-align:left !important">Status</th>
                     </tr>
-                    <tr class="table-light"><td style="text-align:left !important">{{details.charity_payable| currency:'AED ':'code':'1.2-3'}}</td><td style="text-align:left !important">{{details.fils_commission| currency:'AED ':'code':'1.2-3'}}</td><td style="text-align:left !important">{{details.vendor_commission| currency:'AED ':'code':'1.2-3'}}</td></tr>
+                    <tr class="table-light"><td style="text-align:left !important">{{details.charity_payable| currency:'AED ':'code':'1.2-3'}}</td><td style="text-align:left !important">{{details.vendor_commission| currency:'AED ':'code':'1.2-3'}}</td>
+                      <td style="text-align:left !important">
+                        <span class="badge badge-primary font-size-12" *ngIf="details.status==0">
+                         Pending
+                        </span>
+                        <span class="badge badge-success font-size-12" *ngIf="details.status==1">
+                          Success
+                         </span>
+                         <span class="badge badge-danger font-size-12" *ngIf="details.status==2">
+                          Failed
+                         </span>
+                      </td></tr>
                     <tr>
                       <th style="text-align:left !important">Cause Name</th><th style="text-align:left !important">Charity Name</th><th style="text-align:left !important">Transaction Type</th>
                     </tr>
@@ -185,20 +196,7 @@
                       <td style="text-align:left !important">
                         <span *ngIf="details.transaction_type==1">Store</span>
                         <span *ngIf="details.transaction_type==2">QR Code</span>
-                      </td></tr><tr>
-                      <th style="text-align:left !important">Status</th>
-                    </tr>
-                    <tr class="table-light"><td style="text-align:left !important">
-                      <span class="badge badge-primary font-size-12" *ngIf="details.status==0">
-                       Pending
-                      </span>
-                      <span class="badge badge-success font-size-12" *ngIf="details.status==1">
-                        Success
-                       </span>
-                       <span class="badge badge-danger font-size-12" *ngIf="details.status==2">
-                        Failed
-                       </span>
-                    </td></tr>
+                      </td></tr>
                    
                 </table>
               </div>
