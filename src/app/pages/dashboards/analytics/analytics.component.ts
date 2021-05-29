@@ -29,8 +29,7 @@ merchantCategoryCollection=[]
     this.authFackservice.get('/getAnalytics').subscribe(
       res => {
         if(res['status']==true){
-          this.authFackservice.statuscount().pipe(first())
-          .subscribe(data => {})
+        
            this.dashboardData =res['data'];
            this.dashboardData['causeTypeCollection']['labels'].forEach((element,i) => {
             this.causeTypeCollection.push({label:element,series:this.dashboardData['causeTypeCollection']['series'][i]})
@@ -68,6 +67,8 @@ merchantCategoryCollection=[]
       
         };
       });
+      this.authFackservice.statuscount().pipe(first())
+      .subscribe(data => {})
   }
   getRandomColor() {
     var letters = '0123456789ABCDEF';

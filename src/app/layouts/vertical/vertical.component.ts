@@ -49,7 +49,7 @@ export class VerticalComponent implements OnInit, AfterViewInit {
   }
   getcount(){
     let url='/notifications'
-    this.authFackservice.get(url).subscribe(
+    this.authFackservice.getnoload(url).subscribe(
       res => {
         if(res['status']==true){
           this.count=res['unreadCount'];

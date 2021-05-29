@@ -89,8 +89,7 @@ export class TransactionsComponent implements OnInit {
     this._fetchData()
   }
   public _fetchData() {
-    this.authFackservice.statuscount().pipe(first())
-          .subscribe(data => {})
+   
     let url='/transactions?page='+this.page.pageNumber+'&perPage='+this.page.size+'&keyword='+this.keyword
     if(this.sortBy!='' && this.order!=''){
       url+='&sortBy='+this.sortBy+'&order='+this.order;
@@ -107,6 +106,8 @@ export class TransactionsComponent implements OnInit {
           this.page.totalElements=res['elementCount'];
         }
       });
+      this.authFackservice.statuscount().pipe(first())
+      .subscribe(data => {})
   }
 
   sorting(){

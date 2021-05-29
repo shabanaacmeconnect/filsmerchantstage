@@ -74,8 +74,7 @@ export class NotificationsComponent implements OnInit {
           }
         });
     }else{
-      this.authFackservice.statuscount().pipe(first())
-      .subscribe(data => {})
+    
       this.authFackservice.get(url).subscribe(
         res => {
           if(res['status']==true){
@@ -85,6 +84,8 @@ export class NotificationsComponent implements OnInit {
   
           }
         });
+        this.authFackservice.statuscount().pipe(first())
+        .subscribe(data => {})
     }
     
   }

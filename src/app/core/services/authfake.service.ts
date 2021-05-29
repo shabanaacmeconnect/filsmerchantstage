@@ -43,10 +43,10 @@ export class AuthfakeauthenticationService {
          return Observable.of({status:1});
     }
     statuscount(){
-        this.apiStatusHandler.next({show:true});
+        // this.apiStatusHandler.next({show:true});
         return this.http.get<any>(environment.baseurl+'/systemPendingCounts')
                     .pipe(map(res => {
-            this.apiStatusHandler.next({show:false});
+            // this.apiStatusHandler.next({show:false});
             localStorage.setItem('currentstatus', JSON.stringify(res['data'][0]));
             this.currentstatusSubject.next(res['data'][0]);
             this.eventService.broadcast('currentstatus',  this.currentstatusSubject.value);
@@ -107,10 +107,11 @@ export class AuthfakeauthenticationService {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
         location.reload();
-    } getnoload( url) {
+    } 
+    getnoload( url) {
         return this.http.get<any>(environment.baseurl+url)
                       .pipe(map(res => {
-            this.apiStatusHandler.next({show:false});
+            // this.apiStatusHandler.next({show:false});
             // login successful if there's a jwt token in the response
             if (res['status']==true) {
              

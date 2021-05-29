@@ -25,8 +25,7 @@ export class DefaultComponent implements OnInit {
     this.authFackservice.get('/getStats').subscribe(
       res => {
         if(res['status']==true){
-            this.authFackservice.statuscount().pipe(first())
-          .subscribe(data => {})
+          
            this.dashboardData =res['data'];
         let collection=res['data']['transactionCollectionLineData'];
         let count=res['data']['transactionsCountLineData'];
@@ -175,5 +174,7 @@ export class DefaultComponent implements OnInit {
         };
         };
       });
+      this.authFackservice.statuscount().pipe(first())
+      .subscribe(data => {})
   }
 }

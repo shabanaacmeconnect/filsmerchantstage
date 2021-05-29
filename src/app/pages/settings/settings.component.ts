@@ -83,8 +83,7 @@ export class SettingsComponent implements OnInit {
   }
 
   public _fetchData() {
-    this.authFackservice.statuscount().pipe(first())
-          .subscribe(data => {})
+  
     let url='/getDetails'
     this.authFackservice.get(url).subscribe(
       res => {
@@ -103,6 +102,8 @@ export class SettingsComponent implements OnInit {
            }
           }
         });
+        this.authFackservice.statuscount().pipe(first())
+        .subscribe(data => {})
   }
   get type() {
     return this.typeValidationForm.controls;
