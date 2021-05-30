@@ -54,7 +54,7 @@ export class DriveComponent implements OnInit, AfterViewInit {
      this.authFackservice.getv1(url).subscribe(res => {
         if(res['status']==true){
           this.status=true
-         this.response=res['data'][0];
+         this.response=res['data'];
          if(this.response.payment_type==2){
            this.amounts=this.response.preset_values.split(',');
          }
