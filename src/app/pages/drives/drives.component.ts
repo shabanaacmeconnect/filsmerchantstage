@@ -50,6 +50,7 @@ export class DrivesComponent implements OnInit {
    year:any = this.dtToday.getFullYear();
   minDate: string;
   userlogo=''
+  iacad_number: any;
   constructor( private router: Router,private modalService: NgbModal,public notificationService:notificationService,
     private authFackservice: AuthfakeauthenticationService,public formBuilder: FormBuilder) { }
 
@@ -95,6 +96,8 @@ export class DrivesComponent implements OnInit {
       res => {
         if(res['status']==true){
           this.causes =res['data'];
+          if(res['data'].length>0)
+          this.iacad_number=res['data'][0]['iacad_number']
         }
       });
   } 
