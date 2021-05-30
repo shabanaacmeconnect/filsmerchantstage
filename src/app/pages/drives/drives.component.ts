@@ -49,11 +49,13 @@ export class DrivesComponent implements OnInit {
    day:any = this.dtToday.getDate();
    year:any = this.dtToday.getFullYear();
   minDate: string;
- 
+  userlogo=''
   constructor( private router: Router,private modalService: NgbModal,public notificationService:notificationService,
     private authFackservice: AuthfakeauthenticationService,public formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.userlogo=localStorage.getItem('user_logo')
+
     this.breadCrumbItems = [{label:'My Dashboard',href:'/dashboard'},{label:'Charitable Drives', active: true }];
     this.currentpage = 1;
     this._fetchData();
