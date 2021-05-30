@@ -170,10 +170,12 @@
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-centered table-striped table-nowrap">
+                  <tr><th style="text-align:left !important" colspan="3">Transaction ID</th></tr>
+                  <tr  class="table-light"><td colspan="3" style="text-align:left !important">{{details.transaction_id}}</td></tr>
                     <tr>
-                      <th style="text-align:left !important">Created At</th><th style="text-align:left !important">Transaction ID</th><th style="text-align:left !important">Donation Amount</th>
+                      <th style="text-align:left !important">Created Date</th><th style="text-align:left !important">Time</th><th style="text-align:left !important">Donation Amount</th>
                     </tr>
-                    <tr class="table-light"><td style="text-align:left !important">{{details.created_at |date}}</td><td style="text-align:left !important">{{details.transaction_id}}</td><td style="text-align:left !important">{{details.donation_amount| currency:'AED ':'code':'1.2-3'}}</td></tr>
+                    <tr class="table-light"><td style="text-align:left !important">{{details.created_at |date}}</td><td style="text-align:left !important">{{details.created_at |date :'h:mm:ss a'}}</td><td style="text-align:left !important">{{details.donation_amount| currency:'AED ':'code':'1.2-3'}}</td></tr>
                     <tr>
                       <th style="text-align:left !important">Charity Payable</th><th style="text-align:left !important">Merchant Fee</th><th style="text-align:left !important">Status</th>
                     </tr>

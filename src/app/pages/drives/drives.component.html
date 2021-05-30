@@ -216,7 +216,7 @@
                 </div>
                 </div>
                 <div class="form-group col-md-6">
-                  <label>Image</label><span class="text-muted font-size-10 "> ( jpg/jpeg/png files of maximum 2MB )</span>
+                  <label>Image</label><span class="text-muted font-size-10 "> ( 500*300 jpg/jpeg/png files of maximum 2MB )</span>
                   <div>
                     <input type="file"  (change)="onFileSelected($event)" formControlName="logo_path"
                       [ngClass]="{'is-invalid': (typesubmit && type.logo_path.errors || (sizeError|| !imageType))}">

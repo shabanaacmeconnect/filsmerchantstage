@@ -32,6 +32,7 @@ export class DriveComponent implements OnInit, AfterViewInit {
   amounts=[];
   amount='';
   status;
+  message=""
   // tslint:disable-next-line: max-line-length
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router,
     private authFackservice: AuthfakeauthenticationService) {
@@ -44,7 +45,6 @@ export class DriveComponent implements OnInit, AfterViewInit {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required]],
     });
-  console.log(this.route.snapshot)
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
   public _fetchData() {
@@ -58,8 +58,10 @@ export class DriveComponent implements OnInit, AfterViewInit {
          if(this.response.payment_type==2){
            this.amounts=this.response.preset_values.split(',');
          }
-        }else
-        this.status=false;
+        }else{
+          this.status=false;
+          this.message=res['message']
+        }
       });
   }
   checkout(item){
