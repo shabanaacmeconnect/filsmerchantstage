@@ -44,7 +44,7 @@ export class TransactionsComponent implements OnInit {
   sortBy='';
   order='';
   details: any;
-  transfer_type: any;
+  transfer_type: any;channel_id=''
   constructor(private socketService: TransactionsService, private router: Router,private modalService: NgbModal,public notificationService:notificationService,
     private authFackservice: AuthfakeauthenticationService,public formBuilder: FormBuilder) { }
    ngOnInit() {
@@ -98,6 +98,7 @@ export class TransactionsComponent implements OnInit {
     {
       url+='&from_date='+this.from_date+'&to_date='+this.to_date
     }    if(this.transfer_type) url+='&transaction_type='+this.transfer_type;
+    if(this.channel_id) url+='&channel_id='+this.channel_id;
 
      this.authFackservice.get(url).subscribe(      res => {
         if(res['status']==true){
@@ -149,7 +150,7 @@ export class TransactionsComponent implements OnInit {
   clearfilter(){
     this.from_date=undefined;
     this.to_date=undefined;
-    this.keyword='';
+    this.keyword='';this.transfer_type=undefined; this.channel_id=undefined
     this.search()
   }
   datesearch(){

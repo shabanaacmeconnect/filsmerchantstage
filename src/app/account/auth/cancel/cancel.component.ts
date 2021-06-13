@@ -38,7 +38,7 @@ export class CancelComponent implements OnInit {
   this.authFackservice.getv1('charityDrivePayment?drive_id='+this.drive).subscribe(res => {
        if(res['status']==true){
          this.status=true
-        this.response1=res['data'][0];
+        this.response1=res['data'];
        }
       })
     let url='transactionDetails?transaction_id='+this.id

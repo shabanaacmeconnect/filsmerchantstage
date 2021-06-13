@@ -57,7 +57,15 @@
                 <div class="form-group">
                   <label>Transaction Types</label>
                   <select type="text" class="form-control" [(ngModel)]="transfer_type" (change)="search()">
-                    <option value=1>Store</option><option value=2>QR Code</option>
+                    <option value=1>Donation</option><option value=2>Round Up</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Channel Types</label>
+                  <select type="text" class="form-control" [(ngModel)]="channel_id" (change)="search()">
+                    <option value=1>Cash</option><option value=2>Online</option><option value=3>QR</option>
                   </select>
                 </div>
               </div>
@@ -79,7 +87,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-2">
+              <div class="col-md-12">
                 <div class="form-group col-md-12">
                   <label style="visibility: hidden;">report</label>
                   <div class="text-sm-right">
@@ -126,8 +134,8 @@
                   <tr *ngFor="let merchants of merchantsData  | filter:term ;let i = index;">
                     <td  role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.created_at |date }}</td>
                     <td  role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.created_at |date :'h:mm:ss a'}}</td>
-                    <td   role="button"  (click)="openModel(merchants,templateDetail)" *ngIf="merchants.transaction_type==1" class="text-center"><i class="fas fa-store text-primary"></i></td>
-                    <td   role="button"  (click)="openModel(merchants,templateDetail)" *ngIf="merchants.transaction_type==2"  class="text-center"><i class="fas fa-qrcode text-primary"></i></td>
+                    <td   role="button"  (click)="openModel(merchants,templateDetail)" *ngIf="merchants.transaction_type==1" class="text-center">Donation</td>
+                    <td   role="button"  (click)="openModel(merchants,templateDetail)" *ngIf="merchants.transaction_type==2"  class="text-center">Round Up</td>
                     <td   role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.donation_amount | currency:'AED ':'code':'1.2-3'}}</td>
                     <!-- <td   role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.vendor_commission | currency:'AED ':'code':'1.2-3'}}</td>
                     <td   role="button"  (click)="openModel(merchants,templateDetail)">{{merchants.fils_commission | currency:'AED ':'code':'1.2-3'}}</td> -->
@@ -170,8 +178,8 @@
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-centered table-striped table-nowrap">
-                  <tr><th style="text-align:left !important" colspan="3">Transaction ID</th></tr>
-                  <tr  class="table-light"><td colspan="3" style="text-align:left !important">{{details.transaction_id}}</td></tr>
+                  <tr><th style="text-align:left !important">Transaction ID</th><th style="text-align:left !important">Cause Name</th><th style="text-align:left !important">Charity Name</th></tr>
+                  <tr  class="table-light"><td style="text-align:left !important">{{details.transaction_id}}</td><td style="text-align:left !important">{{details.cause_name}}</td><td style="text-align:left !important">{{details.charity_name}}</td></tr>
                     <tr>
                       <th style="text-align:left !important">Created Date</th><th style="text-align:left !important">Time</th><th style="text-align:left !important">Donation Amount</th>
                     </tr>
@@ -192,12 +200,18 @@
                          </span>
                       </td></tr>
                     <tr>
-                      <th style="text-align:left !important">Cause Name</th><th style="text-align:left !important">Charity Name</th><th style="text-align:left !important">Transaction Type</th>
+                      <th style="text-align:left !important">Transaction Type</th>
+                      <th style="text-align:left !important">Channel</th>
                     </tr>
-                    <tr class="table-light"><td style="text-align:left !important">{{details.cause_name}}</td><td style="text-align:left !important">{{details.charity_name}}</td>
+                    <tr class="table-light">
                       <td style="text-align:left !important">
-                        <span *ngIf="details.transaction_type==1">Store</span>
-                        <span *ngIf="details.transaction_type==2">QR Code</span>
+                        <span *ngIf="details.transaction_type==1">Donation</span>
+                        <span *ngIf="details.transaction_type==2">Round Up</span>
+                      </td>
+                      <td style="text-align:left !important">
+                        <span *ngIf="details.channel_id==1">Cash</span>
+                        <span *ngIf="details.channel_id==2">Online</span>
+                        <span *ngIf="details.channel_id==3">QR</span>
                       </td></tr>
                    
                 </table>

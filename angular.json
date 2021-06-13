@@ -33,7 +33,9 @@
               "src/assets/scss/app.scss",
               "src/assets/scss/icons.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/payment.js"
+            ]
           },
           "configurations": {
             "production": {

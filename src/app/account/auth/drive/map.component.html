@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <button type="button" class="close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="mb-4">
+              <form id="payment-form" #form="ngForm" >
+                <div class="one-liner">
+                  <div class="card-frame">
+                  </div>
+                  <button id="pay-button" disabled >
+                    PAY AED {{data.amount}}
+                  </button>
+                </div>
+                <input type="hidden" value="{{data.amount}}" id="drive-amount-payment" name="drive-amount-payment" />
+                <input type="hidden" value="{{data.id}}" id="drive-id-payment" name="drive-id-payment"/>
+                <input type="hidden" #token id="success-payment-message" class="success-payment-message" name="token" onchange=""/>
+              </form>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+  
+     
+    </div>
+  </div>
