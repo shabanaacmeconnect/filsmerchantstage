@@ -10,8 +10,14 @@ export class DefaultComponent implements OnInit {
 
   // bread crumb items
   breadCrumbItems: Array<{}>;
-  dashboardData:any={all_transactions_count:0,live_charities_count:0,today_transactions_count:0,
-    total_amount_collected:0,total_amount_collected_today:0,live_causes_count:0,total_gross_profit:0,total_gross_profit_today:0};
+  dashboardData:any={all_transactions_count: 0,
+cause_collection: 0,
+cause_name: 0,
+live_causes_count: 0,
+live_charities_count: 0,
+today_transactions_count: 0,
+total_amount_collected: 0,
+total_amount_collected_today: 0}
   earningLineChart:any;
   earningLineChart1:any; 
   series: any;
