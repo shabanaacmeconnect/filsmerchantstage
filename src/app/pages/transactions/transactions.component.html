@@ -200,10 +200,12 @@
                          </span>
                       </td></tr>
                     <tr>
+                      <th  style="text-align:left !important">VAT Value</th>
                       <th style="text-align:left !important">Transaction Type</th>
                       <th style="text-align:left !important">Channel</th>
                     </tr>
                     <tr class="table-light">
+                      <td style="text-align:left !important">{{details.vat |currency:'AED ':'code':'1.2-3'}}</td>
                       <td style="text-align:left !important">
                         <span *ngIf="details.transaction_type==1">Donation</span>
                         <span *ngIf="details.transaction_type==2">Round Up</span>
