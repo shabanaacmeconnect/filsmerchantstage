@@ -203,6 +203,16 @@
                 </div>
             </div>
         </div>
-       
+        <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body" *ngIf="dashboardData['monthlyBarData']">
+                <h4 class="card-title mb-4">Complete Donations - Monthly</h4>
+                <apx-chart class="apex-charts" dir="ltr" [series]="barChart.series" [chart]="barChart.chart"
+                  [plotOptions]="barChart.plotOptions" [dataLabels]="barChart.dataLabels" [xaxis]="barChart.xaxis"
+                  [colors]="barChart.colors"></apx-chart>
+              </div>
+            </div>
+            <!--end card-->
+        </div>
     </div>
 </div> <!-- container-fluid -->

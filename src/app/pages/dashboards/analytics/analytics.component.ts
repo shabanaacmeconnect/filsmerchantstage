@@ -13,7 +13,7 @@ export class AnalyticsComponent implements OnInit {
   dashboardData:any={all_transactions_count:0,charities_count:0,today_transactions_count:0,
     total_amount_collected:0,total_amount_collected_today:0};
     salesAnalyticsDonutChart:any;
-//   earningLineChart:any;
+    barChart:any;
 causeTypeCollection=[];
 channelCollection=[];
 merchantCategoryCollection=[]
@@ -37,10 +37,51 @@ merchantCategoryCollection=[]
            this.dashboardData['channelCollection']['labels'].forEach((element,i) => {
             this.channelCollection.push({label:element,series:this.dashboardData['channelCollection']['series'][i]})
            });
-           this.dashboardData['merchantCategoryCollection']['labels'].forEach((element,i) => {
-            this.merchantCategoryCollection.push({label:element,series:this.dashboardData['merchantCategoryCollection']['series'][i]})
-           });
-           
+          //  this.dashboardData['merchantCategoryCollection']['labels'].forEach((element,i) => {
+          //   this.merchantCategoryCollection.push({label:element,series:this.dashboardData['merchantCategoryCollection']['series'][i]})
+          //  });
+           let monthlydata= {month:[],value:[]};
+           for (const [key, element] of Object.entries(this.dashboardData['monthlyBarData'])) {
+            monthlydata.month.push(key)
+            monthlydata.value.push(element);
+            
+           };
+           this.barChart= {
+            chart: {
+                height: 380,
+                type: 'bar',
+            },
+          
+            plotOptions: {
+              bar: {
+                  vertical: true,
+              }
+          },
+          dataLabels: {
+              enabled: false
+          },
+          series: [{
+              data:monthlydata.value,
+              title: {
+                text: 'Amount'
+           },
+          }],
+          colors: ['#6f62e7'],
+          xaxis: {
+            title: {
+              text: 'Months'
+          },
+          categories: monthlydata.month,
+          },
+          grid: {
+              borderColor: '#f1f1f1'
+          },
+            // title: {
+            //     text: 'Collections for last 7 Days',
+            //     align: 'left'
+            // },
+          
+        };
         this.salesAnalyticsDonutChart ={
             series: [56, 38, 26],
             chart: {
