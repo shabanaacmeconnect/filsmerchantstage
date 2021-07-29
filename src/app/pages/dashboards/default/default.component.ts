@@ -12,7 +12,7 @@ export class DefaultComponent implements OnInit {
   breadCrumbItems: Array<{}>;
   dashboardData:any={all_transactions_count: 0,
 cause_collection: 0,
-cause_name: 0,
+cause_name: '',
 live_causes_count: 0,
 live_charities_count: 0,
 today_transactions_count: 0,

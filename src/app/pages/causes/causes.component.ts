@@ -37,15 +37,17 @@ export class CausesComponent implements OnInit {
   sortBy='';
   order='';
   cause: any;
+
+  expiry=new Date();
   constructor( private route: ActivatedRoute,private router: Router,private modalService: NgbModal,public notificationService:notificationService,
     private authFackservice: AuthfakeauthenticationService,public formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get("id")?this.route.snapshot.paramMap.get("id"):0;
-
     this.breadCrumbItems = [{label:'My Dashboard',href:'/dashboard'},{ label: 'Charity', href:'/charity/list'},{label:'Approved Causes', active: true }];
     this.currentpage = 1;
     this._fetchData();
+    this.expiry.setDate(this.expiry.getDate() + 21);
   }
 
   search(){
@@ -184,6 +186,15 @@ export class CausesComponent implements OnInit {
   changePage(event){
     this.page.pageNumber=event;
     this._fetchData()
+  }
+  expirations(date){
+    if(new Date(date).getTime()<new Date().getTime()){
+      return 1;
+    }else if(new Date(date).getTime()<this.expiry.getTime()){
+      return 2;
+    }else{
+      return 3;
+    }
   }
   assign(data) {
     

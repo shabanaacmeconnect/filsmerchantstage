@@ -8,8 +8,8 @@
           <div class="card-title mb-3" >Assigned Charity and Cause</div>
           <div class="table-responsive">
             <table class="table table-centered table-striped table-nowrap">
-                <tr><th style="text-align: left !important;">Charity</th><th style="text-align: left !important;">Cause</th></tr>
-                <tr class="table-light"><td style="text-align: left !important;">{{assigned.charity_name}}</td><td style="text-align: left !important;">{{assigned.cause_name}}</td></tr>
+                <tr><th style="text-align: left !important;">Charity</th><th style="text-align: left !important;">Cause</th><th style="text-align: left !important;">Activated At</th><th style="text-align: left !important;">Active Days</th></tr>
+                <tr class="table-light"><td style="text-align: left !important;" class="text-success">{{assigned.charity_name}}</td><td style="text-align: left !important;"  class="text-success">{{assigned.cause_name}}</td><td style="text-align: left !important;" class="text-success">{{assigned.activated_at |date}}</td><td style="text-align: left !important;"  class="text-success">{{assigned.days_active}}</td></tr>
             </table>
           </div>
         </div>
@@ -109,8 +109,9 @@
                       <label class="custom-control-label" for="customCheck{{i}}">&nbsp;</label>
                     </div>
                   </td> -->
-                  <td><img [src]="merchants.logo_path" class=" header-profile-user mr-2" style="
-                    object-fit: contain;"/>{{merchants.business_name}}</td>
+                  <td><img [src]="merchants.logo_path" class="mr-2" style="width:100px;
+                    object-fit: contain;"/>{{merchants.business_name}}
+                    <span class="badge badge-success badge-pill ml-3" *ngIf="merchants.user_id==charity">Active</span></td>
                   <td>{{merchants.iacad_number}} </td>
                   <!-- <td>{{merchants.commission}} </td> -->
                   <td>{{merchants.city_name}}</td>

@@ -104,7 +104,9 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let merchants of merchantsData  | filter:term ;let i = index;">
-                    <td (click)="openModel2(merchants,templateDetail)">{{merchants.created_at |date}} </td>
+                    <td (click)="openModel2(merchants,templateDetail)">{{merchants.created_at |date}} 
+                      <span class="badge badge-success badge-pill ml-3" *ngIf="merchants.alive_status==0">Live</span>
+                    </td>
                     <td (click)="openModel2(merchants,templateDetail)">{{merchants.start_date |date}} </td>
                     <td (click)="openModel2(merchants,templateDetail)">{{merchants.end_date |date}}</td>
                     <td (click)="openModel2(merchants,templateDetail)">{{merchants.charity}}</td>
@@ -113,10 +115,11 @@
                     <td (click)="openModel2(merchants,templateDetail)">{{merchants.vendor_commission  |currency:'AED ':'code':'1.2-3'}}</td>
                     <td class="text-center">
                       <!--*ngIf="checkdate(merchants.start_date,merchants.end_date)" *ngIf="merchants.approved==0" -->
-                      <div  ngbDropdown placement="bottom-right">
-                        <a href="javascript: void(0);"  (click)="openQR(qrTemplate,merchants.drive_id)" class="dropdown-item " >
+                      <div >
+                        <a href="javascript: void(0);"  (click)="openQR(qrTemplate,merchants.drive_id)" class="mr-3" >
                           <i class='bx bx-barcode-reader'></i>
                         </a>
+
                       </div>
                     </td>
                     <td>
@@ -131,6 +134,9 @@
                        </span>
                        <span class="badge badge-danger font-size-12" *ngIf="merchants.approved==1">
                         Rejected
+                       </span>
+                       <span class="badge badge-secondary font-size-12" *ngIf="merchants.approved==3">
+                        Ended
                        </span>
                     </td>
                    </tr>

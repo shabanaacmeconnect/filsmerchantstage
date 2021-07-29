@@ -55,7 +55,7 @@ export class CharityComponent implements OnInit {
     private authFackservice: AuthfakeauthenticationService,public formBuilder: FormBuilder) { }
 
   ngOnInit() {
-     this.breadCrumbItems = [{label:'My Dashboard',href:'/dashboard'},{ label: 'Merchants', active: true }];
+     this.breadCrumbItems = [{label:'My Dashboard',href:'/dashboard'},{ label: 'Charities', active: true }];
     this.currentpage = 1;
     this._getcharities();
     this.getcategories();

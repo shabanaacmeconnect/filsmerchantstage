@@ -1,6 +1,6 @@
 <div class="container-fluid">
 
-    <app-page-title title="Cause Requests" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <app-page-title title="Causes" [breadcrumbItems]="breadCrumbItems"></app-page-title>
     <div class="row">
       <div class="col-12">
         <div class="card">
@@ -76,17 +76,31 @@
               <table class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
                 <thead>
                   <tr>
-                    <th sortable="cause_name" (sort)="onSort($event)">Cause</th><th sortable="cause_description" (sort)="onSort($event)">Cause Info</th><th sortable="category_name" (sort)="onSort($event)">Category</th>
-                    <th sortable="from_date" (sort)="onSort($event)">From Date</th><th sortable="end_date" (sort)="onSort($event)">To Date</th><th>Configure</th>
+                    <th sortable="cause_name" (sort)="onSort($event)">Cause</th><th sortable="cause_description" style="width:30%" (sort)="onSort($event)">Cause Info</th><th sortable="category_name" (sort)="onSort($event)">Category</th>
+                    <th sortable="from_date" (sort)="onSort($event)">From Date</th><th sortable="end_date" (sort)="onSort($event)">To Date</th>
+                    <th sortable="alive_status" (sort)="onSort($event)">Cause Status</th>
+                    <th>Configure</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let merchants of merchantsData  | filter:term ;let i = index;">
-                    <td>{{merchants.cause_name}} <span class="badge badge-primary " *ngIf="cause==merchants.id">Selected</span></td>
+                    <td>{{merchants.cause_name}}
+                      <span class="badge badge-success badge-pill ml-3 " *ngIf="cause==merchants.id">Selected</span>
+                      </td>
                     <td>{{merchants.cause_description}}</td>
                     <td>{{merchants.category_name}} </td>
                     <td>{{merchants.from_date |date}} </td>
                     <td>{{merchants.end_date |date}}</td>
+                    <!-- <td>
+                      <span class="badge badge-warning badge-pill ml-3 " *ngIf="expirations(merchants.end_date)==2">Expiring Soon</span>
+<span class="badge badge-danger badge-pill ml-3 " *ngIf="expirations(merchants.end_date)==1">Expired</span>
+                    </td> -->
+                    <td>
+                      <span class="badge badge-warning badge-pill ml-3 " *ngIf="merchants.alive_status==3">Expiring Soon</span>
+                      <span class="badge badge-danger badge-pill ml-3 " *ngIf="merchants.alive_status==1">Expired</span>
+                      <span class="badge badge-success badge-pill ml-3 " *ngIf="merchants.alive_status==0">Live</span>
+                      <span class="badge badge-primary badge-pill ml-3 " *ngIf="merchants.alive_status==2">Coming Soon</span>
+                    </td>
                     <td><button class="btn btn-primary btn-sm" (click)="assign(merchants)">Select</button></td>
                   </tr>
                 </tbody>

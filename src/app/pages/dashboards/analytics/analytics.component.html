@@ -146,40 +146,6 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4">Active Campaigns</h4>
-                    <perfect-scrollbar style="height: 260px;">
-
-                    <div class="table-responsive mb-0">
-                        <table class="table table-centered table-nowrap">
-                          <thead class="thead-light">
-                            <tr>
-                             
-                              <th>Drive ID</th>
-                              <th>Logo</th>
-                             
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let merchant of dashboardData['activeCampaings']">
-                              <td>
-                                <a href="javascript: void(0);" class="text-body ">{{merchant.drive_id}} </a>
-                              </td>
-                              <td><div class="avatar-xs me-3"><span  class=""><img src="{{merchant.logo_path}}" alt="" height="50"></span></div></td>
-                            </tr>
-                          
-                          </tbody>
-                        </table>
-                      
-                      </div>
-                      </perfect-scrollbar>
-                </div>
-            </div>
-        </div>
-       
-      
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
                     <h4 class="card-title mb-4">Active Causes</h4>
                     <perfect-scrollbar style="height: 260px;">
 
@@ -204,7 +170,39 @@
                 </div>
             </div>
         </div>
-        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Active Campaigns</h4>
+                    <perfect-scrollbar style="height: 260px;">
+
+                    <div class="table-responsive mb-0">
+                        <table class="table table-centered table-nowrap">
+                          <thead class="thead-light">
+                            <tr>
+                             
+                              <th>Drive ID</th>
+                              <th>Logo</th>
+                             
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let merchant of dashboardData['activeCampaings']">
+                              <td>
+                                <a href="javascript: void(0);" class="text-body ">{{merchant.drive_id}} </a>
+                              </td>
+                              <td><div class="avatar-xs me-3"><span  class=""><img src="{{merchant.logo_path}}" alt=""style="    height: 159%;
+                                margin-top: -10px;"></span></div></td>
+                            </tr>
+                          
+                          </tbody>
+                        </table>
+                      
+                      </div>
+                      </perfect-scrollbar>
+                </div>
+            </div>
+        </div>
        
     </div>
 </div> <!-- container-fluid -->
