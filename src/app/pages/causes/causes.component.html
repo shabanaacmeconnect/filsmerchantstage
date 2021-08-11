@@ -84,7 +84,8 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let merchants of merchantsData  | filter:term ;let i = index;">
-                    <td>{{merchants.cause_name}}
+                    <td><img [src]="merchants.image_path" class="mr-2" style="width:100px;
+                      object-fit: contain;"/>{{merchants.cause_name}}
                       <span class="badge badge-success badge-pill ml-3 " *ngIf="cause==merchants.id">Selected</span>
                       </td>
                     <td>{{merchants.cause_description}}</td>

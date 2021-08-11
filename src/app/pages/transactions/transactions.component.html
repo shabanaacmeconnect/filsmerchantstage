@@ -69,6 +69,14 @@
                   </select>
                 </div>
               </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Charities</label>
+                  <select type="text" class="form-control" [(ngModel)]="charity_id" (change)="search()">
+                    <option [ngValue]="x.user_id" *ngFor="let x of charities">{{x.business_name}}</option>
+                  </select>
+                </div>
+              </div>
               <div class="col-md-1">
                 <div class="form-group">
                   <label>Entries</label>

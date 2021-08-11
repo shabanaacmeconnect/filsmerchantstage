@@ -32,7 +32,7 @@ export class TransactionsComponent implements OnInit {
   hrefLink: any;
   blob: Blob;
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>=Object.create(null);
-
+  charity_id='';charities=[];
   document: any;
   page={totalElements:0,pageNumber:1,size:10};
   elementCount=0;
@@ -52,6 +52,7 @@ export class TransactionsComponent implements OnInit {
     this.breadCrumbItems = [{label:'My Dashboard',href:'/dashboard'},{label:'Transactions', active: true }];
     this.currentpage = 1;
     this._fetchData();
+    this.getUsers()
   }
   onSort({column, direction}: SortEvent) {
     // resetting other headers
@@ -88,6 +89,14 @@ export class TransactionsComponent implements OnInit {
     this.currentpage=1;
     this._fetchData()
   }
+  getUsers(){
+    let url1='charities'
+    this.authFackservice.get(url1).subscribe(      res => {
+        if(res['status']==true){
+          this.charities =res['data'];
+        }
+      });
+  }
   public _fetchData() {
    
     let url='/transactions?page='+this.page.pageNumber+'&perPage='+this.page.size+'&keyword='+this.keyword
@@ -99,6 +108,7 @@ export class TransactionsComponent implements OnInit {
       url+='&from_date='+this.from_date+'&to_date='+this.to_date
     }    if(this.transfer_type) url+='&transaction_type='+this.transfer_type;
     if(this.channel_id) url+='&channel_id='+this.channel_id;
+    if(this.charity_id) url+='&charity_id='+this.charity_id;
 
      this.authFackservice.get(url).subscribe(      res => {
         if(res['status']==true){
@@ -149,7 +159,7 @@ export class TransactionsComponent implements OnInit {
   }
   clearfilter(){
     this.from_date=undefined;
-    this.to_date=undefined;
+    this.to_date=undefined;this.charity_id=undefined;
     this.keyword='';this.transfer_type=undefined; this.channel_id=undefined
     this.search()
   }
