@@ -13,5 +13,8 @@
     {
       "path": "./tsconfig.spec.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "paths": { "@angular/*": ["./node_modules/@angular/*"] }
+}
 }

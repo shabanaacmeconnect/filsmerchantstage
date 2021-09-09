@@ -1,0 +1,26 @@
+.bg-grey{
+    background: #F5F5F5;
+}
+.container {
+    padding-right: 50px !important;
+    padding-left: 50px !important;
+}
+.bottom-left {
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+  }
+  .px-75{
+      padding:0 .75rem 0 .75rem;
+  }
+.head1{
+    font-size: 20px;
+    position:relative;
+    bottom: 50px;
+}
+.head2{
+    font-size: 14px;
+}
+.wb{
+    word-break: break-word;
+}

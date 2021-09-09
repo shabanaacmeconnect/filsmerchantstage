@@ -20,6 +20,8 @@ export interface SortEvent {
 @Component({
   selector: 'app-drives',
   templateUrl: './drives.component.html',
+  styleUrls: ['./drives.component.scss']
+
 })
 export class DrivesComponent implements OnInit {
   page={totalElements:0,pageNumber:1,size:10};
@@ -51,6 +53,7 @@ export class DrivesComponent implements OnInit {
   minDate: string;
   userlogo=''
   iacad_number: any;
+  info: any;
   constructor( private router: Router,private modalService: NgbModal,public notificationService:notificationService,
     private authFackservice: AuthfakeauthenticationService,public formBuilder: FormBuilder) { }
 
@@ -199,13 +202,18 @@ export class DrivesComponent implements OnInit {
     return this.typeValidationForm.controls;
   }
   openQR(largeDataModal: any,item){
-    this.qrstring=location.origin+'/merchant/account/drive/'+item;
+    this.qrstring=location.origin+'/account/drive/'+item;
     this.modalService.open(largeDataModal, { size: 'md',windowClass:'modal-holder', centered: true });
 
   }
   openModel2(item,largeDataModal: any) {
     this.details=item
      this.modalService.open(largeDataModal, { size: 'lg',windowClass:'modal-holder', centered: true });
+   }
+   showinfo(modal,item){
+     this.info=item;
+    this.modalService.open(modal,{container: '.account-pages', size: 'sm',windowClass:'modal-holder' });
+
    }
   largeModal(largeDataModal: any) {
     this.title='Add';

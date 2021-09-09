@@ -31,6 +31,7 @@ export class DriveComponent implements OnInit, AfterViewInit ,OnChanges{
   amount='';
   status;
   message=""
+  info: any;
   // tslint:disable-next-line: max-line-length
   constructor(private modalService: NgbModal,private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router,
     private authFackservice: AuthfakeauthenticationService) {
@@ -90,7 +91,11 @@ export class DriveComponent implements OnInit, AfterViewInit ,OnChanges{
      this.sendcheckout()
     }
   }
- 
+  showinfo(modal,item){
+    this.info=item;
+   this.modalService.open(modal,{container: '.account-pages', size: 'sm',windowClass:'modal-holder' });
+
+  }
   sendcheckout(){
     this.sendcheck=true;
       // let modalRef=this.modalService.open(MapComponent, { size: 'lg',windowClass:'modal-holder', centered: true });

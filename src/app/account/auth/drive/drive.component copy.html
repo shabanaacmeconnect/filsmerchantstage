@@ -1,0 +1,188 @@
+<div class="home-btn d-none d-sm-block">
+</div>
+<div class="account-pages mb-5" style="position: relative;
+top: -16px;">
+  <div class="container bg-white" style="max-width: 500px;">
+    <div class="row justify-content-center">
+      <img [src]="response.logo_path"  *ngIf="status==true" style="object-fit: cover; width:100%" height="300px"/><br/>
+      <div  *ngIf="status==true" class="container">
+        <h1 class="text-center mb-4 mt-4"  [ngStyle]="{
+          'color' :  response.color 
+        }" >
+          <p class="font-weight-bold">{{response.heading}}</p>
+        </h1>
+        <div class="text-center">
+          <img [src]="response.merchant_logo" style="object-fit: contain; max-width:50%" height="50px"/><br/>
+        </div>
+        <div class="text-center text-muted mt-3">
+          <p class="mb-3">{{response.message}}</p>
+          <p class="mb-3">{{response.message2}}</p>  
+        </div>
+        <h3 class="text-center">
+          <p class="font-weight-bold">{{response.message3}}</p>
+        </h3>
+        <div class="text-center px-2 mb-5" *ngIf="response.payment_type==2">
+          <button class="btn btn-xl mx-2  my-2  text-white amount-buttons"  style="    width: 38%;
+          border-radius: 9px;"  [ngStyle]="{
+            'background-color' :  response.color 
+          }" *ngFor="let amount of amounts" (click)="checkout(amount)">{{amount |currency :'AED '}}</button>
+        </div>
+        <div class="px-5 mb-5" *ngIf="response.payment_type==1">
+          <form class="form-horizontal" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="form-group mb-3">
+              <input type="number" formControlName="email" placeholder="Enter the amount here" class="form-control amount-field" id="email" placeholder=""
+                [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+              <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">Amount is required</div>
+              </div>
+            </div>
+            <div class="mt-3">
+              <button class="btn btn-block text-white"  [ngStyle]="{
+                'background-color' :  response.color 
+              }"  type="submit">Checkout</button>
+            </div>
+            <div class="mt-4 text-center">
+            </div>
+          </form>
+        </div>
+        <div class="mb-4" *ngIf="amount">
+          <div class="apple-pay-button apple-pay-button-black">
+          </div>
+          
+          <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
+          <!-- <google-pay-button
+  environment="TEST"
+  buttonType="plain"
+  buttonColor="black"
+  [paymentRequest]="{
+    apiVersion: 2,
+    apiVersionMinor: 0,
+    allowedPaymentMethods: [
+      {
+        type: 'CARD',
+        parameters: {
+          allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+          allowedCardNetworks: ['AMEX', 'VISA', 'MASTERCARD']
+        },
+        tokenizationSpecification: {
+          type: 'PAYMENT_GATEWAY',
+          parameters: {
+            gateway: 'example',
+            gatewayMerchantId: 'exampleGatewayMerchantId'
+          }
+        }
+      }
+    ],
+    merchantInfo: {
+      merchantId: '12345678901234567890',
+      merchantName: 'Demo Merchant'
+    },
+    transactionInfo: {
+      totalPriceStatus: 'FINAL',
+      totalPriceLabel: 'Total',
+      totalPrice: '100.00',
+      currencyCode: 'USD',
+      countryCode: 'US'
+    }
+  }"
+  (loadpaymentdata)="onLoadPaymentData($event)"
+></google-pay-button> -->
+          <form id="payment-form" #form="ngForm" class="w-100" >
+            <div class="one-liner">
+              <div class="card-frame">
+              </div>
+              <button id="pay-button" disabled >
+                PAY AED {{amount}}
+              </button>
+            </div>
+            <input type="hidden" value="{{amount}}" id="drive-amount-payment" name="drive-amount-payment" />
+            <input type="hidden" value="{{id}}" id="drive-id-payment" name="drive-id-payment"/>
+            <input type="hidden" #token id="success-payment-message" class="success-payment-message" name="token" onchange=""/>
+          </form>
+        </div>
+        <div class="text-center text-muted">
+          <p class="mb-3">IACAD Number : {{response.iacad_number}}</p>
+        </div>
+        
+        <ul  class="list-inline text-center mb-3">
+          <li  class="list-inline-item"><a  href="javascript::void()" class="social-list-item bg-dark text-white border-dark"><i  class="bx bxl-facebook"></i></a></li>
+          <li  class="list-inline-item"><a  href="javascript::void()" class="social-list-item bg-dark text-white border-dark"><i  class="bx bxl-twitter"></i></a></li>
+          <li  class="list-inline-item"><a  href="javascript::void()" class="social-list-item bg-dark text-white border-dark"><i  class="bx bx-envelope"></i></a></li>
+          <li  class="list-inline-item"><a  href="javascript::void()" class="social-list-item bg-dark text-white border-dark"><i  class="bx bx-share-alt"></i></a></li>
+          <li  class="list-inline-item"><a  href="javascript::void()" class="social-list-item bg-dark text-white border-dark"><i  class="bx bxl-linkedin"></i></a></li>
+        </ul>
+        <div class="text-center text-muted">
+          <p class="mb-3">Powered by <img src="assets/fils-logo.png" class="ml-2" height=30/></p>
+        </div>
+
+       
+      </div>
+      <div class=" overflow-hidden" style="min-height: 300px;
+      margin-top: 100px;" *ngIf="status==false">
+        <div class=" pt-0   mt-4">
+          <div class="text-center mb-4">
+            <p class="font-weight-semibold">{{message}}</p>
+          </div>          
+        </div>
+      </div>
+      <!-- <div class="col-md-8 col-lg-6 col-xl-5">
+        <div class="card overflow-hidden" *ngIf="status==true">
+          <div class="card-body pt-0   mt-4">
+            <div class="text-center mb-4">
+            </div>
+           
+            <div class="text-center p-2 mb-5" *ngIf="response.payment_type==2">
+              <p class="mb-3">Select the Amount from Below.</p>
+              <button class="btn btn-sm mx-1  mb-2  text-white"   [ngStyle]="{
+                'background-color' :  response.color 
+              }" *ngFor="let amount of amounts" (click)="checkout(amount)">{{amount |currency :'AED '}}</button>
+            </div>
+            <div class="p-2 mb-5" *ngIf="response.payment_type==1">
+              <form class="form-horizontal" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-group mb-3">
+                  <label for="email">Enter the Amount</label>
+                  <input type="number" formControlName="email" class="form-control" id="email" placeholder=""
+                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors.required">Amount is required</div>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <button class="btn btn-block text-white"  [ngStyle]="{
+                    'background-color' :  response.color 
+                  }"  type="submit">Checkout</button>
+                </div>
+                <div class="mt-4 text-center">
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+        <div class="card overflow-hidden" *ngIf="status==false">
+          <div class="card-body pt-0   mt-4">
+            
+            <div class="text-center mb-4">
+              <p class="font-weight-semibold">Invalid QR Code</p>
+            </div>
+           
+          
+          </div>
+        </div>
+        <div class="mt-5 text-center">
+         
+          <p>© {{year}} Fils Connect.</p>
+        </div>
+
+      </div> -->
+    </div>
+  </div>
+
+  <!-- end container -->
+</div>
+<!-- end page -->
+
+
+
+
+

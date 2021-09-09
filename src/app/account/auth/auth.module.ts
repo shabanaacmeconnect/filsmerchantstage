@@ -26,7 +26,7 @@ import { GooglePayButtonModule } from "@google-pay/button-angular";
     ReactiveFormsModule,FormsModule ,
     NgbAlertModule,
     UIModule,
-    AuthRoutingModule,GooglePayButtonModule
+    AuthRoutingModule,GooglePayButtonModule,
   ],
   exports:[MapComponent]
 })
