@@ -40,6 +40,8 @@ export class DrivesComponent implements OnInit {
   dates=new Date().getTime();
   order='';
   color='#ffff' 
+  color2='#ffff' 
+  btcolor='#ffff' 
   hrefLink: any;
   blob: Blob;
   qrstring=""
@@ -113,11 +115,14 @@ export class DrivesComponent implements OnInit {
       end_date:['',Validators.required],
       logo_path:['',this.conditionalrequiredValidator(this.title)],
       message:['',Validators.required],
-      message2:[''],
-      message3:[''],
+      message2:['',Validators.required],
+      message3:['',Validators.required],
 
       heading:['',Validators.required],
       color:['',Validators.required],
+      heading2:['',Validators.required],
+      color2:['',Validators.required],
+      btcolor:['',Validators.required],
       payment_type:['',Validators.required],
       preset_values: this.formBuilder.array([]),
     }, {
@@ -212,7 +217,7 @@ export class DrivesComponent implements OnInit {
    }
    showinfo(modal,item){
      this.info=item;
-    this.modalService.open(modal,{container: '.account-pages', size: 'sm',windowClass:'modal-holder' });
+    this.modalService.open(modal,{container: '.account-pages', size: 'sm',windowClass:'modal-holder' , centered: true});
 
    }
   largeModal(largeDataModal: any) {
@@ -284,6 +289,9 @@ export class DrivesComponent implements OnInit {
 
     formData.append("heading", this.typeValidationForm.value.heading);
     formData.append("color", this.typeValidationForm.value.color);
+    formData.append("heading2", this.typeValidationForm.value.heading2);
+    formData.append("color2", this.typeValidationForm.value.color2);
+    formData.append("btcolor", this.typeValidationForm.value.btcolor);
     formData.append("payment_type", this.typeValidationForm.value.payment_type);
     formData.append("preset_values", amount.join(','));    
       this.authFackservice.postMultipart('/charityDrive',formData).subscribe(

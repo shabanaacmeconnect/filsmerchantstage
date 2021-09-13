@@ -3,20 +3,35 @@
 <div  class="account-pages" style="position: relative;
 top: -16px;">
   <div class="bg-grey mx-auto" style="max-width: 500px;">
-    <div class="row">
-      <div class="w-100">
-        <img [src]="response.logo_path" *ngIf="status==true"  class="px-75" style="object-fit: cover; width:100%" id="fakeimg" height="300px"/><br/>
-      <span class="container wb head1 text-sm-left  font-weight-bold" [ngStyle]="{
-        'color' :  response.color
-      }">{{response.heading}}</span>
+    <!-- <div class="w-100"*ngIf="status==true" >
+      <img [src]="img" class="px-75" style="object-fit: cover; width:100%" id="fakeimg" height="250px"/><br/>
+      <div class="br"  [ngStyle]="{
+        'background' :  response.color
+      }"></div>
+      <div class="container wb head1 text-sm-left text-white font-weight-bold" >
+      <span  class=" border-left1 " [ngStyle]="{
+        'border-color' :  response.color
+      }"> {{response.heading}}</span></div>
+    </div> -->
+    <div class="">
+      <div class="w-100"*ngIf="status==true" >
+        <div class="pickgradient"><img [src]="response.logo_path"  style="object-fit: cover; width:100%" id="fakeimg" height="300px"/>
+      </div>
+        <div class="br"  [ngStyle]="{
+          'background' :  response.color
+        }"></div>
+        <div class="container wb head1 text-sm-left text-white font-weight-bold" >
+        <span  class=" border-left1 " [ngStyle]="{
+          'border-color' :  response.color
+        }"> {{response.heading}}</span></div>
       </div>
       <div  *ngIf="status==true" class="container wb">
         <span class="mb-4 head2"  [ngStyle]="{
-          'color' :  response.color
+          'color' :  response.color2
         }" >
-          <p class="font-weight-bold">{{response.heading}}</p>
+          <p class="font-weight-bold">{{response.heading2}}</p>
       </span>
-      <div class="">
+      <div class="text-dark">
         <p class="mb-3 font-size-12">{{response.message}}</p>
       </div>
       <div class="card">
@@ -39,9 +54,9 @@ top: -16px;">
             <button class="btn btn-xl mx-1 my-2 bg-grey"  style="    width: 45%;
             border:1px solid #E0E0E0;"   *ngFor="let amount of amounts" (click)="checkout(amount)">{{amount |currency :'AED '}}</button>
             <div class="mt-3 mx-1">
-              <button class=" btn btn-block text-white"  [ngStyle]="{
-                'background-color' :  response.color
-              }"  >{{response.message3}}</button>
+              <button class=" btn btn-block text-white" [disabled]="amount==''"  [ngStyle]="{
+                'background-color' :  response.btcolor
+              }"  (click)="sendcheckout()">{{response.message3}}</button>
             </div>
           </div>
           <div class=" mb-5" *ngIf="response.payment_type==1">
@@ -54,8 +69,8 @@ top: -16px;">
                 </div>
               </div>
                 <div class="mt-3  mx-1">
-                  <button class="btn btn-block text-white"  [ngStyle]="{
-                    'background-color' :  response.color
+                  <button class="btn btn-block text-white" [disabled]="amount==''"  [ngStyle]="{
+                    'background-color' :  response.btcolor
                   }"  type="submit">{{response.message3}}</button>
                 </div>
               
@@ -79,7 +94,7 @@ top: -16px;">
             </div>
         </div>
       </div>
-      <div class="text-center text-muted">
+      <div class="text-center text-dark">
         <p class="mb-3">IACAD Number : {{response.iacad_number}}</p>
       </div>
       <div class="text-center mb-3">
@@ -123,12 +138,13 @@ top: -16px;">
       </div>
       </div>
       
-<!--        
-        <div class="mb-4" *ngIf="amount">
+     
+        <div class="mb-4" *ngIf="amount" >
+          {{getdc()}}
           <div class="apple-pay-button apple-pay-button-black">
           </div>
           
-          <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script> -->
+         
           <!-- <google-pay-button
   environment="TEST"
   buttonType="plain"
@@ -168,7 +184,7 @@ top: -16px;">
 ></google-pay-button> -->
 
 
-      <div class=" overflow-hidden" style="min-height: 300px;
+      <div class=" overflow-hidden container" style="min-height: 300px;
       margin-top: 100px;" *ngIf="status==false">
         <div class=" pt-0   mt-4">
           <div class="text-center mb-4">

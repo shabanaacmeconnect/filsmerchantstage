@@ -5,3 +5,6 @@ interface JQuery {
    interface JQuery {
        selectpicker(options?: any, callback?: Function):any;
    }
+    interface Window {
+      ApplePaySession?: any;
+    }

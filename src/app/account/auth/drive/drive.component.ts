@@ -7,6 +7,8 @@ import { first } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import { MapComponent} from './map.component'
+declare var window: any;
+
 @Component({
   selector: 'app-drive',
   templateUrl: './drive.component.html',
@@ -36,9 +38,21 @@ export class DriveComponent implements OnInit, AfterViewInit ,OnChanges{
   constructor(private modalService: NgbModal,private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router,
     private authFackservice: AuthfakeauthenticationService) {
       this.id = this.route.snapshot.paramMap.get("id")?this.route.snapshot.paramMap.get("id"):'';
-
+      
      }
-
+     getdc(){
+       console.log(1)
+      if (window.ApplePaySession) {
+        console.log(2)
+        var merchantIdentifier = 'example.com.store';
+        var promise = ApplePaySession.canMakePaymentsWithActiveCard(merchantIdentifier);
+        promise.then(function (canMakePayments) {
+          console.log(canMakePayments)
+          //  if (canMakePayments)
+              // Display Apple Pay button here.
+      }); 
+      }
+     }
   ngOnInit() {
     this._fetchData()
     this.loginForm = this.formBuilder.group({
@@ -47,14 +61,15 @@ export class DriveComponent implements OnInit, AfterViewInit ,OnChanges{
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
   }
+  
   public _fetchData() {
     let url='charityDrivePayment?drive_id='+this.id
     if(this.route.snapshot.url['2']=='preview')
       url+='&preview=1'
      this.authFackservice.getv1(url).subscribe(res => {
         if(res['status']==true){
-          this.status=true
-         this.response=res['data'];
+          this.response=res['data'];
+          this.status=true;
          if(this.response.payment_type==2){
            this.amounts=this.response.preset_values.split(',');
          }
@@ -66,7 +81,7 @@ export class DriveComponent implements OnInit, AfterViewInit ,OnChanges{
   }
   checkout(item){
     this.amount=item;
-    this.sendcheckout();
+    // this.sendcheckout();
   }
 
   ngAfterViewInit() {
@@ -93,7 +108,7 @@ export class DriveComponent implements OnInit, AfterViewInit ,OnChanges{
   }
   showinfo(modal,item){
     this.info=item;
-   this.modalService.open(modal,{container: '.account-pages', size: 'sm',windowClass:'modal-holder' });
+   this.modalService.open(modal,{container: '.account-pages', size: 'sm',windowClass:'modal-holder', centered: true });
 
   }
   sendcheckout(){
