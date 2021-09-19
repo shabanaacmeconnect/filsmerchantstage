@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import { MapComponent} from './map.component'
 declare var window: any;
+declare var $:any;
 
 @Component({
   selector: 'app-drive',
@@ -41,10 +42,11 @@ export class DriveComponent implements OnInit, AfterViewInit ,OnChanges{
       
      }
      getdc(){
-       console.log(1)
+       console.log(1);
+       $('.apple-pay-button').show()
       if (window.ApplePaySession) {
         console.log(2)
-        var merchantIdentifier = 'example.com.store';
+        var merchantIdentifier = 'merchant.com.filscare.devmerchant';
         var promise = ApplePaySession.canMakePaymentsWithActiveCard(merchantIdentifier);
         promise.then(function (canMakePayments) {
           console.log(canMakePayments)
